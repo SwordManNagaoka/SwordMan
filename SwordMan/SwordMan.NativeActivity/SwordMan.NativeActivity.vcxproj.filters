@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="ECS\ECS.cpp">
+      <Filter>ECS</Filter>
+    </ClCompile>
+    <ClCompile Include="GameController\Game.cpp">
+      <Filter>GameController</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Collision">
+      <UniqueIdentifier>{627c36ce-c283-4249-b175-1d0a501f48b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System">
+      <UniqueIdentifier>{2c17779e-5bdc-4083-bfb5-9bd5dbb943ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utility">
+      <UniqueIdentifier>{f3107098-3717-40cc-ae63-db15155d1761}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ResourceManager">
+      <UniqueIdentifier>{03cb3af6-9062-4035-8223-757b53185250}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components">
+      <UniqueIdentifier>{66bf0db4-2e51-4493-b65b-31c45fdd199d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ECS">
+      <UniqueIdentifier>{3ccc7d88-c38c-47b3-86fb-22c7a1bbedd4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameController">
+      <UniqueIdentifier>{756deecd-f2a4-47dc-be44-81fba07e9505}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Class">
+      <UniqueIdentifier>{22ca671e-5c47-4a15-82ce-10c7b8411e50}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ComponentDatas">
+      <UniqueIdentifier>{798d7670-4fa0-46dd-b539-ef29eeee8bc6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Events">
+      <UniqueIdentifier>{45a90f34-719c-4be8-beae-59e2b1003c2b}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Collision\Collision.hpp">
+      <Filter>Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\BasicComponents.hpp">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\Collider.hpp">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\Renderer.hpp">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="ECS\ECS.hpp">
+      <Filter>ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="GameController\Game.h">
+      <Filter>GameController</Filter>
+    </ClInclude>
+    <ClInclude Include="GameController\GameMain.hpp">
+      <Filter>GameController</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceManager\ResourceManager.hpp">
+      <Filter>ResourceManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\Counter.hpp">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\Easing.hpp">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\FPS.hpp">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\Random.hpp">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\Utility.hpp">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\Vec.hpp">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="System\System.hpp">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="Class\Map.hpp">
+      <Filter>Class</Filter>
+    </ClInclude>
+    <ClInclude Include="Class\MapLoader.hpp">
+      <Filter>Class</Filter>
+    </ClInclude>
+    <ClInclude Include="Class\Scene.hpp">
+      <Filter>Class</Filter>
+    </ClInclude>
+    <ClInclude Include="ComponentDatas\PlayerData.hpp">
+      <Filter>ComponentDatas</Filter>
+    </ClInclude>
+    <ClInclude Include="Events\AtackEvent.hpp">
+      <Filter>Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Events\ContinueTap.hpp">
+      <Filter>Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Events\PauseTap.hpp">
+      <Filter>Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Events\ReturnFirstTap.hpp">
+      <Filter>Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Events\TitleTap.hpp">
+      <Filter>Events</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
