@@ -120,6 +120,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <Content Include="assets\image\a.png" />
+    <Content Include="res\drawable\icon.png" />
     <Content Include="res\values\strings.xml" />
     <AntBuildXml Include="build.xml" />
     <AndroidManifest Include="AndroidManifest.xml" />
