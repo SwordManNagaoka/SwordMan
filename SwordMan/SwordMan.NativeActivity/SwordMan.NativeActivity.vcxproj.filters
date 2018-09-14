@@ -34,11 +34,14 @@
     <Filter Include="Class">
       <UniqueIdentifier>{22ca671e-5c47-4a15-82ce-10c7b8411e50}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ComponentDatas">
-      <UniqueIdentifier>{798d7670-4fa0-46dd-b539-ef29eeee8bc6}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Events">
       <UniqueIdentifier>{45a90f34-719c-4be8-beae-59e2b1003c2b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\ComponentDatas">
+      <UniqueIdentifier>{798d7670-4fa0-46dd-b539-ef29eeee8bc6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ArcheType">
+      <UniqueIdentifier>{ce2bfcf7-1bbf-4073-ae7f-7f5ac9e319c7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -96,9 +99,6 @@
     <ClInclude Include="Class\Scene.hpp">
       <Filter>Class</Filter>
     </ClInclude>
-    <ClInclude Include="ComponentDatas\PlayerData.hpp">
-      <Filter>ComponentDatas</Filter>
-    </ClInclude>
     <ClInclude Include="Events\AtackEvent.hpp">
       <Filter>Events</Filter>
     </ClInclude>
@@ -113,6 +113,21 @@
     </ClInclude>
     <ClInclude Include="Events\TitleTap.hpp">
       <Filter>Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\ComponentDatas\PlayerData.hpp">
+      <Filter>Components\ComponentDatas</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\MapMove.hpp">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="ArcheType\Map.hpp">
+      <Filter>ArcheType</Filter>
+    </ClInclude>
+    <ClInclude Include="ArcheType\MapLoader.hpp">
+      <Filter>ArcheType</Filter>
+    </ClInclude>
+    <ClInclude Include="ArcheType\Player.hpp">
+      <Filter>ArcheType</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
