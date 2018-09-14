@@ -44,7 +44,7 @@ private:
 		SetMainWindowText("Game");
 #endif
 		//画面サイズ変更
-		SetGraphMode(1280,900, 32);
+		SetGraphMode(1280,720, 32);
 		//ウィンドウモード変更
 		//初期化
 		DxLib_Init();
