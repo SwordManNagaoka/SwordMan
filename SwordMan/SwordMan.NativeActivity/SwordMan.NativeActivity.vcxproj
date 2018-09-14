@@ -233,11 +233,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ArcheType\Map.hpp" />
-    <ClInclude Include="ArcheType\MapLoader.hpp" />
     <ClInclude Include="ArcheType\Player.hpp" />
-    <ClInclude Include="Class\Map.hpp" />
     <ClInclude Include="Class\MapLoader.hpp" />
     <ClInclude Include="Class\Scene.hpp" />
+    <ClInclude Include="Class\TouchInput.hpp" />
     <ClInclude Include="Collision\Collision.hpp" />
     <ClInclude Include="Components\BasicComponents.hpp" />
     <ClInclude Include="Components\Collider.hpp" />

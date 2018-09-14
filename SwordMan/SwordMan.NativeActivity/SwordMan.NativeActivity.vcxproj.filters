@@ -90,9 +90,6 @@
     <ClInclude Include="System\System.hpp">
       <Filter>System</Filter>
     </ClInclude>
-    <ClInclude Include="Class\Map.hpp">
-      <Filter>Class</Filter>
-    </ClInclude>
     <ClInclude Include="Class\MapLoader.hpp">
       <Filter>Class</Filter>
     </ClInclude>
@@ -123,10 +120,10 @@
     <ClInclude Include="ArcheType\Map.hpp">
       <Filter>ArcheType</Filter>
     </ClInclude>
-    <ClInclude Include="ArcheType\MapLoader.hpp">
+    <ClInclude Include="ArcheType\Player.hpp">
       <Filter>ArcheType</Filter>
     </ClInclude>
-    <ClInclude Include="ArcheType\Player.hpp">
+    <ClInclude Include="Class\TouchInput.hpp">
       <Filter>ArcheType</Filter>
     </ClInclude>
   </ItemGroup>
