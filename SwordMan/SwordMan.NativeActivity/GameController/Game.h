@@ -1,9 +1,12 @@
 ﻿#pragma once
 #include "../ECS/ECS.hpp"
+#include "../Class/TouchInput.hpp"
 #define ENTITY_GROUP (ECS::Group)Game::GameGroup
 
 class Game final
 {
+private:
+	TouchInput	touchInput;
 private:
 	ECS::EntityManager* pManager;
 	void EventUpDate();

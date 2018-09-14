@@ -32,6 +32,13 @@ void Game::Update()
 {
 	pManager->Refresh();
 	pManager->Update();
+
+
+	if (touchInput.Press(0))
+	{
+		DrawFormatString(touchInput.GetTouchIDPos(0).x, touchInput.GetTouchIDPos(0).y, GetColor(0,255,0),"タップ0番が押されています");
+	}
+	touchInput.Run();
 }
 
 void Game::Draw()
