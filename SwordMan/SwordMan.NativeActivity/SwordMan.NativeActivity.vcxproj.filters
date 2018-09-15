@@ -124,7 +124,7 @@
       <Filter>ArcheType</Filter>
     </ClInclude>
     <ClInclude Include="Class\TouchInput.hpp">
-      <Filter>ArcheType</Filter>
+      <Filter>Class</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

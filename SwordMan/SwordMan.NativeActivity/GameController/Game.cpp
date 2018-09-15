@@ -3,6 +3,8 @@
 #include "../../Components/BasicComponents.hpp"
 #include "../../Components/Renderer.hpp"
 #include "../../Components/Collider.hpp"
+#include "../../ArcheType/Map.hpp"
+#include "../Class/MapLoader.hpp"
 void Game::EventUpDate()
 {
 
@@ -11,6 +13,7 @@ void Game::EventUpDate()
 void Game::ResourceLoad()
 {
 	ResourceManager::GetGraph().Load("image/a.png","a");
+	ResourceManager::GetGraph().Load("image/ground01.png", "map");
 }
 
 Game::Game()
@@ -21,6 +24,7 @@ Game::Game()
 	e.AddComponent<ECS::Position>(100.f,100.f);
 	e.AddComponent<ECS::CircleColiider>(20.f);
 	e.AddComponent<ECS::SimpleDraw>("a");
+	MapLoader("stage/maptest.csv", "map", Vec2(5, 5), 13, 8, 96, ECS::MapArcheType());
 }
 
 void Game::ResetGame()
