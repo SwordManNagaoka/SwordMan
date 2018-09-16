@@ -126,5 +126,14 @@
     <ClInclude Include="Class\TouchInput.hpp">
       <Filter>ArcheType</Filter>
     </ClInclude>
+    <ClInclude Include="Components\Behavior.hpp">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\Jump.hpp">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\Think.hpp">
+      <Filter>Components</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
