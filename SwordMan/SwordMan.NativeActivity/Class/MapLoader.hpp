@@ -1,6 +1,6 @@
 ﻿/**
 * @file MapLoader.hpp
-* @brief csvファイル等からマップデータの読み込をします。
+* @brief csvファイル等からマップデータの読み込みをします。
 * @author tonarinohito
 * @date 2018/9/15
 */
@@ -23,10 +23,48 @@ public:
 		mapArray.resize(yNum);	//1次元目
 		for (auto i(0u); i < yNum; ++i)
 		{
-			mapArray[i].resize(xNum);//2次元目
+			mapArray[i].resize(xNum);	//2次元目
 		}
-		std::ifstream fin(path);
-		if (!fin.is_open())
+		//ファイルを開く
+		int handle = FileRead_open(path.c_str());
+		if (handle == 0)
+		{
+			printfDx("HandleError!!!\n");
+		}
+		//ファイルのサイズを取得する
+		int64_t fileSize = FileRead_size(path.c_str());
+		if (fileSize == -1)
+		{
+			printfDx("SizeError!!!\n");
+		}
+		//ファイルからデータを読み込む
+		void *buffer = malloc(fileSize);
+		int isRead = FileRead_read(buffer, fileSize, handle);
+		if (isRead == -1)
+		{
+			printfDx("ReadError!!!\n");
+		}
+		//ファイルを閉じる
+		FileRead_close(handle);
+		//アプリのデータ保存用のディレクトリパスを取得する
+		char pathBuffer[1024];
+		GetInternalDataPath(pathBuffer, sizeof(pathBuffer));
+		//ディレクトリパスにディレクトリ区切りの『/』とテンポラリファイルの名前を追加する
+		strcat(pathBuffer, "/tempfile.txt");
+		//テンポラリファイルを書き込み用に開く
+		FILE* fp = fopen(pathBuffer,"wb");
+		if (fp != NULL)
+		{
+			//テンポラリファイルにcsvファイルの内容を書き出す
+			fwrite(buffer, 1, fileSize, fp);
+			//ファイルを閉じる
+			fclose(fp);
+		}
+		//確保したメモリを解放
+		free(buffer);
+		//テンポラリファイルを開く
+		std::ifstream fin(pathBuffer);
+		if (fin.is_open() == 0)
 		{
 			printfDx("Error!!!");
 		}
