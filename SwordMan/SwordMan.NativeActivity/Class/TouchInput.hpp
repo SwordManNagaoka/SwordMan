@@ -1,4 +1,5 @@
-﻿#include "DxLib.h"
+﻿#pragma once
+#include "DxLib.h"
 #include "../Utility/Vec.hpp"
 #include <vector>
 #include <unordered_map>

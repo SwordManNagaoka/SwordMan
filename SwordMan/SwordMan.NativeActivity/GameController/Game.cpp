@@ -5,6 +5,7 @@
 #include "../../Components/Collider.hpp"
 #include "../../ArcheType/Map.hpp"
 #include "../Class/MapLoader.hpp"
+#include "../../ArcheType/Player.hpp"
 void Game::EventUpDate()
 {
 
@@ -25,6 +26,7 @@ Game::Game()
 	e.AddComponent<ECS::CircleColiider>(20.f);
 	e.AddComponent<ECS::SimpleDraw>("a");
 	MapLoader("stage/maptest.csv", "map", Vec2(5, 5), 13, 8, 96, ECS::MapArcheType());
+	ECS::PlayerArcheType()(Vec2(0,0),Vec2(48,48));
 }
 
 void Game::ResetGame()

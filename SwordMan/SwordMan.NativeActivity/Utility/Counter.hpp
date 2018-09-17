@@ -5,7 +5,6 @@
 * @date 2018/５/11
 */
 #pragma once
-#pragma warning (disable : 4458)	//thisを使うため消す
 template <typename T>
 /*! @class Counter
 *   @brief カウンターです.上限値に達したら下限値、下限値を超えたら上限値になります
@@ -19,12 +18,12 @@ class TemplateCounter
 #undef max
 #undef min
 private:
+	bool isMax;
+	bool isMin;
 	T now;
 	T add;
 	T min;
 	T max;
-	bool isMax;
-	bool isMin;
 public:
 	
 	TemplateCounter() :
