@@ -120,8 +120,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <Content Include="assets\image\a.png" />
+    <Content Include="assets\image\ground01.png" />
     <Content Include="assets\image\tekito.png" />
     <Content Include="assets\image\temp.png" />
+    <Content Include="assets\stage\maptest.csv" />
     <Content Include="res\drawable\icon.png" />
     <Content Include="res\values\strings.xml" />
     <AntBuildXml Include="build.xml" />

@@ -45,7 +45,7 @@ private:
 #endif
 		//画面サイズ変更
 		SetGraphMode(1280,720, 32);
-		//ウィンドウモード変更
+		SetUseCharCodeFormat(DX_CHARCODEFORMAT_UTF8);
 		//初期化
 		DxLib_Init();
 		assert(DxLib_IsInit());
