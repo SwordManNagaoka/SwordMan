@@ -29,7 +29,10 @@ namespace ECS
 			case PlayerData::State::Walk:
 				if (touchInput.Push(0))
 				{
-					nowState = PlayerData::State::Jump;
+					if (touchInput.GetTouchIDPos(0).x <= (System::SCREEN_WIDIH / 2.0f))
+					{
+						nowState = PlayerData::State::Jump;
+					}
 				}
 				break;
 			case PlayerData::State::Jump:
