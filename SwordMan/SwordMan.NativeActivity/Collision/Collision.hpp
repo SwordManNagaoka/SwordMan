@@ -63,4 +63,34 @@ struct Collision
 		}
 		return false;
 	}
+
+	//円と点の当たり判定
+	template<class T = ECS::CircleColiider, class T2 = ECS::Position>
+	inline static bool CircleAndPoint(const ECS::Entity& b1, const ECS::Entity& b2)
+	{
+		if (!b1.HasComponent<T>() || !b2.HasComponent<T2>())
+		{
+			return false;
+		}
+		const auto& circle = b1.GetComponent<T>();
+		const auto& point = b2.GetComponent<T2>();
+
+		Vec2 buttonPos = Vec2(circle.x(), circle.y());
+		Vec2 distance = buttonPos - point.val();
+		if (distance.Length() <= circle.radius())
+		{
+			return true;
+		}
+		return false;
+	}
+
+	inline static bool CircleAndPoint(const Vec2& circlePos, const float& circleRadius, const Vec2& pointPos) noexcept
+	{
+		Vec2 distance = circlePos - pointPos;
+		if (distance.Length() <= circleRadius)
+		{
+			return true;
+		}
+		return false;
+	}
 };
