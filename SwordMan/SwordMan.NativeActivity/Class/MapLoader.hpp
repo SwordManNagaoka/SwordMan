@@ -11,21 +11,13 @@
 #include <functional>
 #include "../ECS/ECS.hpp"
 
-class MapLoader
+class DXFilieRead
 {
 private:
-	std::vector<std::vector<int>> mapArray;
-	std::vector<size_t> posX;
-	std::vector<size_t> posY;
+	char pathBuffer[1024];
 public:
-	MapLoader(const std::string& path, const std::string& mapName, const Vec2& velocity, const size_t xNum, const size_t yNum, const size_t size,
-		std::function<ECS::Entity*(const char*, const Vec2&, const Vec2&, const int, const int, const int)> tileMapArcheType)
+	const char* GetPath(const std::string& path)
 	{
-		mapArray.resize(yNum);	//1次元目
-		for (auto i(0u); i < yNum; ++i)
-		{
-			mapArray[i].resize(xNum);	//2次元目
-		}
 		//ファイルを開く
 		int handle = FileRead_open(path.c_str());
 		if (handle == 0)
@@ -48,12 +40,11 @@ public:
 		//ファイルを閉じる
 		FileRead_close(handle);
 		//アプリのデータ保存用のディレクトリパスを取得する
-		char pathBuffer[1024];
 		GetInternalDataPath(pathBuffer, sizeof(pathBuffer));
 		//ディレクトリパスにディレクトリ区切りの『/』とテンポラリファイルの名前を追加する
 		strcat(pathBuffer, "/tempfile.txt");
 		//テンポラリファイルを書き込み用に開く
-		FILE* fp = fopen(pathBuffer,"wb");
+		FILE* fp = fopen(pathBuffer, "wb");
 		if (fp != NULL)
 		{
 			//テンポラリファイルにcsvファイルの内容を書き出す
@@ -63,8 +54,27 @@ public:
 		}
 		//確保したメモリを解放
 		free(buffer);
+		return pathBuffer;
+	}
+};
+class MapLoader
+{
+private:
+	std::vector<std::vector<int>> mapArray;
+	std::vector<size_t> posX;
+	std::vector<size_t> posY;
+public:
+	MapLoader(const std::string& path, const std::string& mapName, const Vec2& velocity, const size_t xNum, const size_t yNum, const size_t size,
+		std::function<ECS::Entity*(const char*, const Vec2&, const Vec2&, const int, const int, const int)> tileMapArcheType)
+	{
+		mapArray.resize(yNum);	//1次元目
+		for (auto i(0u); i < yNum; ++i)
+		{
+			mapArray[i].resize(xNum);	//2次元目
+		}
+		
 		//テンポラリファイルを開く
-		std::ifstream fin(pathBuffer);
+		std::ifstream fin(DXFilieRead().GetPath(path));
 		if (fin.is_open() == 0)
 		{
 			printfDx("Error!!!");
@@ -99,6 +109,5 @@ public:
 			}
 		}
 	}
-
 };
 
