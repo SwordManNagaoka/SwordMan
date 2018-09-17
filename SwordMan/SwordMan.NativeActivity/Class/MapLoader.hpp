@@ -11,7 +11,7 @@
 #include <functional>
 #include "../ECS/ECS.hpp"
 
-class DXFilieRead
+class DXFilieRead final
 {
 private:
 	char pathBuffer[1024];

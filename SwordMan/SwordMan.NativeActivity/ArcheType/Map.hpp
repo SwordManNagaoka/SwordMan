@@ -21,25 +21,28 @@ namespace ECS
 			ECS::Entity* entity = &ECS::EcsSystem::GetManager().AddEntity();
 			
 			//このスコープでしか必要ない処理なためラムダ式で記述
-			auto Create = [=](ECS::Entity* e, const int srcX, const int srcY)
+			auto Create = [=](ECS::Entity* e, const int srcX, const int srcY, bool isCollision = true)
 			{
 				e->AddComponent<Position>(pos);
 				e->AddComponent<Velocity>(velocity);
 				e->AddComponent<MapMove>();
-				e->AddComponent<HitBase>(static_cast<float>(w), static_cast<float>(h)).SetColor(255, 0, 0);
+				if (isCollision)
+				{
+					e->AddComponent<HitBase>(static_cast<float>(w), static_cast<float>(h)).SetColor(255, 0, 0);
+				}
 				e->AddComponent<RectDraw>(name, srcX, srcY, w, h);
 				e->AddGroup(ENTITY_GROUP::Ground);
 			};
 			
 			switch (id)
 			{
-			case -1:                         break;
-			case 0: Create(entity, 0, 0);    break;  //地面
-			case 1: Create(entity, 96, 0);   break;  //断面
-			case 2: Create(entity, 0, 96);   break;  //地面左端
-			case 3: Create(entity, 96, 96);  break;  //断面左端
-			case 4: Create(entity, 0, 192);  break;  //地面右端
-			case 5: Create(entity, 96, 192); break;	 //断面右端
+			case -1:								break;
+			case 0: Create(entity, 0, 0);			break;  //地面
+			case 1: Create(entity, 96, 0, false);   break;  //断面
+			case 2: Create(entity, 0, 96);			break;  //地面左端
+			case 3: Create(entity, 96, 96);			break;  //断面左端
+			case 4: Create(entity, 0, 192);			break;  //地面右端
+			case 5: Create(entity, 96, 192);		break;	//断面右端
 			}
 			return entity;
 		}

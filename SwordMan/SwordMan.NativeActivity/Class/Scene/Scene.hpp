@@ -17,19 +17,20 @@ namespace Scene
 {
 	class ISceneBase
 	{
-		//Entityの初期化、生成を記述します
+		//!Entityの初期化、生成を記述します
 		virtual void Initialize() = 0;
-		//Entityのイベント処理を記述します
+		//!Entityのイベント処理を記述します
 		virtual void EventUpdate() = 0;
-		//Entityの更新をまとめます
+		//!Entityの更新をまとめます
 		virtual void Update() = 0;
-		//Entityの描画をまとめます
+		//!Entityの描画をまとめます
 		virtual void Draw() = 0;
-		//Entityの削除を行います
+		//!Entityの削除を行います
 		virtual void CleanUp() = 0;
 	};
 
-	class SceneManager
+	//ミニマルなゲームなためまとめて管理
+	class SceneManager final
 	{
 	private:
 		enum class State
@@ -75,8 +76,8 @@ namespace Scene
 			{
 			case State::Title:  title->EventUpdate();  break;
 			case State::Menu:   menu->EventUpdate();   break;
-			case State::Pause:  pause->EventUpdate();  break;
 			case State::Game:   game->EventUpdate();   break;
+			case State::Pause:  pause->EventUpdate();  break;
 			case State::Result: result->EventUpdate(); break;
 			}
 		}
@@ -86,8 +87,8 @@ namespace Scene
 			{
 			case State::Title:  title->Update();  break;
 			case State::Menu:   menu->Update();   break;
-			case State::Pause:  pause->Update();  break;
 			case State::Game:   game->Update();   break;
+			case State::Pause:  pause->Update();  break;
 			case State::Result: result->Update(); break;
 			}
 		}
@@ -98,8 +99,8 @@ namespace Scene
 			{
 			case State::Title:  title->Draw();  break;
 			case State::Menu:   menu->Draw();   break;
-			case State::Pause:  pause->Draw();
 			case State::Game:   game->Draw();   break;
+			case State::Pause:  pause->Draw();
 			case State::Result: result->Draw(); break;
 			}
 		}
