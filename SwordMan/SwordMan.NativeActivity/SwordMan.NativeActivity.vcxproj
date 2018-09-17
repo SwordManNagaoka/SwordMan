@@ -230,14 +230,19 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ECS\ECS.cpp" />
-    <ClCompile Include="GameController\Game.cpp" />
+    <ClCompile Include="GameController\GameController.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ArcheType\Map.hpp" />
     <ClInclude Include="ArcheType\Player.hpp" />
     <ClInclude Include="Class\MapLoader.hpp" />
-    <ClInclude Include="Class\Scene.hpp" />
+    <ClInclude Include="Class\Scene\Game.hpp" />
+    <ClInclude Include="Class\Scene\Menu.hpp" />
+    <ClInclude Include="Class\Scene\Pause.hpp" />
+    <ClInclude Include="Class\Scene\Result.hpp" />
+    <ClInclude Include="Class\Scene\Scene.hpp" />
+    <ClInclude Include="Class\Scene\Title.hpp" />
     <ClInclude Include="Class\TouchInput.hpp" />
     <ClInclude Include="Collision\Collision.hpp" />
     <ClInclude Include="Components\BasicComponents.hpp" />
@@ -251,10 +256,12 @@
     <ClInclude Include="ECS\ECS.hpp" />
     <ClInclude Include="Events\AtackEvent.hpp" />
     <ClInclude Include="Events\ContinueTap.hpp" />
+    <ClInclude Include="Events\EventList.hpp" />
+    <ClInclude Include="Events\Observer.hpp" />
     <ClInclude Include="Events\PauseTap.hpp" />
     <ClInclude Include="Events\ReturnFirstTap.hpp" />
     <ClInclude Include="Events\TitleTap.hpp" />
-    <ClInclude Include="GameController\Game.h" />
+    <ClInclude Include="GameController\GameController.h" />
     <ClInclude Include="GameController\GameMain.hpp" />
     <ClInclude Include="ResourceManager\ResourceManager.hpp" />
     <ClInclude Include="System\System.hpp" />

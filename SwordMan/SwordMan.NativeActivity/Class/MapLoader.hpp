@@ -10,6 +10,7 @@
 #include <vector>
 #include <functional>
 #include "../ECS/ECS.hpp"
+
 class MapLoader
 {
 private:
@@ -100,3 +101,4 @@ public:
 	}
 
 };
+

@@ -5,7 +5,7 @@
     <ClCompile Include="ECS\ECS.cpp">
       <Filter>ECS</Filter>
     </ClCompile>
-    <ClCompile Include="GameController\Game.cpp">
+    <ClCompile Include="GameController\GameController.cpp">
       <Filter>GameController</Filter>
     </ClCompile>
   </ItemGroup>
@@ -43,6 +43,9 @@
     <Filter Include="ArcheType">
       <UniqueIdentifier>{ce2bfcf7-1bbf-4073-ae7f-7f5ac9e319c7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Class\Scene">
+      <UniqueIdentifier>{5fe58b71-7b37-44a6-99ea-5fb34bac7da0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Collision\Collision.hpp">
@@ -59,9 +62,6 @@
     </ClInclude>
     <ClInclude Include="ECS\ECS.hpp">
       <Filter>ECS</Filter>
-    </ClInclude>
-    <ClInclude Include="GameController\Game.h">
-      <Filter>GameController</Filter>
     </ClInclude>
     <ClInclude Include="GameController\GameMain.hpp">
       <Filter>GameController</Filter>
@@ -91,9 +91,6 @@
       <Filter>System</Filter>
     </ClInclude>
     <ClInclude Include="Class\MapLoader.hpp">
-      <Filter>Class</Filter>
-    </ClInclude>
-    <ClInclude Include="Class\Scene.hpp">
       <Filter>Class</Filter>
     </ClInclude>
     <ClInclude Include="Events\AtackEvent.hpp">
@@ -134,6 +131,33 @@
     </ClInclude>
     <ClInclude Include="Components\Think.hpp">
       <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Events\EventList.hpp">
+      <Filter>Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Events\Observer.hpp">
+      <Filter>Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Class\Scene\Scene.hpp">
+      <Filter>Class\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Class\Scene\Pause.hpp">
+      <Filter>Class\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Class\Scene\Result.hpp">
+      <Filter>Class\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Class\Scene\Title.hpp">
+      <Filter>Class\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Class\Scene\Game.hpp">
+      <Filter>Class\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Class\Scene\Menu.hpp">
+      <Filter>Class\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="GameController\GameController.h">
+      <Filter>GameController</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

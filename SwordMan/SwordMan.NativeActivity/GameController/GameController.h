@@ -1,15 +1,14 @@
 ﻿#pragma once
 #include "../ECS/ECS.hpp"
 #include "../Class/TouchInput.hpp"
-#define ENTITY_GROUP (ECS::Group)Game::GameGroup
+#define ENTITY_GROUP (ECS::Group)GameController::GameGroup
 
-class Game final
+class GameController final
 {
 private:
 	TouchInput	touchInput;
 private:
 	ECS::EntityManager* pManager;
-	void EventUpDate();
 	void ResourceLoad();
 public:
 	enum class GameGroup : ECS::Group
@@ -30,7 +29,7 @@ public:
 		Fade2,		//フェード画像その2
 		Max,		//Group最大数
 	};
-	Game();
+	GameController();
 	//Entityの初期化処理を明示的に呼び出します
 	void ResetGame();
 	//EntityおよびEventの更新処理を行います

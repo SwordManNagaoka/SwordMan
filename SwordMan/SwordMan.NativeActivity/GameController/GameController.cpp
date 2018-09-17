@@ -1,4 +1,4 @@
-﻿#include "Game.h"
+﻿#include "GameController.h"
 #include "../ResourceManager/ResourceManager.hpp"
 #include "../../Components/BasicComponents.hpp"
 #include "../../Components/Renderer.hpp"
@@ -6,18 +6,14 @@
 #include "../../ArcheType/Map.hpp"
 #include "../Class/MapLoader.hpp"
 #include "../../ArcheType/Player.hpp"
-void Game::EventUpDate()
-{
 
-}
-
-void Game::ResourceLoad()
+void GameController::ResourceLoad()
 {
 	ResourceManager::GetGraph().Load("image/a.png","a");
 	ResourceManager::GetGraph().Load("image/ground01.png", "map");
 }
 
-Game::Game()
+GameController::GameController()
 {
 	ResourceLoad();
 	pManager = &ECS::EcsSystem::GetManager();
@@ -29,16 +25,15 @@ Game::Game()
 	ECS::PlayerArcheType()(Vec2(0,0),Vec2(48,48));
 }
 
-void Game::ResetGame()
+void GameController::ResetGame()
 {
 
 }
 
-void Game::Update()
+void GameController::Update()
 {
 	pManager->Refresh();
 	pManager->Update();
-
 
 	if (touchInput.Press(0))
 	{
@@ -51,7 +46,7 @@ void Game::Update()
 	touchInput.Run();
 }
 
-void Game::Draw()
+void GameController::Draw()
 {
 	pManager->Draw2D();
 }

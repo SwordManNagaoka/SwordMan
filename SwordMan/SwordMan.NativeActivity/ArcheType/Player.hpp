@@ -8,7 +8,7 @@
 #include "../ECS/ECS.hpp"
 #include "../../Components/Collider.hpp"
 #include "../../Components/Renderer.hpp"
-#include "../GameController/Game.h"
+#include "../GameController/GameController.h"
 #include "../Components/Jump.hpp"
 #include "../Components/Think.hpp"
 #include "../Components/Behavior.hpp"
