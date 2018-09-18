@@ -236,6 +236,7 @@
   <ItemGroup>
     <ClInclude Include="ArcheType\Map.hpp" />
     <ClInclude Include="ArcheType\Player.hpp" />
+    <ClInclude Include="Class\DXFilieRead.hpp" />
     <ClInclude Include="Class\MapLoader.hpp" />
     <ClInclude Include="Class\Scene\Game.hpp" />
     <ClInclude Include="Class\Scene\Menu.hpp" />
