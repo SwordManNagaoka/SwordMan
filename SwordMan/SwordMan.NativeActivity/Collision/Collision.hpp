@@ -3,6 +3,9 @@
 * @brief Collisionの式をまとめたファイルです
 * @author tonarinohito
 * @date 2018/8/29
+* @par History
+- 2018/09/17 日比野　真聖
+-# 円と点のコリジョン追加
 */
 #pragma once
 #include "../ECS/ECS.hpp"

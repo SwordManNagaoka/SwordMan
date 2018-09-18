@@ -11,5 +11,5 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 {
 	GameMain game;
 	game.Run();
-	return 0;                   // ソフトの終了 
+	return 0; 
 }

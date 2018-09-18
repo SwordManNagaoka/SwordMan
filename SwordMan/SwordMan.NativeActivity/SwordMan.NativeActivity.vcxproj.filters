@@ -159,5 +159,8 @@
     <ClInclude Include="GameController\GameController.h">
       <Filter>GameController</Filter>
     </ClInclude>
+    <ClInclude Include="Class\DXFilieRead.hpp">
+      <Filter>Class</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
