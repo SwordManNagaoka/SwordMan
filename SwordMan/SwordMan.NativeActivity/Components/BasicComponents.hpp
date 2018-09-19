@@ -106,7 +106,9 @@ namespace ECS
 	};
 	/*!
 	@class Physics
-	@brief GravityとVelocityをまとめます
+	@brief Entityに重力を加えます。
+	また衝突応答処理も含まれますが、これは明示的に呼び出してください
+	@note Gravity,Velocity,Positionが必要です
 	*/
 	class Physics final : public Component
 	{
