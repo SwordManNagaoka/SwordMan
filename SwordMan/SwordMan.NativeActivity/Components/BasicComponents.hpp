@@ -104,26 +104,27 @@ namespace ECS
 		AnimationState(const State& state) : val(state) {}
 		
 	};
-	/*!
-	@class Physics
-	@brief Entityに重力を加えます。
-	また衝突応答処理も含まれますが、これは明示的に呼び出してください
-	@note Gravity,Velocity,Positionが必要です
-	*/
+	/*
+@class Physics
+@brief Entityに重力を加えます。
+また衝突応答処理も含まれますが、これは明示的に呼び出してください
+@note Gravity, Velocity, Positionが必要です
+*/
 	class Physics final : public Component
 	{
 	private:
+
 		Gravity* gravity;
 		Velocity* velocity;
 		Position* pos;
-		Entity* otherEntity = nullptr;
+		std::vector<Entity*> otherEntity;
 		std::function<bool(const Entity&, const Entity&)> hitFunc;
 		static constexpr float GRAVITY = 9.8f / 60 / 60 * 32 * 3;
 		void CheckMove(Vec2& pos_, Vec2& velocity_)
 		{
 
 			Vec2 p = velocity_;
-			//縦軸に対する移動
+			//横軸に対する移動
 			while (p.x != 0.f)
 			{
 				float  preX = pos_.x;
@@ -132,7 +133,7 @@ namespace ECS
 				{
 					pos_.x += 1; p.x -= 1;
 				}
-				else if (p.y <= -1)
+				else if (p.x <= -1)
 				{
 					pos_.x -= 1; p.x += 1;
 				}
@@ -141,12 +142,16 @@ namespace ECS
 					pos_.x += p.x;
 					p.x = 0;
 				}
-				if (hitFunc(*entity, *otherEntity))
+				for (const auto& it : otherEntity)
 				{
-					velocity->val.y = 0;
-					pos_.y = preX;		//移動をキャンセル
-					break;
+					if (hitFunc(*entity, *it))
+					{
+						velocity->val.x = 0;
+						pos_.x = preX;		//移動をキャンセル
+						break;
+					}
 				}
+
 			}
 			//縦軸に対する移動
 			while (p.y != 0.f)
@@ -166,11 +171,14 @@ namespace ECS
 					pos_.y += p.y;
 					p.y = 0;
 				}
-				if (hitFunc(*entity, *otherEntity))
+				for (const auto& it : otherEntity)
 				{
-					velocity->val.y = 0;
-					pos_.y = preY;		//移動をキャンセル
-					break;
+					if (hitFunc(*entity, *it))
+					{
+						velocity->val.y = 0;
+						pos_.y = preY;		//移動をキャンセル
+						break;
+					}
 				}
 			}
 		}
@@ -193,14 +201,7 @@ namespace ECS
 		void Update() override
 		{
 			velocity->val.y += gravity->val;
-			if (otherEntity != nullptr)
-			{
-				CheckMove(pos->val, velocity->val);
-			}
-			else
-			{
-				pos->val.y += velocity->val.y;
-			}
+			CheckMove(pos->val, velocity->val);
 		}
 		void Draw2D() override {}
 		void SetVelocity(const float& x, const float& y)
@@ -218,7 +219,7 @@ namespace ECS
 			hitFunc = func;
 		}
 		//引数に指定したEntityにめり込まないようにする
-		void PushOutEntity(Entity* e)
+		void PushOutEntity(std::vector<Entity*>&  e)
 		{
 			otherEntity = e;
 		}
