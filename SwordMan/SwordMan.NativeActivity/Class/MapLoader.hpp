@@ -5,64 +5,84 @@
 * @date 2018/9/15
 */
 #pragma once
-#include <string>
+#include <sstream>
 #include <fstream>
-#include <vector>
 #include <functional>
 #include "../ECS/ECS.hpp"
 #include "DXFilieRead.hpp"
+#include "MapData.hpp"
+#include "../ResourceManager/ResourceManager.hpp"
 
 class MapLoader
 {
 private:
-	std::vector<std::vector<int>> mapArray;
-	std::vector<size_t> posX;
-	std::vector<size_t> posY;
+	MapParam	mapParam;
+	MapData		mapData;
 public:
-	MapLoader(const std::string& path, const std::string& mapName, const Vec2& velocity, const size_t xNum, const size_t yNum, const size_t size,
-		std::function<ECS::Entity*(const char*, const Vec2&, const Vec2&, const int, const int, const int)> tileMapArcheType)
+	MapLoader(const std::string& mapParamPath)
 	{
-		mapArray.resize(yNum);	//1次元目
-		for (auto i(0u); i < yNum; ++i)
-		{
-			mapArray[i].resize(xNum);	//2次元目
-		}
-		
-		//テンポラリファイルを開く
-		std::ifstream fin(DXFilieRead().GetPath(path));
+		//ファイルを開く
+		std::ifstream fin(DXFilieRead().GetPath(mapParamPath));
 		if (fin.is_open() == 0)
 		{
 			printfDx("Error!!!");
 		}
-		//チップIDの読み込み
-		for (auto y(0u); y < yNum; ++y)
+
+		//各種パラメーターを読み込む
+		fin >>	mapParam.mapName >> mapParam.mapDataPath >>
+				mapParam.mapWidth >> mapParam.mapHeight >>
+				mapParam.blockSize >>
+				mapParam.xSpeed >>
+				mapParam.backImagePath[0] >> mapParam.backImagePath[1] >> mapParam.backImagePath[2] >>
+				mapParam.blockImagePath;
+
+		fin.close();
+
+		//ここでマップ構成に必要なデータを読み込む
+		for (int i = 0; i < 3; ++i)
 		{
-			for (auto x(0u); x < xNum; ++x)
+			//背景
+			//std::stringstream ss;
+			//ss << i;
+			//ResourceManager::GetGraph().Load(mapParam.backImagePath[i], mapParam.mapName + "back" + ss.str());
+		}
+		//マップチップ
+		ResourceManager::GetGraph().Load(mapParam.blockImagePath, mapParam.mapName);
+	}
+
+	void LoadMapArray()
+	{
+		mapData.resize(mapParam.mapHeight);	//1次元目
+		for (auto i(0u); i < mapParam.mapHeight; ++i)
+		{
+			mapData[i].resize(mapParam.mapWidth);	//2次元目
+		}
+
+		//マップ構成ファイルを開く
+		std::ifstream fin(DXFilieRead().GetPath(mapParam.mapDataPath));
+		if (fin.is_open() == 0)
+		{
+			printfDx("Error!!!");
+		}
+
+		//チップIDの読み込み
+		for (auto y(0u); y < mapParam.mapHeight; ++y)
+		{
+			for (auto x(0u); x < mapParam.mapWidth; ++x)
 			{
-				fin >> mapArray[y][x];
+				fin >> mapData[y][x];
 			}
 		}
 		fin.close();
+	}
 
-		//配置するチップの座標
-		posX.resize(xNum);
-		posY.resize(yNum);
-		for (auto y(0u); y < yNum; ++y)
-		{
-			posY[y] = y * size;
-		}
-		for (auto x(0u); x < xNum; ++x)
-		{
-			posX[x] = x * size;
-		}
-
-		for (auto y(0u); y < yNum; ++y)
-		{
-			for (auto x(0u); x < xNum; ++x)
-			{
-				tileMapArcheType(mapName.c_str(), Vec2((float)posX[x], (float)posY[y]), Vec2(velocity), int(size), int(size), mapArray[y][x]);
-			}
-		}
+	const MapParam& GetMapParam()
+	{
+		return mapParam;
+	}
+	const MapData& GetMapData()
+	{
+		return mapData;
 	}
 };
 

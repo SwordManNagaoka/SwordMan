@@ -1,1 +1,1 @@
-﻿
+﻿//std::function<ECS::Entity*(const char*, const Vec2&, const Vec2&, const int, const int, const int)> tileMapArcheType

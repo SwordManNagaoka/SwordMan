@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include "../ECS/ECS.hpp"
 #include "../Class/TouchInput.hpp"
+
 #define ENTITY_GROUP (ECS::Group)GameController::GameGroup
 
 class GameController final

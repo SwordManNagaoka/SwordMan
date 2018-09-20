@@ -21,7 +21,7 @@ GameController::GameController()
 	e.AddComponent<ECS::Position>(100.f,100.f);
 	e.AddComponent<ECS::CircleColiider>(20.f);
 	e.AddComponent<ECS::SimpleDraw>("a");
-	MapLoader("stage/maptest.csv", "map", Vec2(5, 5), 13, 8, 96, ECS::MapArcheType());
+	MapLoader("stage/mapparamtest.csv");
 	ECS::PlayerArcheType()(Vec2(0,0),Vec2(48,48));
 }
 
