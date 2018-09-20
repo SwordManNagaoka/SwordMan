@@ -162,5 +162,11 @@
     <ClInclude Include="Class\DXFilieRead.hpp">
       <Filter>Class</Filter>
     </ClInclude>
+    <ClInclude Include="Class\MapCreator.hpp">
+      <Filter>Class</Filter>
+    </ClInclude>
+    <ClInclude Include="Class\MapParameter.hpp">
+      <Filter>Class</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
