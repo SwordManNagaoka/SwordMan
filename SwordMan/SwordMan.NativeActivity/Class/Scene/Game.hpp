@@ -1,32 +1,22 @@
-﻿#pragma once
+﻿/**
+* @file Game.hpp
+* @brief Gameシーンでの動作を記述します
+* @author tonarinohito
+* @date 2018/9/21
+*/
+#pragma once
 #include "Scene.hpp"
+
 namespace Scene
 {
 	class Game final : public ISceneBase
 	{
 	public:
-		//Entityの初期化を記述します
-		void Initialize() override
-		{
-
-		}
-		//Entityのイベント処理を記述します
-		void EventUpdate() override
-		{
-
-		}
-		//Entityの更新をまとめます
 		void Update() override
 		{
-			
-		}
-		//Entityの描画をまとめます
-		void Draw() override
-		{
 
 		}
-		//Entityの削除を行います
-		void CleanUp() override
+		void Draw() override
 		{
 
 		}

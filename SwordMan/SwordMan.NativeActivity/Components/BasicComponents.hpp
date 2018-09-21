@@ -3,6 +3,10 @@
 * @brief 座標や速度などの基本的なコンポーネント群です。
 * @author tonarinohito
 * @date 2018/8/29
+* @par History
+- 2018/08/20 tonarinohito
+-# Physicsコンポーネントに機能を追加した
+-# Physicsの重力定数をGravityに移動した
 */
 #pragma once
 #include "../ECS/ECS.hpp"
@@ -81,7 +85,8 @@ namespace ECS
 	struct Gravity final : public ComponentData
 	{
 		float val;
-		Gravity() = default;
+		static constexpr float GRAVITY = 9.8f / 60 / 60 * 32 * 3;
+		Gravity() :val(GRAVITY) {}
 		Gravity(const float g) :val(g) {}
 		
 	};
@@ -105,24 +110,21 @@ namespace ECS
 		
 	};
 	/*
-@class Physics
-@brief Entityに重力を加えます。
-また衝突応答処理も含まれますが、これは明示的に呼び出してください
-@note Gravity, Velocity, Positionが必要です
-*/
+	@class Physics
+	@brief Entityに重力を加えます。
+	また衝突応答処理も含まれますが、これは明示的に呼び出してください
+	@note Gravity, Velocity, Positionが必要です
+	*/
 	class Physics final : public Component
 	{
 	private:
-
 		Gravity* gravity;
 		Velocity* velocity;
 		Position* pos;
 		std::vector<Entity*> otherEntity;
 		std::function<bool(const Entity&, const Entity&)> hitFunc;
-		static constexpr float GRAVITY = 9.8f / 60 / 60 * 32 * 3;
 		void CheckMove(Vec2& pos_, Vec2& velocity_)
 		{
-
 			Vec2 p = velocity_;
 			//横軸に対する移動
 			while (p.x != 0.f)
@@ -196,7 +198,6 @@ namespace ECS
 			velocity = &entity->GetComponent<Velocity>();
 			gravity = &entity->GetComponent<Gravity>();
 			pos = &entity->GetComponent<Position>();
-			gravity->val = GRAVITY;
 		}
 		void Update() override
 		{
@@ -209,7 +210,7 @@ namespace ECS
 			velocity->val.x = x;
 			velocity->val.y = y;
 		}
-		void SetGravity(const float& g = GRAVITY)
+		void SetGravity(const float& g = Gravity::GRAVITY)
 		{
 			gravity->val = g;
 		}
@@ -224,7 +225,6 @@ namespace ECS
 			otherEntity = e;
 		}
 	};
-
 
 	/*!
 	@class Transform
