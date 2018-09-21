@@ -2,9 +2,9 @@
 * @file Vec.hpp
 * @brief ベクトルを扱うクラスです
 * @author tonarinohito
-* @date 2018/５/11
+* @date 2018/5/11
 * @par History
-- 2016/08/20 tonarinohito
+- 2018/08/20 tonarinohito
 -# 適切にconstをつけた
 */
 #pragma once

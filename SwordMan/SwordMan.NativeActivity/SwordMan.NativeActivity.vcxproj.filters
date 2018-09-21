@@ -168,5 +168,8 @@
     <ClInclude Include="Class\MapParameter.hpp">
       <Filter>Class</Filter>
     </ClInclude>
+    <ClInclude Include="Class\Scene\SceneManager.hpp">
+      <Filter>Class\Scene</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
