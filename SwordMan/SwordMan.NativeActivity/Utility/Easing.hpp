@@ -1,4 +1,10 @@
-﻿#pragma once
+﻿/**
+* @file Easing.hpp
+* @brief Easingのまとめ
+* @author feveleK5563
+* @date 2018/??/??
+*/
+#pragma once
 #include <cmath>
 #include "Counter.hpp"
 typedef float(*Ease)(float, float);

@@ -1,6 +1,6 @@
-maptest stage/maptest.csv
-13 8
-96
-5
-backimg01.png backimg02.png backimg03.png
-chipimg.png
+maptest stage/maptest.csv 
+13 8 
+96 
+5 
+backimg01.png backimg02.png backimg03.png 
+image/ground01.png 

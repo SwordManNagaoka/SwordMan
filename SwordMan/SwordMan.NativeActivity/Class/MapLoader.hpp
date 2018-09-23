@@ -3,12 +3,13 @@
 * @brief csvファイル等からマップデータの読み込みをします。
 * @author tonarinohito
 * @date 2018/9/15
+* @par History
+- 2018/09/21 feveleK5563
+-# 「マップパラメータファイル」から必要なデータを全て取得できるようにした
 */
 #pragma once
 #include <sstream>
 #include <fstream>
-#include <functional>
-#include "../ECS/ECS.hpp"
 #include "DXFilieRead.hpp"
 #include "MapData.hpp"
 #include "../ResourceManager/ResourceManager.hpp"
@@ -31,14 +32,14 @@ public:
 		//各種パラメーターを読み込む
 		fin >>	mapParam.mapName >> mapParam.mapDataPath >>
 				mapParam.mapWidth >> mapParam.mapHeight >>
-				mapParam.blockSize >>
+				mapParam.chipSize >>
 				mapParam.xSpeed >>
 				mapParam.backImagePath[0] >> mapParam.backImagePath[1] >> mapParam.backImagePath[2] >>
-				mapParam.blockImagePath;
+				mapParam.chipImagePath;
 
 		fin.close();
 
-		//ここでマップ構成に必要なデータを読み込む
+		//ここで使用するリソースを読み込む
 		for (int i = 0; i < 3; ++i)
 		{
 			//背景
@@ -47,9 +48,10 @@ public:
 			//ResourceManager::GetGraph().Load(mapParam.backImagePath[i], mapParam.mapName + "back" + ss.str());
 		}
 		//マップチップ
-		ResourceManager::GetGraph().Load(mapParam.blockImagePath, mapParam.mapName);
+		ResourceManager::GetGraph().Load(mapParam.chipImagePath, mapParam.mapName);
 	}
 
+	//マップの構成を読み込む
 	void LoadMapArray()
 	{
 		mapData.resize(mapParam.mapHeight);	//1次元目
@@ -66,9 +68,9 @@ public:
 		}
 
 		//チップIDの読み込み
-		for (auto y(0u); y < mapParam.mapHeight; ++y)
+		for (size_t y = 0; y < mapParam.mapHeight; ++y)
 		{
-			for (auto x(0u); x < mapParam.mapWidth; ++x)
+			for (size_t x = 0; x < mapParam.mapWidth; ++x)
 			{
 				fin >> mapData[y][x];
 			}

@@ -1,6 +1,8 @@
 ﻿#pragma once
 #include "../ECS/ECS.hpp"
 #include "../Class/TouchInput.hpp"
+#include "../Class/MapLoader.hpp"
+#include "../Class/MapCreator.hpp"
 
 #define ENTITY_GROUP (ECS::Group)GameController::GameGroup
 
@@ -10,6 +12,8 @@ private:
 	TouchInput	touchInput;
 private:
 	ECS::EntityManager* pManager;
+	MapLoader mapLoader;
+	MapCreator mapCreator;
 	void ResourceLoad();
 public:
 	enum class GameGroup : ECS::Group
