@@ -4,16 +4,16 @@
 #include "../../Components/Renderer.hpp"
 #include "../../Components/Collider.hpp"
 #include "../../ArcheType/Map.hpp"
-#include "../Class/MapLoader.hpp"
 #include "../../ArcheType/Player.hpp"
 
 void GameController::ResourceLoad()
 {
 	ResourceManager::GetGraph().Load("image/a.png","a");
-	ResourceManager::GetGraph().Load("image/ground01.png", "map");
+	//ResourceManager::GetGraph().Load("image/ground01.png", "map");
 }
 
-GameController::GameController()
+GameController::GameController():
+	mapLoader("stage/mapparamtest.csv")
 {
 	ResourceLoad();
 	pManager = &ECS::EcsSystem::GetManager();
@@ -21,8 +21,13 @@ GameController::GameController()
 	e.AddComponent<ECS::Position>(100.f,100.f);
 	e.AddComponent<ECS::CircleColiider>(20.f);
 	e.AddComponent<ECS::SimpleDraw>("a");
-	MapLoader("stage/maptest.csv", "map", Vec2(5, 5), 13, 8, 96, ECS::MapArcheType());
 	ECS::PlayerArcheType()(Vec2(0,0),Vec2(48,48));
+
+	mapLoader.LoadMapArray();
+
+	mapCreator.SetMapParam(mapLoader.GetMapParam());
+	mapCreator.FillUpFlatMap(ECS::MapArcheType());
+	mapCreator.Run(ECS::MapArcheType(), false, &mapLoader.GetMapData());
 }
 
 void GameController::ResetGame()
@@ -44,6 +49,8 @@ void GameController::Update()
 		DrawFormatString(touchInput.GetTouchIDPos(1).x, touchInput.GetTouchIDPos(1).y, GetColor(255, 255, 0), "タップ1番が押されています");
 	}
 	touchInput.Run();
+
+	mapCreator.Run(ECS::MapArcheType(), false, &mapLoader.GetMapData());
 }
 
 void GameController::Draw()

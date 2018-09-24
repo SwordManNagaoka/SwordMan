@@ -239,7 +239,7 @@
     <ClInclude Include="Class\DXFilieRead.hpp" />
     <ClInclude Include="Class\MapCreator.hpp" />
     <ClInclude Include="Class\MapLoader.hpp" />
-    <ClInclude Include="Class\MapParameter.hpp" />
+    <ClInclude Include="Class\MapData.hpp" />
     <ClInclude Include="Class\Scene\Game.hpp" />
     <ClInclude Include="Class\Scene\Menu.hpp" />
     <ClInclude Include="Class\Scene\Pause.hpp" />
