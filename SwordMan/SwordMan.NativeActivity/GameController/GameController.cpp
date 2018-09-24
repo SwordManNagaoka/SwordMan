@@ -5,6 +5,7 @@
 #include "../../Components/Collider.hpp"
 #include "../../ArcheType/Map.hpp"
 #include "../../ArcheType/Player.hpp"
+#include "../Class/TouchInput.hpp"
 
 void GameController::ResourceLoad()
 {
@@ -40,16 +41,8 @@ void GameController::Update()
 	pManager->Refresh();
 	pManager->Update();
 
-	if (touchInput.Press(0))
-	{
-		DrawFormatString(touchInput.GetTouchIDPos(0).x, touchInput.GetTouchIDPos(0).y, GetColor(0,255,0),"タップ0番が押されています");
-	}
-	if (touchInput.Press(1))
-	{
-		DrawFormatString(touchInput.GetTouchIDPos(1).x, touchInput.GetTouchIDPos(1).y, GetColor(255, 255, 0), "タップ1番が押されています");
-	}
-	touchInput.Run();
-
+	
+	TouchInput::GetInput().Run();
 	mapCreator.Run(ECS::MapArcheType(), false, &mapLoader.GetMapData());
 }
 

@@ -27,16 +27,16 @@ namespace ECS
 			switch (nowState)
 			{
 			case PlayerData::State::Walk:
-				if (touchInput.Push(0))
+				if (TouchInput::GetInput().Push(0))
 				{
-					if (touchInput.GetTouchIDPos(0).x <= (System::SCREEN_WIDIH / 2.0f))
+					if (TouchInput::GetInput().GetTouchIDPos(0).x <= (System::SCREEN_WIDIH / 2.0f))
 					{
 						nowState = PlayerData::State::Jump;
 					}
 				}
 				break;
 			case PlayerData::State::Jump:
-				if (touchInput.Free(0))
+				if (TouchInput::GetInput().Free(0))
 				{
 					nowState = PlayerData::State::Walk;
 				}
@@ -50,9 +50,8 @@ namespace ECS
 			case PlayerData::State::Death:
 				break;
 			}
-			UpdateState(nowState);
 			motionCnt.Add();
-			touchInput.Run();
+			UpdateState(nowState);
 		}
 		void	Draw2D() override
 		{
@@ -83,6 +82,5 @@ namespace ECS
 	private:
 		PlayerData	data;
 		Counter		motionCnt;
-		TouchInput	touchInput;
 	};
 }

@@ -1,6 +1,5 @@
 ﻿#pragma once
 #include "../ECS/ECS.hpp"
-#include "../Class/TouchInput.hpp"
 #include "../Class/MapLoader.hpp"
 #include "../Class/MapCreator.hpp"
 
@@ -8,8 +7,6 @@
 
 class GameController final
 {
-private:
-	TouchInput	touchInput;
 private:
 	ECS::EntityManager* pManager;
 	MapLoader mapLoader;
