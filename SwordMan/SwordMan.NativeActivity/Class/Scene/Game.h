@@ -6,19 +6,18 @@
 */
 #pragma once
 #include "Scene.hpp"
-
+#include "../../Class/MapLoader.hpp"
+#include "../../Class/MapCreator.hpp"
 namespace Scene
 {
 	class Game final : public ISceneBase
 	{
+	private:
+		MapLoader mapLoader;
+		MapCreator mapCreator;
 	public:
-		void Update() override
-		{
-
-		}
-		void Draw() override
-		{
-
-		}
+		Game();
+		void Update() override;
+		void Draw() override;
 	};
 }

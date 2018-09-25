@@ -11,13 +11,7 @@ namespace Scene
 	class Menu final : public ISceneBase
 	{
 	public:
-		void Update() override
-		{
-
-		}
-		void Draw() override
-		{
-
-		}
+		void Update() override;
+		void Draw() override;
 	};
 }

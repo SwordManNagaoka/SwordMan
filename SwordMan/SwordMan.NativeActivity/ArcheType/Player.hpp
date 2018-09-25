@@ -23,11 +23,12 @@ namespace ECS
 			ECS::Entity*	entity = &ECS::EcsSystem::GetManager().AddEntity();
 			entity->AddComponent<Position>(pos);
 			entity->AddComponent<Rotation>();
-			entity->AddComponent<JumpMove>();
-			entity->AddComponent<Think>();
-			entity->AddComponent<Behavior>();
-			entity->AddComponent<HitBase>(static_cast<float>(size.x), static_cast<float>(size.y)).SetColor(255,0,0);
-			entity->AddComponent<ECS::SimpleDraw>("a");
+			entity->AddComponent<HitBase>(static_cast<float>(size.x), static_cast<float>(size.y)).SetColor(255, 0, 0);
+			entity->AddComponent<Physics>();
+			entity->AddComponent<TriggerJumpMove>(-10);
+			//entity->AddComponent<Think>();
+			//entity->AddComponent<Behavior>();
+			//entity->AddComponent<ECS::SimpleDraw>("a");
 			entity->AddGroup(ENTITY_GROUP::Player);
 			return entity;
 		}

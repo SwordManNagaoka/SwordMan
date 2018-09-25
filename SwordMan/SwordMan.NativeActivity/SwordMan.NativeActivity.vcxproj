@@ -229,6 +229,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Class\Scene\Game.cpp" />
+    <ClCompile Include="Class\Scene\Menu.cpp" />
+    <ClCompile Include="Class\Scene\Pause.cpp" />
+    <ClCompile Include="Class\Scene\Result.cpp" />
+    <ClCompile Include="Class\Scene\Title.cpp" />
     <ClCompile Include="ECS\ECS.cpp" />
     <ClCompile Include="GameController\GameController.cpp" />
     <ClCompile Include="main.cpp" />
@@ -240,13 +245,13 @@
     <ClInclude Include="Class\MapCreator.hpp" />
     <ClInclude Include="Class\MapLoader.hpp" />
     <ClInclude Include="Class\MapData.hpp" />
-    <ClInclude Include="Class\Scene\Game.hpp" />
-    <ClInclude Include="Class\Scene\Menu.hpp" />
-    <ClInclude Include="Class\Scene\Pause.hpp" />
-    <ClInclude Include="Class\Scene\Result.hpp" />
+    <ClInclude Include="Class\Scene\Game.h" />
+    <ClInclude Include="Class\Scene\Menu.h" />
+    <ClInclude Include="Class\Scene\Pause.h" />
+    <ClInclude Include="Class\Scene\Result.h" />
     <ClInclude Include="Class\Scene\Scene.hpp" />
     <ClInclude Include="Class\Scene\SceneManager.hpp" />
-    <ClInclude Include="Class\Scene\Title.hpp" />
+    <ClInclude Include="Class\Scene\Title.h" />
     <ClInclude Include="Class\TouchInput.hpp" />
     <ClInclude Include="Collision\Collision.hpp" />
     <ClInclude Include="Components\BasicComponents.hpp" />
@@ -260,7 +265,7 @@
     <ClInclude Include="ECS\ECS.hpp" />
     <ClInclude Include="Events\AtackEvent.hpp" />
     <ClInclude Include="Events\ContinueTap.hpp" />
-    <ClInclude Include="Events\EventList.hpp" />
+    <ClInclude Include="Events\EventManager.hpp" />
     <ClInclude Include="Events\Observer.hpp" />
     <ClInclude Include="Events\PauseTap.hpp" />
     <ClInclude Include="Events\ReturnFirstTap.hpp" />

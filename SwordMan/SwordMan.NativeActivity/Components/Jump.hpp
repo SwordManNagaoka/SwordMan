@@ -90,11 +90,6 @@ namespace ECS
 		}
 		void Update() override
 		{
-			//着地中
-			if (isLanding)
-			{
-				velocity->val.y = 0.0f;
-			}
 			//ジャンプフラグが立つと、ジャンプする
 			if (jumpTrigger && isLanding)
 			{

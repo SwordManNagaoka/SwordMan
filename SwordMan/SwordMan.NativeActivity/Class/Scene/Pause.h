@@ -11,14 +11,7 @@ namespace Scene
 	class Pause final : public ISceneBase
 	{
 	public:
-
-		void Update() override
-		{
-
-		}
-		void Draw() override
-		{
-
-		}
+		void Update() override;
+		void Draw() override;
 	};
 }

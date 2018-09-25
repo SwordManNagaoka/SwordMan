@@ -8,18 +8,18 @@
 #include "../../ECS/ECS.hpp"
 #include "../../Utility/Utility.hpp"
 #include "Scene.hpp"
-#include "Game.hpp"
-#include "Title.hpp"
-#include "Result.hpp"
-#include "Pause.hpp"
-#include "Menu.hpp"
+#include "Game.h"
+#include "Title.h"
+#include "Result.h"
+#include "Pause.h"
+#include "Menu.h"
 
 namespace Scene
 {
 	class SceneManager final
 	{
 	public:
-		enum class Scene
+		enum class State
 		{
 			Title,
 			Game,
@@ -31,23 +31,29 @@ namespace Scene
 		class Singleton final
 		{
 		private:
+			State state;
 			ISceneBase* pScene = nullptr;
 		public:
 			~Singleton()
 			{
 				Memory::SafeDelete(pScene);
 			}
-			void ChangeScene(Scene scene)
+			void ChangeScene(State scene)
 			{
 				Memory::SafeDelete(pScene);
+				state = scene;
 				switch (scene)
 				{
-				case Scene::Title:	pScene = new Title();  break;
-				case Scene::Game:	pScene = new Game();   break;
-				case Scene::Menu:	pScene = new Menu();   break;
-				case Scene::Pause:	pScene = new Pause();  break;
-				case Scene::Result:	pScene = new Result(); break;	
+				case State::Title:	pScene = new Title();  break;
+				case State::Game:	pScene = new Game();   break;
+				case State::Menu:	pScene = new Menu();   break;
+				case State::Pause:	pScene = new Pause();  break;
+				case State::Result:	pScene = new Result(); break;	
 				}
+			}
+			const State GetCurrentScene() const
+			{
+				return state;
 			}
 			void Update()
 			{

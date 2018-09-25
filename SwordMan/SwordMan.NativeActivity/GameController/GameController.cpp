@@ -6,29 +6,21 @@
 #include "../../ArcheType/Map.hpp"
 #include "../../ArcheType/Player.hpp"
 #include "../Class/TouchInput.hpp"
-
+#include "../../Class/Scene/SceneManager.hpp"
+#include "../../Events/EventManager.hpp"
 void GameController::ResourceLoad()
 {
-	ResourceManager::GetGraph().Load("image/a.png","a");
-	//ResourceManager::GetGraph().Load("image/ground01.png", "map");
 }
 
-GameController::GameController():
-	mapLoader("stage/mapparamtest.csv")
+GameController::GameController()
 {
+	//最初に必要なリソースやEntityの生成、ロードを行う
 	ResourceLoad();
-	pManager = &ECS::EcsSystem::GetManager();
-	auto& e = pManager->AddEntity();
-	e.AddComponent<ECS::Position>(100.f,100.f);
-	e.AddComponent<ECS::CircleColiider>(20.f);
-	e.AddComponent<ECS::SimpleDraw>("a");
-	ECS::PlayerArcheType()(Vec2(0,0),Vec2(48,48));
-
-	mapLoader.LoadMapArray();
-
-	mapCreator.SetMapParam(mapLoader.GetMapParam());
-	mapCreator.FillUpFlatMap(ECS::MapArcheType());
-	mapCreator.Run(ECS::MapArcheType(), false, &mapLoader.GetMapData());
+	pManager = &ECS::EcsSystem::GetManager();	
+	//初期シーン
+	ECS::PlayerArcheType()(Vec2(50,300),Vec2(48,48));
+	Scene::SceneManager::Get().ChangeScene(Scene::SceneManager::State::Game);
+	//Event::EventManager().Get().Add(Scene::SceneManager::State::Game,Event::AAA);
 }
 
 void GameController::ResetGame()
@@ -38,15 +30,14 @@ void GameController::ResetGame()
 
 void GameController::Update()
 {
+	TouchInput::GetInput().Update();
 	pManager->Refresh();
-	pManager->Update();
+	Event::EventManager::Get().Update();
+	Scene::SceneManager::Get().Update();
 
-	
-	TouchInput::GetInput().Run();
-	mapCreator.Run(ECS::MapArcheType(), false, &mapLoader.GetMapData());
 }
 
 void GameController::Draw()
 {
-	pManager->Draw2D();
+	Scene::SceneManager::Get().Draw();
 }

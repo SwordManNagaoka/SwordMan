@@ -126,35 +126,35 @@ namespace ECS
 		void CheckMove(Vec2& pos_, Vec2& velocity_)
 		{
 			Vec2 p = velocity_;
-			//横軸に対する移動
-			while (p.x != 0.f)
-			{
-				float  preX = pos_.x;
+			////横軸に対する移動
+			//while (p.x != 0.f)
+			//{
+			//	float  preX = pos_.x;
 
-				if (p.x >= 1)
-				{
-					pos_.x += 1; p.x -= 1;
-				}
-				else if (p.x <= -1)
-				{
-					pos_.x -= 1; p.x += 1;
-				}
-				else
-				{
-					pos_.x += p.x;
-					p.x = 0;
-				}
-				for (const auto& it : otherEntity)
-				{
-					if (hitFunc(*entity, *it))
-					{
-						velocity->val.x = 0;
-						pos_.x = preX;		//移動をキャンセル
-						break;
-					}
-				}
+			//	if (p.x >= 1)
+			//	{
+			//		pos_.x += 1; p.x -= 1;
+			//	}
+			//	else if (p.x <= -1)
+			//	{
+			//		pos_.x -= 1; p.x += 1;
+			//	}
+			//	else
+			//	{
+			//		pos_.x += p.x;
+			//		p.x = 0;
+			//	}
+			//	for (const auto& it : otherEntity)
+			//	{
+			//		if (hitFunc(*entity, *it))
+			//		{
+			//			velocity->val.x = 0;
+			//			pos_.x = preX;		//移動をキャンセル
+			//			break;
+			//		}
+			//	}
 
-			}
+			//}
 			//縦軸に対する移動
 			while (p.y != 0.f)
 			{

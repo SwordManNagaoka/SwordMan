@@ -8,6 +8,21 @@
     <ClCompile Include="GameController\GameController.cpp">
       <Filter>GameController</Filter>
     </ClCompile>
+    <ClCompile Include="Class\Scene\Menu.cpp">
+      <Filter>Class\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Class\Scene\Result.cpp">
+      <Filter>Class\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Class\Scene\Title.cpp">
+      <Filter>Class\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Class\Scene\Game.cpp">
+      <Filter>Class\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Class\Scene\Pause.cpp">
+      <Filter>Class\Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Collision">
@@ -50,9 +65,6 @@
   <ItemGroup>
     <ClInclude Include="Collision\Collision.hpp">
       <Filter>Collision</Filter>
-    </ClInclude>
-    <ClInclude Include="Components\BasicComponents.hpp">
-      <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="Components\Collider.hpp">
       <Filter>Components</Filter>
@@ -132,29 +144,8 @@
     <ClInclude Include="Components\Think.hpp">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="Events\EventList.hpp">
-      <Filter>Events</Filter>
-    </ClInclude>
     <ClInclude Include="Events\Observer.hpp">
       <Filter>Events</Filter>
-    </ClInclude>
-    <ClInclude Include="Class\Scene\Scene.hpp">
-      <Filter>Class\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Class\Scene\Pause.hpp">
-      <Filter>Class\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Class\Scene\Result.hpp">
-      <Filter>Class\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Class\Scene\Title.hpp">
-      <Filter>Class\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Class\Scene\Game.hpp">
-      <Filter>Class\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Class\Scene\Menu.hpp">
-      <Filter>Class\Scene</Filter>
     </ClInclude>
     <ClInclude Include="GameController\GameController.h">
       <Filter>GameController</Filter>
@@ -170,6 +161,30 @@
     </ClInclude>
     <ClInclude Include="Class\Scene\SceneManager.hpp">
       <Filter>Class\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Class\Scene\Game.h">
+      <Filter>Class\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Class\Scene\Menu.h">
+      <Filter>Class\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Class\Scene\Pause.h">
+      <Filter>Class\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Class\Scene\Result.h">
+      <Filter>Class\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Class\Scene\Title.h">
+      <Filter>Class\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Class\Scene\Scene.hpp">
+      <Filter>Class\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Events\EventManager.hpp">
+      <Filter>Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\BasicComponents.hpp">
+      <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

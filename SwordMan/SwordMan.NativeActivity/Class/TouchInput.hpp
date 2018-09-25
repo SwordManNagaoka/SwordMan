@@ -76,7 +76,7 @@ private:
 		}
 
 		//!@brief	更新
-		void	Run()
+		void	Update()
 		{
 			if (GetTouchInputNum() > 0)
 			{
