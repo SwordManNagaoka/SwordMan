@@ -12,6 +12,8 @@
 #include "../../Components/ComponentDatas/PlayerData.hpp"
 #include "../../Components/Think.hpp"
 #include "../../Components/Jump.hpp"
+#include "../../Components/AnimationController.hpp"
+#include "../../ArcheType/AttackCollision.hpp"
 
 
 namespace ECS
@@ -21,6 +23,14 @@ namespace ECS
 	public:
 		void	Initialize() override
 		{
+			if (entity->HasComponent<TriggerJumpMove>())
+			{
+				jumpMove = &entity->GetComponent<TriggerJumpMove>();
+			}
+			if (entity->HasComponent<Think>())
+			{
+				think = &entity->GetComponent<Think>();
+			}
 		}
 		void	Update() override
 		{
@@ -31,22 +41,40 @@ namespace ECS
 				switch (think.GetNowState())
 				{
 				case PlayerData::State::Walk:
-					if (entity->HasComponent<JumpMove>())
-					{
-						entity->GetComponent<JumpMove>().SetJumpFlag(false);
-					}
+					jumpMove->SetJumpTrigger(false);
 					break;
 				case PlayerData::State::Jump:
 				{
-					if (entity->HasComponent<JumpMove>())
-					{
-						entity->GetComponent<JumpMove>().SetJumpFlag(true);
-					}
+					jumpMove->SetJumpTrigger(true);
 				}
 				break;
 				case PlayerData::State::Attack:
+					if (think.GetNowMotionCnt().GetCurrentCount() == 0)
+					{
+						auto pos = entity->GetComponent<Position>().val;
+						float sizeX = entity->GetComponent<HitBase>().w() / 2.0f;
+						SwordAttackCollision()(Vec2(pos.x + sizeX,pos.y), Vec2(96.0f, 96.0f), 30);
+					}
 					break;
 				case PlayerData::State::JumpAttack:
+					if (think.GetNowMotionCnt().GetCurrentCount() == 0)
+					{
+						entity->DeleteComponent<AnimationDraw>();
+						entity->DeleteComponent<AnimationController>();
+						entity->AddComponent<AnimationDraw>("rolling");
+						entity->AddComponent<AnimationController>(4, 4);
+
+						auto pos = entity->GetComponent<Position>().val;
+						float sizeX = entity->GetComponent<HitBase>().w() / 2.0f;
+						JumpAttackCollision()(Vec2(pos.x + sizeX,pos.y), Vec2(96.0f, 96.0f), 30);
+					}
+					if (think.GetNowMotionCnt().GetCurrentCount() > 16)
+					{
+						entity->DeleteComponent<AnimationDraw>();
+						entity->DeleteComponent<AnimationController>();
+						entity->AddComponent<ECS::AnimationDraw>("player");
+						entity->AddComponent<ECS::AnimationController>(20, 2);
+					}
 					break;
 				case PlayerData::State::Damage:
 					break;
@@ -61,5 +89,8 @@ namespace ECS
 		}
 	private:
 		void	Draw3D() override {}
+	private:
+		TriggerJumpMove* jumpMove;
+		Think* think;
 	};
 }

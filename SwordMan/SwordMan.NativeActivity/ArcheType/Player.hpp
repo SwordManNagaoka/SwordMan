@@ -12,6 +12,8 @@
 #include "../Components/Jump.hpp"
 #include "../Components/Think.hpp"
 #include "../Components/Behavior.hpp"
+#include "../Components/AnimationController.hpp"
+
 
 namespace ECS
 {
@@ -26,9 +28,11 @@ namespace ECS
 			entity->AddComponent<HitBase>(static_cast<float>(size.x), static_cast<float>(size.y)).SetColor(255, 0, 0);
 			entity->AddComponent<Physics>();
 			entity->AddComponent<TriggerJumpMove>(-10);
-			//entity->AddComponent<Think>();
-			//entity->AddComponent<Behavior>();
-			//entity->AddComponent<ECS::SimpleDraw>("a");
+			entity->AddComponent<Think>();
+			entity->AddComponent<Behavior>();
+			entity->AddComponent<Direction>();
+			entity->AddComponent<AnimationDraw>("player");
+			entity->AddComponent<AnimationController>(20, 2);
 			entity->AddGroup(ENTITY_GROUP::Player);
 			return entity;
 		}

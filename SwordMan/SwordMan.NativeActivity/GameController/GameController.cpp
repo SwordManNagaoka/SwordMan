@@ -10,6 +10,9 @@
 #include "../../Events/EventManager.hpp"
 void GameController::ResourceLoad()
 {
+	ResourceManager::GetGraph().LoadDiv("image/player.png", "player", 2, 2, 1, 96, 96);
+	ResourceManager::GetGraph().LoadDiv("image/sword.png", "sword", 5, 5, 1, 192, 192);
+	ResourceManager::GetGraph().LoadDiv("image/rolling", "rolling", 4, 4, 1, 288, 288);
 }
 
 GameController::GameController()
@@ -18,7 +21,7 @@ GameController::GameController()
 	ResourceLoad();
 	pManager = &ECS::EcsSystem::GetManager();	
 	//初期シーン
-	ECS::PlayerArcheType()(Vec2(50,300),Vec2(48,48));
+	ECS::PlayerArcheType()(Vec2(150,300),Vec2(96,96));
 	Scene::SceneManager::Get().ChangeScene(Scene::SceneManager::State::Game);
 	//Event::EventManager().Get().Add(Scene::SceneManager::State::Game,Event::AAA);
 }

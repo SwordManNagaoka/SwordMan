@@ -186,5 +186,11 @@
     <ClInclude Include="Components\BasicComponents.hpp">
       <Filter>Components</Filter>
     </ClInclude>
+    <ClInclude Include="Components\AnimationController.hpp">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="ArcheType\AttackCollision.hpp">
+      <Filter>ArcheType</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

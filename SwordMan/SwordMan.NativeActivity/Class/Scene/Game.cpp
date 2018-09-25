@@ -27,8 +27,6 @@ namespace Scene
 		{
 			p->GetComponent<ECS::Physics>().PushOutEntity(ground);
 			p->GetComponent<ECS::Physics>().SetCollisionFunction(Collision::BoxAndBox<ECS::HitBase, ECS::HitBase>);
-			p->GetComponent<ECS::TriggerJumpMove>().SetJumpTrigger(TouchInput::GetInput().Push(0));
-			p->GetComponent<ECS::TriggerJumpMove>().SetFallTrigger(TouchInput::GetInput().Free(0));
 		}
 		ECS::EcsSystem::GetManager().Update();
 	}

@@ -121,6 +121,9 @@
   <ItemGroup>
     <Content Include="assets\image\a.png" />
     <Content Include="assets\image\ground01.png" />
+    <Content Include="assets\image\player.png" />
+    <Content Include="assets\image\rolling.png" />
+    <Content Include="assets\image\sword.png" />
     <Content Include="assets\image\tekito.png" />
     <Content Include="assets\image\temp.png" />
     <Content Include="assets\stage\mapparamtest.csv" />

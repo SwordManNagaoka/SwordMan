@@ -239,6 +239,7 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ArcheType\AttackCollision.hpp" />
     <ClInclude Include="ArcheType\Map.hpp" />
     <ClInclude Include="ArcheType\Player.hpp" />
     <ClInclude Include="Class\DXFilieRead.hpp" />
@@ -254,6 +255,7 @@
     <ClInclude Include="Class\Scene\Title.h" />
     <ClInclude Include="Class\TouchInput.hpp" />
     <ClInclude Include="Collision\Collision.hpp" />
+    <ClInclude Include="Components\AnimationController.hpp" />
     <ClInclude Include="Components\BasicComponents.hpp" />
     <ClInclude Include="Components\Behavior.hpp" />
     <ClInclude Include="Components\Collider.hpp" />

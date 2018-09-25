@@ -20,6 +20,11 @@ namespace ECS
 		void	Initialize() override
 		{
 			data.state = PlayerData::State::Walk;
+
+			if (entity->HasComponent<TriggerJumpMove>())
+			{
+				jumpMove = &entity->GetComponent<TriggerJumpMove>();
+			}
 		}
 		void	Update() override
 		{
@@ -33,6 +38,17 @@ namespace ECS
 					{
 						nowState = PlayerData::State::Jump;
 					}
+					else
+					{
+						if (jumpMove->IsLanding())
+						{
+							nowState = PlayerData::State::Attack;
+						}
+						else
+						{
+							nowState = PlayerData::State::JumpAttack;
+						}
+					}
 				}
 				break;
 			case PlayerData::State::Jump:
@@ -40,10 +56,39 @@ namespace ECS
 				{
 					nowState = PlayerData::State::Walk;
 				}
+				if (entity->HasComponent<TriggerJumpMove>())
+				{
+					if (jumpMove->IsLanding())
+					{
+						nowState = PlayerData::State::Walk;
+					}	
+				}
 				break;
 			case PlayerData::State::Attack:
+				if (motionCnt.GetCurrentCount() >= 30)
+				{
+					if (jumpMove->IsLanding())
+					{
+						nowState = PlayerData::State::Walk;
+					}
+					else
+					{
+						nowState = PlayerData::State::Jump;
+					}
+				}
 				break;
 			case PlayerData::State::JumpAttack:
+				if (motionCnt.GetCurrentCount() > 16)
+				{
+					if (jumpMove->IsLanding())
+					{
+						nowState = PlayerData::State::Walk;
+					}
+					else
+					{
+						nowState = PlayerData::State::Jump;
+					}
+				}
 				break;
 			case PlayerData::State::Damage:
 				break;
@@ -82,5 +127,6 @@ namespace ECS
 	private:
 		PlayerData	data;
 		Counter		motionCnt;
+		TriggerJumpMove* jumpMove;
 	};
 }
