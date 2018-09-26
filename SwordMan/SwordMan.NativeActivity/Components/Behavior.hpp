@@ -52,8 +52,7 @@ namespace ECS
 					if (think.GetNowMotionCnt().GetCurrentCount() == 0)
 					{
 						auto pos = entity->GetComponent<Position>().val;
-						float sizeX = entity->GetComponent<HitBase>().w() / 2.0f;
-						SwordAttackCollision()(Vec2(pos.x + sizeX,pos.y), Vec2(96.0f, 96.0f), 30);
+						SwordAttackCollision()(Vec2(pos.x ,pos.y), Vec2(96.0f, 96.0f), 30);
 					}
 					break;
 				case PlayerData::State::JumpAttack:
@@ -61,12 +60,11 @@ namespace ECS
 					{
 						entity->DeleteComponent<AnimationDraw>();
 						entity->DeleteComponent<AnimationController>();
-						entity->AddComponent<AnimationDraw>("rolling");
+						entity->AddComponent<AnimationDraw>("rolling").Offset(Vec2(-96.0f,-96.0f));
 						entity->AddComponent<AnimationController>(4, 4);
 
 						auto pos = entity->GetComponent<Position>().val;
-						float sizeX = entity->GetComponent<HitBase>().w() / 2.0f;
-						JumpAttackCollision()(Vec2(pos.x + sizeX,pos.y), Vec2(96.0f, 96.0f), 30);
+						JumpAttackCollision()(Vec2(pos.x,pos.y), Vec2(96.0f, 96.0f), 30);
 					}
 					if (think.GetNowMotionCnt().GetCurrentCount() > 16)
 					{

@@ -192,5 +192,11 @@
     <ClInclude Include="ArcheType\AttackCollision.hpp">
       <Filter>ArcheType</Filter>
     </ClInclude>
+    <ClInclude Include="Components\HealthCounter.hpp">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\ChaseEntity.hpp">
+      <Filter>Components</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

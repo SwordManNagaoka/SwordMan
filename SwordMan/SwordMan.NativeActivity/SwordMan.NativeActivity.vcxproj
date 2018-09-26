@@ -258,8 +258,10 @@
     <ClInclude Include="Components\AnimationController.hpp" />
     <ClInclude Include="Components\BasicComponents.hpp" />
     <ClInclude Include="Components\Behavior.hpp" />
+    <ClInclude Include="Components\ChaseEntity.hpp" />
     <ClInclude Include="Components\Collider.hpp" />
     <ClInclude Include="Components\ComponentDatas\PlayerData.hpp" />
+    <ClInclude Include="Components\HealthCounter.hpp" />
     <ClInclude Include="Components\Jump.hpp" />
     <ClInclude Include="Components\MapMove.hpp" />
     <ClInclude Include="Components\Renderer.hpp" />

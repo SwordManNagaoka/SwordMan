@@ -1,6 +1,8 @@
 ﻿#pragma once
+#include "../../ECS/ECS.hpp"
+#include "../../Utility/Vec.hpp"
+#include "../../ResourceManager/ResourceManager.hpp"
 #include "../../Utility/Counter.hpp"
-
 
 
 struct PlayerData
@@ -14,6 +16,11 @@ struct PlayerData
 		Damage,
 		Death
 	};
-	Counter	health;
 	State	state;
+};
+
+
+struct Health : public ECS::ComponentData
+{
+	Counter value;
 };

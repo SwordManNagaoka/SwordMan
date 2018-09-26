@@ -8,11 +8,13 @@
 #include "../Class/TouchInput.hpp"
 #include "../../Class/Scene/SceneManager.hpp"
 #include "../../Events/EventManager.hpp"
+#include "../../Events/AtackEvent.hpp"
+
 void GameController::ResourceLoad()
 {
 	ResourceManager::GetGraph().LoadDiv("image/player.png", "player", 2, 2, 1, 96, 96);
 	ResourceManager::GetGraph().LoadDiv("image/sword.png", "sword", 5, 5, 1, 192, 192);
-	ResourceManager::GetGraph().LoadDiv("image/rolling", "rolling", 4, 4, 1, 288, 288);
+	ResourceManager::GetGraph().LoadDiv("image/rolling.png", "rolling", 4, 4, 1, 288, 288);
 }
 
 GameController::GameController()
@@ -22,8 +24,12 @@ GameController::GameController()
 	pManager = &ECS::EcsSystem::GetManager();	
 	//初期シーン
 	ECS::PlayerArcheType()(Vec2(150,300),Vec2(96,96));
+	ECS::EnemyArcheType()(Vec2(280, 500), Vec2(96, 96));
 	Scene::SceneManager::Get().ChangeScene(Scene::SceneManager::State::Game);
-	//Event::EventManager().Get().Add(Scene::SceneManager::State::Game,Event::AAA);
+
+	//イベント関数の登録
+	Event::EventManager().Get().Add(Scene::SceneManager::State::Game, Event::CollisionEvent::AttackCollisionToEnemy);
+	Event::EventManager().Get().Add(Scene::SceneManager::State::Game, Event::CollisionEvent::PlayerToEnemy);
 }
 
 void GameController::ResetGame()

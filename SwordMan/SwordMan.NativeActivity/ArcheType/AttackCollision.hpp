@@ -10,6 +10,7 @@
 #include "../../Components/Renderer.hpp"
 #include "../GameController/GameController.h"
 #include "../Components/AnimationController.hpp"
+#include "../Components/ChaseEntity.hpp"
 
 
 namespace ECS
@@ -20,15 +21,15 @@ namespace ECS
 		ECS::Entity* operator()(const Vec2& pos, const Vec2& size,const int killTime)
 		{
 			ECS::Entity*	entity = &ECS::EcsSystem::GetManager().AddEntity();
+			const auto& player = ECS::EcsSystem::GetManager().GetEntitiesByGroup(ENTITY_GROUP::Player);
 
 			entity->AddComponent<ECS::Position>(pos);
-			//entity->AddComponent<ECS::ChasePosition>();
+			entity->AddComponent<ECS::ChaseEntity>(player[0]);
 			entity->AddComponent<ECS::HitBase>(size.x,size.y).SetColor(0, 255, 0);
 			entity->GetComponent<ECS::HitBase>().SetOffset(size.x, 0.0f);
 			entity->AddComponent<ECS::KillEntity>(killTime);
 			entity->AddComponent<ECS::Direction>();
-			entity->AddComponent<ECS::AnimationDraw>("sword");
-			//entity->AddComponent<ECS::AnimationDraw>("sword").Offset(Vec2(0.0f, -64.0f));
+			entity->AddComponent<ECS::AnimationDraw>("sword").Offset(Vec2(-12.0f, -84.0f));
 			entity->AddComponent<ECS::AnimationController>(5, 5);
 			entity->AddGroup(ENTITY_GROUP::Wepon);
 			return entity;
@@ -42,9 +43,10 @@ namespace ECS
 		ECS::Entity* operator()(const Vec2& pos, const Vec2& size,const int killTime)
 		{
 			ECS::Entity*	entity = &ECS::EcsSystem::GetManager().AddEntity();
+			const auto& player = ECS::EcsSystem::GetManager().GetEntitiesByGroup(ENTITY_GROUP::Player);
 
 			entity->AddComponent<ECS::Position>(pos);
-			//entity->AddComponent<ECS::ChasePosition>();
+			entity->AddComponent<ECS::ChaseEntity>(player[0]);
 			entity->AddComponent<ECS::HitBase>(size.x,size.y).SetColor(128, 0, 0);
 			entity->GetComponent<ECS::HitBase>().SetOffset(size.x, 0.0f);
 			entity->AddComponent<ECS::KillEntity>(killTime);

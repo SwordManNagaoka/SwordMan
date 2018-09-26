@@ -90,6 +90,7 @@ namespace ECS
 		std::string name;
 		int index = 0;
 		bool isTurn = false;
+		Vec2 offsetAmount;
 	public:
 		AnimationDraw(const char* name_)
 		{
@@ -106,6 +107,7 @@ namespace ECS
 				dir = &entity->GetComponent<Direction>();
 			}
 			pos = &entity->GetComponent<Position>();
+			offsetAmount = Vec2(0.0f, 0.0f);
 		}
 		void Update() override
 		{
@@ -125,11 +127,11 @@ namespace ECS
 			{
 				if (!isTurn)
 				{
-					DrawGraphF(pos->val.x, pos->val.y, ResourceManager::GetGraph().GetDivHandle(name, index), true);
+					DrawGraphF(pos->val.x + offsetAmount.x, pos->val.y + offsetAmount.y, ResourceManager::GetGraph().GetDivHandle(name, index), true);
 				}
 				else
 				{
-					DrawTurnGraphF(pos->val.x, pos->val.y, ResourceManager::GetGraph().GetDivHandle(name, index), true);
+					DrawTurnGraphF(pos->val.x + offsetAmount.x, pos->val.y + offsetAmount.y, ResourceManager::GetGraph().GetDivHandle(name, index), true);
 				}
 			}
 		}
@@ -137,6 +139,11 @@ namespace ECS
 		void SetIndex(const int index_)
 		{
 			index = index_;
+		}
+		//画像位置のオフセット
+		void	Offset(const Vec2& offset)
+		{
+			offsetAmount = offset;
 		}
 	};
 }

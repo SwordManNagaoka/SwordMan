@@ -11,6 +11,8 @@
 #include "../Components/BasicComponents.hpp"
 #include "../../Components/ComponentDatas/PlayerData.hpp"
 #include "../../Class/TouchInput.hpp"
+#include "../../Components/HealthCounter.hpp"
+
 
 namespace ECS
 {
@@ -20,10 +22,14 @@ namespace ECS
 		void	Initialize() override
 		{
 			data.state = PlayerData::State::Walk;
-
+			
 			if (entity->HasComponent<TriggerJumpMove>())
 			{
 				jumpMove = &entity->GetComponent<TriggerJumpMove>();
+			}
+			if (entity->HasComponent<HealthCounter>())
+			{
+				health = &entity->GetComponent<HealthCounter>();
 			}
 		}
 		void	Update() override
@@ -32,36 +38,23 @@ namespace ECS
 			switch (nowState)
 			{
 			case PlayerData::State::Walk:
-				if (TouchInput::GetInput().Push(0))
+				if (LeftButtonTap())
 				{
-					if (TouchInput::GetInput().GetTouchIDPos(0).x <= (System::SCREEN_WIDIH / 2.0f))
-					{
-						nowState = PlayerData::State::Jump;
-					}
-					else
-					{
-						if (jumpMove->IsLanding())
-						{
-							nowState = PlayerData::State::Attack;
-						}
-						else
-						{
-							nowState = PlayerData::State::JumpAttack;
-						}
-					}
+					nowState = PlayerData::State::Jump;
+				}
+				if (RightButtonTap())
+				{
+					nowState = PlayerData::State::Attack;
 				}
 				break;
 			case PlayerData::State::Jump:
-				if (TouchInput::GetInput().Free(0))
+				if (jumpMove->IsLanding())
 				{
-					nowState = PlayerData::State::Walk;
+					nowState = PlayerData::State::Walk;	
 				}
-				if (entity->HasComponent<TriggerJumpMove>())
+				if (RightButtonTap())
 				{
-					if (jumpMove->IsLanding())
-					{
-						nowState = PlayerData::State::Walk;
-					}	
+					nowState = PlayerData::State::JumpAttack;
 				}
 				break;
 			case PlayerData::State::Attack:
@@ -70,10 +63,6 @@ namespace ECS
 					if (jumpMove->IsLanding())
 					{
 						nowState = PlayerData::State::Walk;
-					}
-					else
-					{
-						nowState = PlayerData::State::Jump;
 					}
 				}
 				break;
@@ -84,15 +73,30 @@ namespace ECS
 					{
 						nowState = PlayerData::State::Walk;
 					}
-					else
-					{
-						nowState = PlayerData::State::Jump;
-					}
 				}
 				break;
 			case PlayerData::State::Damage:
+				if (motionCnt.GetCurrentCount() == 0)
+				{
+					health->Sub();
+				}
+				if (health->GetCurrentHealth() <= 0)
+				{
+					nowState = PlayerData::State::Death;
+				}
+				if (motionCnt.GetCurrentCount() >= 30)
+				{
+					if (jumpMove->IsLanding())
+					{
+						nowState = PlayerData::State::Walk;
+					}
+				}
 				break;
 			case PlayerData::State::Death:
+				if (!entity->HasComponent<KillEntity>())
+				{
+					entity->AddComponent<KillEntity>(30);
+				}
 				break;
 			}
 			motionCnt.Add();
@@ -112,6 +116,11 @@ namespace ECS
 		{
 			return motionCnt;
 		}
+		//モーションを変化させます
+		void	ChangeMotion(const PlayerData::State& motionState)
+		{
+			data.state = motionState;
+		}
 	private:
 		void	Draw3D() override
 		{
@@ -124,9 +133,32 @@ namespace ECS
 			data.state = nowState;
 			return true;
 		}
+		bool	LeftButtonTap()
+		{
+			if (TouchInput::GetInput().Push(0))
+			{
+				if (TouchInput::GetInput().GetTouchIDPos(0).x <= (System::SCREEN_WIDIH / 2.0f))
+				{
+					return true;
+				}
+			}
+			return false;
+		}
+		bool	RightButtonTap()
+		{
+			if (TouchInput::GetInput().Push(0))
+			{
+				if (TouchInput::GetInput().GetTouchIDPos(0).x > (System::SCREEN_WIDIH / 2.0f))
+				{
+					return true;
+				}
+			}
+			return false;
+		}
 	private:
 		PlayerData	data;
 		Counter		motionCnt;
 		TriggerJumpMove* jumpMove;
+		HealthCounter* health;
 	};
 }
