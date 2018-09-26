@@ -198,5 +198,11 @@
     <ClInclude Include="Components\ChaseEntity.hpp">
       <Filter>Components</Filter>
     </ClInclude>
+    <ClInclude Include="ArcheType\Enemy.hpp">
+      <Filter>ArcheType</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\EnemyDefaultMove.hpp">
+      <Filter>Components</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

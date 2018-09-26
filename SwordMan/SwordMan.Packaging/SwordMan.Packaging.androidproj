@@ -120,6 +120,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <Content Include="assets\image\a.png" />
+    <Content Include="assets\image\enemy01.png" />
+    <Content Include="assets\image\enemy02.png" />
+    <Content Include="assets\image\enemy03.png" />
+    <Content Include="assets\image\enemy04.png" />
     <Content Include="assets\image\ground01.png" />
     <Content Include="assets\image\player.png" />
     <Content Include="assets\image\rolling.png" />
