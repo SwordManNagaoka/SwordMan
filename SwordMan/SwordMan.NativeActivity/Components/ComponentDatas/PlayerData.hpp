@@ -9,12 +9,13 @@ struct PlayerData
 {
 	enum class State
 	{
-		Walk,
-		Jump,
-		Attack,
-		JumpAttack,
-		Damage,
-		Death
+		Walk,			//歩く
+		Jump,			//ジャンプ
+		Airworthiness,	//耐空
+		Attack,			//地面上の攻撃
+		JumpAttack,		//耐空の攻撃
+		Damage,			//ダメージ
+		Death			//死亡
 	};
 	State	state;
 };

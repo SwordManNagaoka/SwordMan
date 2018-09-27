@@ -12,7 +12,7 @@
 #include "../../Components/ComponentDatas/PlayerData.hpp"
 #include "../../Class/TouchInput.hpp"
 #include "../../Components/HealthCounter.hpp"
-
+#include "../../Components/AnimationController.hpp"
 
 namespace ECS
 {
@@ -22,7 +22,7 @@ namespace ECS
 		void	Initialize() override
 		{
 			data.state = PlayerData::State::Walk;
-			
+			motionEndFlag = false;
 			if (entity->HasComponent<TriggerJumpMove>())
 			{
 				jumpMove = &entity->GetComponent<TriggerJumpMove>();
@@ -35,6 +35,7 @@ namespace ECS
 		void	Update() override
 		{
 			PlayerData::State	nowState = data.state;
+			
 			switch (nowState)
 			{
 			case PlayerData::State::Walk:
@@ -46,15 +47,29 @@ namespace ECS
 				{
 					nowState = PlayerData::State::Attack;
 				}
+				if (!jumpMove->IsLanding())
+				{
+					nowState = PlayerData::State::Airworthiness;
+				}
 				break;
 			case PlayerData::State::Jump:
 				if (jumpMove->IsLanding())
 				{
 					nowState = PlayerData::State::Walk;	
 				}
+				else
+				{
+					nowState = PlayerData::State::Airworthiness;
+				}
+				break;
+			case PlayerData::State::Airworthiness:	
 				if (RightButtonTap())
 				{
 					nowState = PlayerData::State::JumpAttack;
+				}
+				if (jumpMove->IsLanding())
+				{
+					nowState = PlayerData::State::Walk;
 				}
 				break;
 			case PlayerData::State::Attack:
@@ -64,15 +79,27 @@ namespace ECS
 					{
 						nowState = PlayerData::State::Walk;
 					}
+					else
+					{
+						nowState = PlayerData::State::Airworthiness;
+					}
 				}
 				break;
 			case PlayerData::State::JumpAttack:
-				if (motionCnt.GetCurrentCount() > 16)
+				if (motionEndFlag)
 				{
 					if (jumpMove->IsLanding())
 					{
 						nowState = PlayerData::State::Walk;
 					}
+				}
+				if (motionCnt.GetCurrentCount() > 16)
+				{
+					motionEndFlag = true;
+				}
+				if (jumpMove->IsLanding())
+				{
+					motionEndFlag = true;
 				}
 				break;
 			case PlayerData::State::Damage:
@@ -104,7 +131,7 @@ namespace ECS
 		}
 		void	Draw2D() override
 		{
-
+			//printfDx("状態:%d", data.state);
 		}
 		//!@brief	現在の状態を取得
 		PlayerData::State	GetNowState() const
@@ -121,6 +148,12 @@ namespace ECS
 		{
 			data.state = motionState;
 		}
+		//モーションの終了かのどうかのチェック
+		//true:終了 false:終了していない
+		bool	CheckMotionCancel()
+		{
+			return motionEndFlag;
+		}
 	private:
 		void	Draw3D() override
 		{
@@ -131,6 +164,7 @@ namespace ECS
 			//更新
 			motionCnt.Reset();
 			data.state = nowState;
+			motionEndFlag = false;
 			return true;
 		}
 		bool	LeftButtonTap()
@@ -160,5 +194,6 @@ namespace ECS
 		Counter		motionCnt;
 		TriggerJumpMove* jumpMove;
 		HealthCounter* health;
+		bool motionEndFlag;
 	};
 }

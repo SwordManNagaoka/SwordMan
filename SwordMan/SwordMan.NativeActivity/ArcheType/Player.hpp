@@ -27,7 +27,7 @@ namespace ECS
 			entity->AddComponent<Rotation>();
 			entity->AddComponent<HitBase>(size.x,size.y).SetColor(255, 0, 0);
 			entity->AddComponent<Physics>();
-			entity->AddComponent<TriggerJumpMove>(-10);
+			entity->AddComponent<TriggerJumpMove>(-24);
 			entity->AddComponent<HealthCounter>(3);
 			entity->AddComponent<Think>();
 			entity->AddComponent<Behavior>();
