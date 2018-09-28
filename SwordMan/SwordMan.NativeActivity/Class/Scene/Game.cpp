@@ -21,10 +21,10 @@ namespace Scene
 		mapCreator.Run(ECS::MapArcheType(), false, &mapLoader.GetMapData());
 
 		//敵の生成
-		ECS::Enemy1ArcheType()("enemy1", Vec2(1500, 40), Vec2(96, 96));
-		ECS::Enemy2ArcheType()("enemy2", Vec2(1800, 160), Vec2(96, 96));
-		ECS::Enemy3ArcheType()("enemy3", Vec2(1500, 400), Vec2(96, 96));
-		ECS::Enemy4ArcheType()("enemy4", Vec2(1300, 300), Vec2(96, 96));
+		//ECS::Enemy1ArcheType()("enemy1", Vec2(1500, 40), Vec2(96, 96));
+		//ECS::Enemy2ArcheType()("enemy2", Vec2(1800, 160), Vec2(96, 96));
+		//ECS::Enemy3ArcheType()("enemy3", Vec2(1500, 400), Vec2(96, 96));
+		//ECS::Enemy4ArcheType()("enemy4", Vec2(1300, 300), Vec2(96, 96));
 	}
 	void Game::Update()
 	{

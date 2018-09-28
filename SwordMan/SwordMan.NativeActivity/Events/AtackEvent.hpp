@@ -4,7 +4,7 @@
 //!@author	日比野　真聖
 //!@date	2018/9/16
 //----------------------------------------------------
-#pragma 
+#pragma once
 #include "../ECS/ECS.hpp"
 #include "../GameController/GameController.h"
 #include "../Collision/Collision.hpp"

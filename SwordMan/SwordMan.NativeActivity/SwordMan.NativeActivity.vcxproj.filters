@@ -204,5 +204,14 @@
     <ClInclude Include="Components\EnemyDefaultMove.hpp">
       <Filter>Components</Filter>
     </ClInclude>
+    <ClInclude Include="Components\CorrectionPosition.hpp">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\OutsideOfScreen.hpp">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\SideHitBase.hpp">
+      <Filter>Components</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

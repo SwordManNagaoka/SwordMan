@@ -29,8 +29,7 @@ GameController::GameController()
 	ResourceLoad();
 	pManager = &ECS::EcsSystem::GetManager();	
 	//初期シーン
-	ECS::PlayerArcheType()(Vec2(150,300),Vec2(96,96));
-	ECS::EnemyArcheType()(Vec2(280, 500), Vec2(96, 96));
+	ECS::PlayerArcheType()(Vec2(250,300),Vec2(96,96));
 	
 	Scene::SceneManager::Get().ChangeScene(Scene::SceneManager::State::Game);
 
