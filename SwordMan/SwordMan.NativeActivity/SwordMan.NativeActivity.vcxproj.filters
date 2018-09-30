@@ -204,5 +204,11 @@
     <ClInclude Include="Components\EnemyDefaultMove.hpp">
       <Filter>Components</Filter>
     </ClInclude>
+    <ClInclude Include="Components\ComponentDatas\EnemyData.hpp">
+      <Filter>Components\ComponentDatas</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\ComponentDatas\CollisionData.hpp">
+      <Filter>Components\ComponentDatas</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

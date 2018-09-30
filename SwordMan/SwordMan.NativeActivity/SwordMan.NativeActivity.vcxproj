@@ -261,6 +261,8 @@
     <ClInclude Include="Components\Behavior.hpp" />
     <ClInclude Include="Components\ChaseEntity.hpp" />
     <ClInclude Include="Components\Collider.hpp" />
+    <ClInclude Include="Components\ComponentDatas\CollisionData.hpp" />
+    <ClInclude Include="Components\ComponentDatas\EnemyData.hpp" />
     <ClInclude Include="Components\ComponentDatas\PlayerData.hpp" />
     <ClInclude Include="Components\EnemyDefaultMove.hpp" />
     <ClInclude Include="Components\HealthCounter.hpp" />

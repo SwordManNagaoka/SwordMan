@@ -14,79 +14,121 @@
 #include "../Components/Behavior.hpp"
 #include "../Components/AnimationController.hpp"
 #include "../Components/EnemyDefaultMove.hpp"
+#include "../Components/ComponentDatas/EnemyData.hpp"
+
+
 
 namespace ECS
 {
-	//青鎧
-	class Enemy1ArcheType : public IArcheType<const std::string&,const Vec2&,const Vec2&>
+	//----------------------------------
+	//敵生成器
+	//----------------------------------
+	class EnemyCreator
 	{
 	public:
-		ECS::Entity* operator()(const std::string& imageName,const Vec2& pos,const Vec2& size)
+		//敵の生成
+		//型1: 渡すデータの型
+		//型2: 生成するアーキタイプの型
+		//引数: 渡すデータ型のデータ
+		template<typename DataType, typename FuncType>
+		static void Create(const DataType& data)
+		{
+			FuncType()(data);
+		}
+	};
+
+	//共通
+	class EnemyCommonArcheType : public IArcheType<const EnemyCommonData&>
+	{
+	public:
+		ECS::Entity* operator()(const EnemyCommonData& data)
 		{
 			ECS::Entity*	entity = &ECS::EcsSystem::GetManager().AddEntity();
-			entity->AddComponent<Position>(pos);
-			entity->AddComponent<HitBase>(size.x,size.y).SetColor(255,0,0);
-			entity->AddComponent<EnemyDefaultMove>();
-			entity->AddComponent<ECS::Direction>();
-			entity->AddComponent<ECS::AnimationDraw>(imageName.c_str());
-			entity->AddComponent<ECS::AnimationController>(20,2);
+			entity->AddComponent<Position>(data.pos);
+			entity->AddComponent<Velocity>();
+			entity->AddComponent<Direction>();
+			entity->AddComponent<AnimationDraw>(data.imageName.c_str());
+			entity->AddComponent<AnimationController>(data.changeAnimFrameTime, data.animNum);
 			entity->AddGroup(ENTITY_GROUP::Enemy);
 			return entity;
 		}
 	};
 
-
-	//赤車輪
-	class Enemy2ArcheType : public IArcheType<const std::string&,const Vec2&, const Vec2&>
+	//ノーマル(青鎧・水色羽)
+	class NormalEnemyArcheType : public IArcheType<const NormalEnemyData&>
 	{
 	public:
-		ECS::Entity* operator()(const std::string& imageName,const Vec2& pos, const Vec2& size)
+		ECS::Entity* operator()(const NormalEnemyData& data)
 		{
-			ECS::Entity*	entity = &ECS::EcsSystem::GetManager().AddEntity();
-			entity->AddComponent<Position>(pos);
-			entity->AddComponent<HitBase>(size.x, size.y).SetColor(255, 128, 0);
-			entity->AddComponent<EnemyDefaultMove>();
-			entity->AddComponent<ECS::Direction>();
-			entity->AddComponent<ECS::AnimationDraw>(imageName.c_str());
-			entity->AddComponent<ECS::AnimationController>(10, 4);
-			entity->AddGroup(ENTITY_GROUP::Enemy);
+			ECS::Entity* entity = EnemyCommonArcheType()(data.commonData);
+			AddCollision(entity, data);
+			entity->AddComponent<ECS::EnemyDefaultMove>();
 			return entity;
+		}
+	private:
+		void AddCollision(ECS::Entity* entity, const NormalEnemyData& data)
+		{
+			if (!data.collisionData.commonData.isCollision) { return; }
+			entity->AddComponent<HitBase>(data.collisionData.boxSize.x,data.collisionData.boxSize.y);
+		}
+	};
+
+	//赤車輪
+	class LeftMoveEnemyArcheType : public IArcheType<const LeftMoveEnemyData&>
+	{
+	public:
+		ECS::Entity* operator()(const LeftMoveEnemyData& data)
+		{
+			ECS::Entity* entity = EnemyCommonArcheType()(data.commonData);
+			AddCollision(entity, data);
+			entity->AddComponent<EnemyDefaultMove>();
+			return entity;
+		}
+	private:
+		void AddCollision(ECS::Entity* entity, const LeftMoveEnemyData& data)
+		{
+			if (!data.collisionData.commonData.isCollision) { return; }
+			entity->AddComponent<HitBase>(data.collisionData.boxSize.x, data.collisionData.boxSize.y);
 		}
 	};
 
 	//緑バネ
-	class Enemy3ArcheType : public IArcheType<const std::string&,const Vec2&, const Vec2&>
+	class JumpMoveEnemyArcheType : public IArcheType<const JumpMoveEnemyData&>
 	{
 	public:
-		ECS::Entity* operator()(const std::string& imageName,const Vec2& pos, const Vec2& size)
+		ECS::Entity* operator()(const JumpMoveEnemyData& data)
 		{
-			ECS::Entity*	entity = &ECS::EcsSystem::GetManager().AddEntity();
-			entity->AddComponent<Position>(pos);
-			entity->AddComponent<HitBase>(size.x, size.y).SetColor(255, 128, 0);
+			ECS::Entity* entity = EnemyCommonArcheType()(data.commonData);
+			AddCollision(entity, data);
 			entity->AddComponent<EnemyDefaultMove>();
-			entity->AddComponent<ECS::Direction>();
-			entity->AddComponent<ECS::AnimationDraw>(imageName.c_str());
-			entity->AddComponent<ECS::AnimationController>(10, 6);
-			entity->AddGroup(ENTITY_GROUP::Enemy);
+			//entity->AddComponent<Physics>();
+			//entity->AddComponent<TriggerJumpMove>(data.jumpPow);
 			return entity;
+		}
+	private:
+		void AddCollision(ECS::Entity* entity, const JumpMoveEnemyData& data)
+		{
+			if (!data.collisionData.commonData.isCollision) { return; }
+			entity->AddComponent<HitBase>(data.collisionData.boxSize.x, data.collisionData.boxSize.y);
 		}
 	};
 
-	//水色羽
-	class Enemy4ArcheType : public IArcheType<const std::string&,const Vec2&, const Vec2&>
+	//ゴール
+	class GoalArcheType : public IArcheType<const GoalData&>
 	{
 	public:
-		ECS::Entity* operator()(const std::string& imageName,const Vec2& pos, const Vec2& size)
+		ECS::Entity* operator()(const GoalData& data)
 		{
-			ECS::Entity*	entity = &ECS::EcsSystem::GetManager().AddEntity();
-			entity->AddComponent<Position>(pos);
-			entity->AddComponent<HitBase>(size.x, size.y).SetColor(255, 128, 0);
+			ECS::Entity* entity = EnemyCommonArcheType()(data.commonData);
+			AddCollision(entity, data);
 			entity->AddComponent<EnemyDefaultMove>();
-			entity->AddComponent<ECS::Direction>();
-			entity->AddComponent<ECS::AnimationDraw>(imageName.c_str());
-			entity->AddComponent<ECS::AnimationController>(10, 4);
-			entity->AddGroup(ENTITY_GROUP::Enemy);
 			return entity;
+		}
+	private:
+		void AddCollision(ECS::Entity* entity, const GoalData& data)
+		{
+			if (!data.collisionData.commonData.isCollision) { return; }
+			entity->AddComponent<HitBase>(data.collisionData.boxSize.x, data.collisionData.boxSize.y);
 		}
 	};
 }
