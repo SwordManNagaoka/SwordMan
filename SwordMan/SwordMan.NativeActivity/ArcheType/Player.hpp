@@ -18,7 +18,6 @@
 #include "../Components/OutsideOfScreen.hpp"
 #include "../Components/SideHitBase.hpp"
 
-
 namespace ECS
 {
 	class PlayerArcheType : public IArcheType<const Vec2&,const Vec2&>
@@ -43,22 +42,6 @@ namespace ECS
 			entity->AddComponent<AnimationDraw>("player");
 			entity->AddComponent<AnimationController>(20, 2);
 			entity->AddGroup(ENTITY_GROUP::Player);
-			return entity;
-		}
-	};
-
-
-	//仮
-	class EnemyArcheType : public IArcheType<const Vec2&, const Vec2&>
-	{
-	public:
-		ECS::Entity* operator()(const Vec2& pos, const Vec2& size)
-		{
-			ECS::Entity*	entity = &ECS::EcsSystem::GetManager().AddEntity();
-			entity->AddComponent<Position>(pos);
-			entity->AddComponent<Rotation>();
-			entity->AddComponent<HitBase>(size.x, size.y).SetColor(0, 128, 0);
-			entity->AddGroup(ENTITY_GROUP::Enemy);
 			return entity;
 		}
 	};
