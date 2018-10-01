@@ -98,7 +98,7 @@ namespace ECS
 			//落下フラグが立つと落下
 			else if (isJump && fallTrigger)
 			{
-				velocity->val.y *= 0.8f;
+				velocity->val.y *= 0.9f;
 			}
 			//落下速度が負の値ならジャンプ中
 			if (velocity->val.y < 0)

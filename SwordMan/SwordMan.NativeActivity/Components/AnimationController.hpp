@@ -42,7 +42,7 @@ namespace ECS
 		{
 			animationID = 0;
 			animationCnt.Reset();
-			entity->GetComponent<ECS::AnimationDraw>().SetIndex(animationID);
+			//entity->GetComponent<ECS::AnimationDraw>().SetIndex(animationID);
 		}
 		void	Update() override
 		{
@@ -53,11 +53,14 @@ namespace ECS
 		}
 		void	Draw2D() override
 		{
-			entity->GetComponent<ECS::AnimationDraw>().SetIndex(animationID);
+			if (entity->HasComponent<ECS::AnimationDraw>())
+			{
+				entity->GetComponent<ECS::AnimationDraw>().SetIndex(animationID);
+			}
 		}
 	private:
 		void	Draw3D() override {}
-	private:
+	public:
 		//!@brief	アニメーションを切り替えるフレーム時間と枚数を設定
 		//!@param[in]	frameTime	フレーム時間
 		//!@param[in]	chipNumber	画像チップの枚数
@@ -65,6 +68,7 @@ namespace ECS
 		{
 			this->frameTime = frameTime;
 			this->chipNumber = chipNumber;
+			animationCnt.Reset();
 		}
 	private:
 		int		frameTime;

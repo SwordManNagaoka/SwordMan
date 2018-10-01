@@ -42,12 +42,24 @@ namespace ECS
 				{
 				case PlayerData::State::Walk:
 					jumpMove->SetJumpTrigger(false);
+					jumpMove->SetFallTrigger(false);
 					break;
 				case PlayerData::State::Jump:
 				{
-					jumpMove->SetJumpTrigger(true);
+					if (think.GetNowMotionCnt().GetCurrentCount() == 0)
+					{
+						jumpMove->SetJumpTrigger(true);
+					}
+					else
+					{
+						jumpMove->SetJumpTrigger(false);
+					}
 				}
 				break;
+				case PlayerData::State::Airworthiness:
+					jumpMove->SetFallTrigger(true);
+					jumpMove->SetJumpTrigger(false);
+					break;
 				case PlayerData::State::Attack:
 					if (think.GetNowMotionCnt().GetCurrentCount() == 0)
 					{
@@ -59,19 +71,17 @@ namespace ECS
 					if (think.GetNowMotionCnt().GetCurrentCount() == 0)
 					{
 						entity->DeleteComponent<AnimationDraw>();
-						entity->DeleteComponent<AnimationController>();
 						entity->AddComponent<AnimationDraw>("rolling").Offset(Vec2(-96.0f,-96.0f));
-						entity->AddComponent<AnimationController>(4, 4);
+						entity->GetComponent<AnimationController>().SetAnimationTime(4, 4);
 
 						auto pos = entity->GetComponent<Position>().val;
-						JumpAttackCollision()(Vec2(pos.x,pos.y), Vec2(96.0f, 96.0f), 30);
+						JumpAttackCollision()(Vec2(pos.x,pos.y), Vec2(96.0f, 96.0f), 20);
 					}
-					if (think.GetNowMotionCnt().GetCurrentCount() > 16)
+					if (think.CheckMotionCancel())
 					{
 						entity->DeleteComponent<AnimationDraw>();
-						entity->DeleteComponent<AnimationController>();
 						entity->AddComponent<ECS::AnimationDraw>("player");
-						entity->AddComponent<ECS::AnimationController>(20, 2);
+						entity->GetComponent<ECS::AnimationController>().SetAnimationTime(20, 2);
 					}
 					break;
 				case PlayerData::State::Damage:
