@@ -1,4 +1,4 @@
-﻿#include "Game.h"
+#include "Game.h"
 #include "../../GameController/GameController.h"
 #include "../../ECS/ECS.hpp"
 #include "../../ArcheType/Map.hpp"

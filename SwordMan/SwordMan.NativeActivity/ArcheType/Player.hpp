@@ -14,6 +14,10 @@
 #include "../Components/Behavior.hpp"
 #include "../Components/AnimationController.hpp"
 #include "../Components/HealthCounter.hpp"
+#include "../Components/CorrectionPosition.hpp"
+#include "../Components/OutsideOfScreen.hpp"
+#include "../Components/SideHitBase.hpp"
+
 
 namespace ECS
 {
@@ -28,6 +32,10 @@ namespace ECS
 			entity->AddComponent<HitBase>(size.x,size.y).SetColor(255, 0, 0);
 			entity->AddComponent<Physics>();
 			entity->AddComponent<TriggerJumpMove>(-24);
+			entity->AddComponent<SideHitBase>(1.0f,96.0f).SetColor(0,255,0);
+			entity->GetComponent<SideHitBase>().SetOffset(96.0f, 0.0f);
+			entity->AddComponent<CorrectionPosition>(pos);
+			entity->AddComponent<OutsideOfScreen>();
 			entity->AddComponent<HealthCounter>(3);
 			entity->AddComponent<Think>();
 			entity->AddComponent<Behavior>();
@@ -38,6 +46,7 @@ namespace ECS
 			return entity;
 		}
 	};
+
 
 	//仮
 	class EnemyArcheType : public IArcheType<const Vec2&, const Vec2&>

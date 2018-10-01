@@ -204,11 +204,14 @@
     <ClInclude Include="Components\EnemyDefaultMove.hpp">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="Components\ComponentDatas\EnemyData.hpp">
-      <Filter>Components\ComponentDatas</Filter>
+    <ClInclude Include="Components\CorrectionPosition.hpp">
+      <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="Components\ComponentDatas\CollisionData.hpp">
-      <Filter>Components\ComponentDatas</Filter>
+    <ClInclude Include="Components\OutsideOfScreen.hpp">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\SideHitBase.hpp">
+      <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
