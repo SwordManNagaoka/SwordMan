@@ -23,7 +23,7 @@ namespace ECS
 
 			if (grounds[0]->HasComponent<ECS::Velocity>())
 			{
-				vel = grounds[0]->GetComponent<ECS::Velocity>();
+				mapvel = grounds[0]->GetComponent<ECS::Velocity>().val.x;
 			}
 			if (entity->HasComponent<ECS::Position>())
 			{
@@ -33,10 +33,20 @@ namespace ECS
 			{
 				size.x = entity->GetComponent<ECS::HitBase>().w();
 			}
+			if (entity->HasComponent<ECS::Velocity>())
+			{
+				myvel = &entity->GetComponent<ECS::Velocity>();
+			}
 		}
 		void Update() override
 		{
-			pos->val.x -= vel.val.x;
+			auto& grounds = ECS::EcsSystem::GetManager().GetEntitiesByGroup(ENTITY_GROUP::Ground)[0];
+
+			if (grounds->HasComponent<ECS::Velocity>())
+			{
+				mapvel = grounds->GetComponent<ECS::Velocity>().val.x;
+			}
+			pos->val.x -= mapvel + myvel->val.x;
 			if (pos->val.x < 0 - size.x)
 			{
 				entity->Destroy();
@@ -53,7 +63,8 @@ namespace ECS
 		}
 	private:
 		Position* pos;
-		Velocity vel;
+		float mapvel;
+		Velocity* myvel;
 		Vec2 size;
 	};
 }
