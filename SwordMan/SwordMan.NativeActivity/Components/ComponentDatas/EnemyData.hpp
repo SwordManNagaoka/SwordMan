@@ -12,39 +12,14 @@
 
 namespace ECS
 {
-	//共通
 	struct EnemyCommonData
 	{
-		std::string imageName;
 		Vec2 pos;
-		int id;
-		int animNum;
+		Vec2 size;
+		std::string imageName;
 		int changeAnimFrameTime;
-	};
-	//ノーマル(青鎧・水色羽)
-	struct NormalEnemyData
-	{
-		EnemyCommonData commonData;
-		BoxCollisionData collisionData;
-	};
-	//赤車輪
-	struct LeftMoveEnemyData
-	{
-		EnemyCommonData commonData;
-		BoxCollisionData collisionData;
+		int animNum;
 		float moveSpeed;
-	};
-	//緑バネ
-	struct JumpMoveEnemyData
-	{
-		EnemyCommonData commonData;
-		BoxCollisionData collisionData;
-		float jumpPow;
-	};
-	//ゴール
-	struct GoalData
-	{
-		EnemyCommonData commonData;
-		BoxCollisionData collisionData;
+		float jumpPower;
 	};
 }
