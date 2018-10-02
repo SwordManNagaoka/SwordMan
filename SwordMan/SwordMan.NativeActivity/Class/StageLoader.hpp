@@ -11,16 +11,17 @@
 #include <sstream>
 #include <fstream>
 #include "DXFilieRead.hpp"
-#include "MapData.hpp"
+#include "StageData.hpp"
 #include "../ResourceManager/ResourceManager.hpp"
 
-class MapLoader
+class StageLoader
 {
 private:
-	MapParam	mapParam;
-	MapData		mapData;
+	StageParam	mapParam;
+	StageArrayData	mapData;
+	StageArrayData	enemyData;
 public:
-	MapLoader(const std::string& mapParamPath)
+	StageLoader(const std::string& mapParamPath)
 	{
 		//ファイルを開く
 		std::ifstream fin(DXFilieRead().GetPath(mapParamPath));
@@ -30,7 +31,9 @@ public:
 		}
 
 		//各種パラメーターを読み込む
-		fin >>	mapParam.mapName >> mapParam.mapDataPath >>
+		fin >>	mapParam.mapImage >>
+				mapParam.mapDataPath >>
+				mapParam.enemyDataPath >>
 				mapParam.mapWidth >> mapParam.mapHeight >>
 				mapParam.chipSize >>
 				mapParam.xSpeed >>
@@ -48,21 +51,25 @@ public:
 			//ResourceManager::GetGraph().Load(mapParam.backImagePath[i], mapParam.mapName + "back" + ss.str());
 		}
 		//マップチップ
-		ResourceManager::GetGraph().Load(mapParam.chipImagePath, mapParam.mapName);
+		ResourceManager::GetGraph().Load(mapParam.chipImagePath, mapParam.mapImage);
 	}
 
-	//マップの構成を読み込む
-	void LoadMapArray()
+	//マップと敵配置の構成を読み込む
+	void LoadStageConstitution()
 	{
 		mapData.resize(mapParam.mapHeight);	//1次元目
+		enemyData.resize(mapParam.mapHeight);
 		for (auto i(0u); i < mapParam.mapHeight; ++i)
 		{
 			mapData[i].resize(mapParam.mapWidth);	//2次元目
+			enemyData[i].resize(mapParam.mapWidth);
 		}
 
 		//マップ構成ファイルを開く
-		std::ifstream fin(DXFilieRead().GetPath(mapParam.mapDataPath));
-		if (fin.is_open() == 0)
+		std::ifstream mapfin(DXFilieRead().GetPath(mapParam.mapDataPath));
+		std::ifstream enemyfin(DXFilieRead().GetPath(mapParam.enemyDataPath));
+		if ((mapfin.is_open() == 0) ||
+			(enemyfin.is_open() == 0))
 		{
 			printfDx("Error!!!");
 		}
@@ -72,19 +79,25 @@ public:
 		{
 			for (size_t x = 0; x < mapParam.mapWidth; ++x)
 			{
-				fin >> mapData[y][x];
+				mapfin >> mapData[y][x];
+				enemyfin >> enemyData[y][x];
 			}
 		}
-		fin.close();
+		mapfin.close();
+		enemyfin.close();
 	}
 
-	const MapParam& GetMapParam()
+	const StageParam& GetStageParam()
 	{
 		return mapParam;
 	}
-	const MapData& GetMapData()
+	const StageArrayData& GetStageData()
 	{
 		return mapData;
+	}
+	const StageArrayData& GetEnemyData()
+	{
+		return enemyData;
 	}
 };
 

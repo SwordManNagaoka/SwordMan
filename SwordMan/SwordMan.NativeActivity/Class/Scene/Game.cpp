@@ -14,11 +14,11 @@ namespace Scene
 	Game::Game() :
 		mapLoader("stage/mapparamtest.csv")
 	{
-		mapLoader.LoadMapArray();
+		mapLoader.LoadStageConstitution();
 
-		mapCreator.SetMapParam(mapLoader.GetMapParam());
+		mapCreator.SetMapParam(mapLoader.GetStageParam());
 		mapCreator.FillUpFlatMap(ECS::MapArcheType());
-		mapCreator.Run(ECS::MapArcheType(), false, &mapLoader.GetMapData());
+		mapCreator.Run(ECS::MapArcheType(), false, &mapLoader.GetStageData());
 
 		//敵の生成
 		ECS::NormalEnemyData normalData;
@@ -44,7 +44,7 @@ namespace Scene
 	}
 	void Game::Update()
 	{
-		mapCreator.Run(ECS::MapArcheType(), false, &mapLoader.GetMapData());
+		mapCreator.Run(ECS::MapArcheType(), false, &mapLoader.GetStageData());
 		auto& player = ECS::EcsSystem::GetManager().GetEntitiesByGroup(ENTITY_GROUP::Player);
 		auto& ground = ECS::EcsSystem::GetManager().GetEntitiesByGroup(ENTITY_GROUP::Ground);
 		//地形との衝突応答を行う

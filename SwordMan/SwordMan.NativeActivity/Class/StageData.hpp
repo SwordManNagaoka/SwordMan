@@ -9,11 +9,12 @@
 #include <array>
 #include <vector>
 
-//マップを構成する各種パラメータ
-struct MapParam
+//ステージを構成する各種パラメータ
+struct StageParam
 {
-	std::string		mapName;		//マップ名
+	std::string		mapImage;		//マップの画像名
 	std::string		mapDataPath;	//マップ上のブロック配置データへのパス
+	std::string		enemyDataPath;	//敵の配置データへのパス
 	size_t	mapWidth, mapHeight;	//マップの広さ
 	int		chipSize;				//マップチップ(ブロック)画像の大きさ(横幅)
 	int		xSpeed;					//X方向への速度
@@ -22,4 +23,4 @@ struct MapParam
 };
 
 //マップ上のブロック配置データ
-typedef std::vector<std::vector<int>> MapData;
+typedef std::vector<std::vector<int>> StageArrayData;

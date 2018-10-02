@@ -102,9 +102,6 @@
     <ClInclude Include="System\System.hpp">
       <Filter>System</Filter>
     </ClInclude>
-    <ClInclude Include="Class\MapLoader.hpp">
-      <Filter>Class</Filter>
-    </ClInclude>
     <ClInclude Include="Events\AtackEvent.hpp">
       <Filter>Events</Filter>
     </ClInclude>
@@ -151,12 +148,6 @@
       <Filter>GameController</Filter>
     </ClInclude>
     <ClInclude Include="Class\DXFilieRead.hpp">
-      <Filter>Class</Filter>
-    </ClInclude>
-    <ClInclude Include="Class\MapCreator.hpp">
-      <Filter>Class</Filter>
-    </ClInclude>
-    <ClInclude Include="Class\MapData.hpp">
       <Filter>Class</Filter>
     </ClInclude>
     <ClInclude Include="Class\Scene\SceneManager.hpp">
@@ -218,6 +209,15 @@
     </ClInclude>
     <ClInclude Include="Components\ComponentDatas\EnemyData.hpp">
       <Filter>Components\ComponentDatas</Filter>
+    </ClInclude>
+    <ClInclude Include="Class\StageData.hpp">
+      <Filter>Class</Filter>
+    </ClInclude>
+    <ClInclude Include="Class\StageLoader.hpp">
+      <Filter>Class</Filter>
+    </ClInclude>
+    <ClInclude Include="Class\StageCreator.hpp">
+      <Filter>Class</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

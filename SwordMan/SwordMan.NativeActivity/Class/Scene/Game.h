@@ -6,15 +6,15 @@
 */
 #pragma once
 #include "Scene.hpp"
-#include "../../Class/MapLoader.hpp"
-#include "../../Class/MapCreator.hpp"
+#include "../../Class/StageLoader.hpp"
+#include "../../Class/StageCreator.hpp"
 namespace Scene
 {
 	class Game final : public ISceneBase
 	{
 	private:
-		MapLoader mapLoader;
-		MapCreator mapCreator;
+		StageLoader mapLoader;
+		StageCreator mapCreator;
 	public:
 		Game();
 		void Update() override;

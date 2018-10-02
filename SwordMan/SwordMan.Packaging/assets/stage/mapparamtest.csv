@@ -1,4 +1,6 @@
-maptest stage/maptest.csv 
+maptest
+stage/map01_stage.csv 
+stage/map01_enemy.csv 
 13 8 
 96 
 5 
