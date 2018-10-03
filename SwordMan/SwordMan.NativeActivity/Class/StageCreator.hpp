@@ -1,10 +1,19 @@
-﻿#pragma once
+﻿/**
+* @file StageLoader.hpp
+* @brief csvファイル等からマップデータと敵データの読み込みをします。
+* @author feveleK5563
+* @date 2018/10/4
+*/
+
+#pragma once
 #include <functional>
 #include "../ECS/ECS.hpp"
 #include "../../Utility/Vec.hpp"
 #include "../../Utility/Counter.hpp"
 #include "StageData.hpp"
 #include "../System/System.hpp"
+#include "../../ArcheType/Map.hpp"
+#include "../../ArcheType/Enemy.hpp"
 
 class StageCreator
 {
@@ -44,32 +53,34 @@ public:
 
 	//マップと敵の自動生成
 	//マップ、敵データを指定しない場合はフラットな地形が生成される
-	void Run(	std::function<ECS::Entity*(const char*, const Vec2&, const Vec2&, const int, const int, const int)> tileMapArcheType,
-				bool isFlatMap, const StageArrayData* mapData = nullptr, const StageArrayData* enemyData = nullptr)
+	void Run(const StageArrayData* mapData = nullptr, const StageArrayData* enemyData = nullptr)
 	{
 		int setChipNum = GetSetMapChipNum();
 		for (int i = 0; i < setChipNum; ++i)
 		{
-			if (isFlatMap || cntCreatMapNum.IsMax())
+			if (mapData == nullptr || cntCreatMapNum.IsMax())
 			{
-				CreateFlatMap(i, tileMapArcheType);
+				CreateFlatMap(i);
+				continue;
 			}
-			else if (mapData != nullptr)
+			else
 			{
-				CreateMap(i, *mapData, tileMapArcheType);
+				CreateMap(i, *mapData);
 			}
 
 			if (enemyData != nullptr)
 			{
-
+				CreateEnemy(i, *enemyData);
 			}
+			cntCreatMapNum.Add();
 		}
 	}
 
 private:
 	//平坦なマップを生成する
-	void CreateFlatMap(int i, std::function<ECS::Entity*(const char*, const Vec2&, const Vec2&, const int, const int, const int)> tileMapArcheType)
+	void CreateFlatMap(int i)
 	{
+		ECS::MapArcheType tileMapArcheType;
 		int flatMap[8]{ -1, -1, -1, -1, -1, -1, 0, 1 };
 		for (int y = 0; y < 8; ++y)
 		{
@@ -80,9 +91,9 @@ private:
 	}
 
 	//マップデータを参照し、マップを生成する
-	void CreateMap(int i, const StageArrayData& mapData,
-		std::function<ECS::Entity*(const char*, const Vec2&, const Vec2&, const int, const int, const int)> tileMapArcheType)
+	void CreateMap(int i, const StageArrayData& mapData)
 	{
+		ECS::MapArcheType tileMapArcheType;
 		int x = cntCreatMapNum.GetCurrentCount();
 
 		for (int y = 0; y < mapParam.mapHeight; ++y)
@@ -91,13 +102,20 @@ private:
 			Vec2 velocity(float(mapParam.xSpeed), 0.f);
 			tileMapArcheType(mapParam.mapImage.c_str(), pos, velocity, mapParam.chipSize, mapParam.chipSize, mapData[y][x]);
 		}
-		cntCreatMapNum.Add();
 	}
 
 	//敵のデータを参照し、敵を生成する
-	void CreateEnemy()
+	void CreateEnemy(int i, const StageArrayData& enemyConstitution)
 	{
+		ECS::EnemyCommonArcheType enemyArcheType;
+		int x = cntCreatMapNum.GetCurrentCount();
 
+		for (int y = 0; y < mapParam.mapHeight; ++y)
+		{
+			Vec2 pos(float(System::SCREEN_WIDIH + (i * mapParam.chipSize)), float(y * mapParam.chipSize));
+			Vec2 velocity(float(mapParam.xSpeed), 0.f);
+			enemyArcheType(mapParam.enemyData[enemyConstitution[y][x]], enemyConstitution[y][x]);
+		}
 	}
 
 	//時間を計測し、配置できるマップチップの数を返す
