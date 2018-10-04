@@ -32,7 +32,7 @@ namespace ECS
 			entity->AddComponent<Physics>();
 			entity->AddComponent<TriggerJumpMove>(-24);
 			entity->AddComponent<SideHitBase>(1.0f,96.0f).SetColor(0,255,0);
-			entity->GetComponent<SideHitBase>().SetOffset(82.0f, 0.0f);
+			entity->GetComponent<SideHitBase>().SetOffset(83.0f, 0.0f);
 			entity->AddComponent<CorrectionPosition>(pos);
 			entity->AddComponent<OutsideOfScreen>();
 			entity->AddComponent<HealthCounter>(3);
