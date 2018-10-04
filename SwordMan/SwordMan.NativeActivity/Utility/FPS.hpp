@@ -7,7 +7,7 @@
 */
 #pragma once
 #include <memory>
-#include <DXlib.h>
+#include <DxLib.h>
 #include <chrono>
 class Timer final
 {
