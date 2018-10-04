@@ -183,9 +183,6 @@
     <ClInclude Include="ArcheType\AttackCollision.hpp">
       <Filter>ArcheType</Filter>
     </ClInclude>
-    <ClInclude Include="Components\HealthCounter.hpp">
-      <Filter>Components</Filter>
-    </ClInclude>
     <ClInclude Include="Components\ChaseEntity.hpp">
       <Filter>Components</Filter>
     </ClInclude>
@@ -222,8 +219,11 @@
     <ClInclude Include="Components\HealthRelationUI.hpp">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="ArcheType\Health.hpp">
+    <ClInclude Include="ArcheType\HealthUI.hpp">
       <Filter>ArcheType</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\EntityHealth.hpp">
+      <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

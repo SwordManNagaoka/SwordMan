@@ -1,6 +1,6 @@
 ﻿//----------------------------------------------------
-//!@file	HealthCounter.hpp
-//!@brief	体力を作成します
+//!@file	EntityHealth.hpp
+//!@brief	Entityに健康状態を作成します
 //!@author	日比野　真聖
 //!@date	2018/9/17
 //----------------------------------------------------
@@ -17,10 +17,10 @@
 
 namespace ECS
 {
-	class HealthCounter : public Component
+	class EntityHealth : public Component
 	{
 	public:
-		HealthCounter(const int maxHealth)
+		EntityHealth(const int maxHealth)
 		{
 			maxValue = maxHealth;
 		}

@@ -7,7 +7,7 @@
 #include "../../Class/Scene/SceneManager.hpp"
 #include "../../Class/TouchInput.hpp"
 #include "../../ArcheType/Enemy.hpp"
-#include "../../ArcheType/Health.hpp"
+#include "../../ArcheType/HealthUI.hpp"
 
 namespace Scene
 {
@@ -22,7 +22,7 @@ namespace Scene
 		mapCreator.Run(&mapLoader.GetStageData(), &mapLoader.GetEnemyData());
 		for (int i = 0; i < 3; ++i)
 		{
-			ECS::HealthArcheType()(i,Vec2(500 + i * 144, 640));
+			ECS::HealthUIArcheType()(i,Vec2(500 + i * 144, 640));
 		}
 	}
 	void Game::Update()

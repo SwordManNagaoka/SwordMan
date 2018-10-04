@@ -64,7 +64,7 @@ namespace ECS
 					if (think.GetNowMotionCnt() == 0)
 					{
 						auto pos = entity->GetComponent<Position>().val;
-						SwordAttackCollision()(Vec2(pos.x ,pos.y), Vec2(96.0f, 96.0f), 30);
+						SwordAttackCollision()(Vec2(pos.x ,pos.y), Vec2(96.0f, 96.0f), 20);
 					}
 					break;
 				case PlayerData::State::JumpAttack:
@@ -100,10 +100,7 @@ namespace ECS
 				case PlayerData::State::Death:
 					if (think.GetNowMotionCnt() == 1)
 					{
-						if (!entity->HasComponent<KillEntity>())
-						{
-							entity->AddComponent<KillEntity>(30);
-						}
+						entity->Destroy();
 					}
 					break;
 				}

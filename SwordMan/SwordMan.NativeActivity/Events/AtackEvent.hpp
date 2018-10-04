@@ -10,7 +10,7 @@
 #include "../Collision/Collision.hpp"
 #include "../Components/BasicComponents.hpp"
 #include "../System/System.hpp"
-#include "../../Components/HealthCounter.hpp"
+#include "../../Components/EntityHealth.hpp"
 
 
 namespace Event

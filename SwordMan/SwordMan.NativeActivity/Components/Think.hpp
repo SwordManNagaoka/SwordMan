@@ -11,7 +11,7 @@
 #include "../Components/BasicComponents.hpp"
 #include "../../Components/ComponentDatas/PlayerData.hpp"
 #include "../../Class/TouchInput.hpp"
-#include "../../Components/HealthCounter.hpp"
+#include "../../Components/EntityHealth.hpp"
 #include "../../Components/AnimationController.hpp"
 
 namespace ECS
@@ -27,9 +27,9 @@ namespace ECS
 			{
 				jumpMove = &entity->GetComponent<TriggerJumpMove>();
 			}
-			if (entity->HasComponent<HealthCounter>())
+			if (entity->HasComponent<EntityHealth>())
 			{
-				health = &entity->GetComponent<HealthCounter>();
+				health = &entity->GetComponent<EntityHealth>();
 			}
 		}
 		void	Update() override
@@ -75,7 +75,7 @@ namespace ECS
 				}
 				break;
 			case PlayerData::State::Attack:
-				if (motionCnt.GetCurrentCount() >= 30)
+				if (motionCnt.GetCurrentCount() >= 20)
 				{
 					if (jumpMove->IsLanding())
 					{
@@ -93,6 +93,10 @@ namespace ECS
 					if (jumpMove->IsLanding())
 					{
 						nowState = PlayerData::State::Walk;
+					}
+					else
+					{
+						nowState = PlayerData::State::Airworthiness;
 					}
 				}
 				if (motionCnt.GetCurrentCount() >= 8)
@@ -195,7 +199,7 @@ namespace ECS
 		PlayerData	data;
 		Counter		motionCnt;
 		TriggerJumpMove* jumpMove;
-		HealthCounter* health;
+		EntityHealth* health;
 		bool motionEndFlag;
 	};
 }
