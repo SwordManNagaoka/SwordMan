@@ -21,6 +21,7 @@ void GameController::ResourceLoad()
 	ResourceManager::GetGraph().LoadDiv("image/enemy02.png", "enemy2", 4, 4, 1, 96, 96);
 	ResourceManager::GetGraph().LoadDiv("image/enemy03.png", "enemy3", 6, 6, 1, 96, 96);
 	ResourceManager::GetGraph().LoadDiv("image/enemy04.png", "enemy4", 4, 4, 1, 96, 96);
+	ResourceManager::GetGraph().LoadDiv("image/goal.png", "goal", 1, 1, 1, 144, 192);
 }
 
 GameController::GameController()

@@ -24,7 +24,7 @@ public:
 	StageLoader(const std::string& mapParamPath)
 	{
 		//ファイルを開く
-		std::ifstream fin(DXFilieRead().GetPath(mapParamPath));
+		std::ifstream fin(DXFilieRead().GetPath(mapParamPath, "/mapData.txt"));
 		if (fin.is_open() == 0)
 		{
 			printfDx("Error!!!");
@@ -71,10 +71,10 @@ public:
 		}
 
 		//マップ構成ファイルを開く
-		std::ifstream mapfin(DXFilieRead().GetPath(mapParam.mapDataPath));
-		std::ifstream enemyfin(DXFilieRead().GetPath(mapParam.enemyConstitutionPath));
-		if ((mapfin.is_open() == 0)/* ||
-			(enemyfin.is_open() == 0)*/)
+		std::ifstream mapfin(DXFilieRead().GetPath(mapParam.mapDataPath, "/map.txt"));
+		std::ifstream enemyfin(DXFilieRead().GetPath(mapParam.enemyConstitutionPath, "/enemy.txt"));
+		if ((mapfin.is_open() == 0) ||
+			(enemyfin.is_open() == 0))
 		{
 			printfDx("Error!!!");
 		}
@@ -85,7 +85,7 @@ public:
 			for (size_t x = 0; x < mapParam.mapWidth; ++x)
 			{
 				mapfin >> mapData[y][x];
-				//enemyfin >> enemyData[y][x];
+				enemyfin >> enemyData[y][x];
 			}
 		}
 		mapfin.close();
@@ -94,13 +94,13 @@ public:
 		//敵種類データの読み込み
 		for (size_t i = 0; i < mapParam.enemyDataPath.size(); ++i)
 		{
-			std::ifstream enemyfin(DXFilieRead().GetPath(mapParam.enemyDataPath[i]));
-			enemyfin >> mapParam.enemyData[i].size.x >> mapParam.enemyData[i].size.y
-					 >> mapParam.enemyData[i].imageName
-					 >> mapParam.enemyData[i].animNum
-					 >> mapParam.enemyData[i].changeAnimFrameTime
-					 >> mapParam.enemyData[i].moveSpeed
-					 >> mapParam.enemyData[i].jumpPower;
+			std::ifstream enemyfin(DXFilieRead().GetPath(mapParam.enemyDataPath[i], "/enemyData.txt"));
+			enemyfin >> mapParam.enemyData[i].size.x >> mapParam.enemyData[i].size.y >>
+						mapParam.enemyData[i].imageName >>
+						mapParam.enemyData[i].animNum >>
+						mapParam.enemyData[i].changeAnimFrameTime >>
+						mapParam.enemyData[i].moveSpeed >>
+						mapParam.enemyData[i].jumpPower;
 			enemyfin.close();
 		}
 	}

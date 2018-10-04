@@ -18,7 +18,7 @@ namespace Scene
 
 		mapCreator.SetMapParam(mapLoader.GetStageParam());
 		mapCreator.FillUpFlatMap(ECS::MapArcheType());
-		mapCreator.Run(&mapLoader.GetStageData()/*, &mapLoader.GetEnemyData()*/);
+		mapCreator.Run(&mapLoader.GetStageData(), &mapLoader.GetEnemyData());
 
 		//敵の生成
 		/*ECS::EnemyCommonData data;
@@ -63,7 +63,7 @@ namespace Scene
 	}
 	void Game::Update()
 	{
-		mapCreator.Run(&mapLoader.GetStageData()/*, &mapLoader.GetEnemyData()*/);
+		mapCreator.Run(&mapLoader.GetStageData(), &mapLoader.GetEnemyData());
 		auto& player = ECS::EcsSystem::GetManager().GetEntitiesByGroup(ENTITY_GROUP::Player);
 		auto& ground = ECS::EcsSystem::GetManager().GetEntitiesByGroup(ENTITY_GROUP::Ground);
 		//地形との衝突応答を行う

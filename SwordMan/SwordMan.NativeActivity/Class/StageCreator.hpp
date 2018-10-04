@@ -112,9 +112,13 @@ private:
 
 		for (int y = 0; y < mapParam.mapHeight; ++y)
 		{
+			int en = enemyConstitution[y][x];
+			if (en < 0)
+				continue;
+
 			Vec2 pos(float(System::SCREEN_WIDIH + (i * mapParam.chipSize)), float(y * mapParam.chipSize));
-			Vec2 velocity(float(mapParam.xSpeed), 0.f);
-			enemyArcheType(mapParam.enemyData[enemyConstitution[y][x]], enemyConstitution[y][x]);
+			mapParam.enemyData[en].pos = pos;
+			enemyArcheType(mapParam.enemyData[en], en);
 		}
 	}
 
