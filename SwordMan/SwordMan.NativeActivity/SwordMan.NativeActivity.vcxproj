@@ -241,6 +241,7 @@
   <ItemGroup>
     <ClInclude Include="ArcheType\AttackCollision.hpp" />
     <ClInclude Include="ArcheType\Enemy.hpp" />
+    <ClInclude Include="ArcheType\Health.hpp" />
     <ClInclude Include="ArcheType\Map.hpp" />
     <ClInclude Include="ArcheType\Player.hpp" />
     <ClInclude Include="Class\DXFilieRead.hpp" />
@@ -267,6 +268,7 @@
     <ClInclude Include="Components\CorrectionPosition.hpp" />
     <ClInclude Include="Components\EnemyDefaultMove.hpp" />
     <ClInclude Include="Components\HealthCounter.hpp" />
+    <ClInclude Include="Components\HealthRelationUI.hpp" />
     <ClInclude Include="Components\Jump.hpp" />
     <ClInclude Include="Components\MapMove.hpp" />
     <ClInclude Include="Components\OutsideOfScreen.hpp" />

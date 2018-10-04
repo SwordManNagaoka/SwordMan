@@ -46,7 +46,7 @@ namespace ECS
 					break;
 				case PlayerData::State::Jump:
 				{
-					if (think.GetNowMotionCnt().GetCurrentCount() == 0)
+					if (think.GetNowMotionCnt() == 0)
 					{
 						jumpMove->SetJumpTrigger(true);
 					}
@@ -61,32 +61,50 @@ namespace ECS
 					jumpMove->SetJumpTrigger(false);
 					break;
 				case PlayerData::State::Attack:
-					if (think.GetNowMotionCnt().GetCurrentCount() == 0)
+					if (think.GetNowMotionCnt() == 0)
 					{
 						auto pos = entity->GetComponent<Position>().val;
 						SwordAttackCollision()(Vec2(pos.x ,pos.y), Vec2(96.0f, 96.0f), 30);
 					}
 					break;
 				case PlayerData::State::JumpAttack:
-					if (think.GetNowMotionCnt().GetCurrentCount() == 0)
+					if (think.GetNowMotionCnt() == 0)
 					{
 						entity->DeleteComponent<AnimationDraw>();
 						entity->AddComponent<AnimationDraw>("rolling").Offset(Vec2(-96.0f,-96.0f));
-						entity->GetComponent<AnimationController>().SetAnimationTime(4, 4);
+						entity->GetComponent<AnimationController>().SetAnimationTime(2, 4);
 
 						auto pos = entity->GetComponent<Position>().val;
-						JumpAttackCollision()(Vec2(pos.x,pos.y), Vec2(96.0f, 96.0f), 20);
+						JumpAttackCollision()(Vec2(pos.x,pos.y), Vec2(3*96.0f, 3*96.0f), 20);
 					}
 					if (think.CheckMotionCancel())
 					{
-						entity->DeleteComponent<AnimationDraw>();
-						entity->AddComponent<ECS::AnimationDraw>("player");
-						entity->GetComponent<ECS::AnimationController>().SetAnimationTime(20, 2);
+						NormalAnimation();
+						auto weapon = ECS::EcsSystem::GetManager().GetEntitiesByGroup(ENTITY_GROUP::Wepon);
+						for (const auto& w : weapon)
+						{
+							w->Destroy();
+						}
 					}
 					break;
 				case PlayerData::State::Damage:
+					if (think.GetNowMotionCnt() == 1)
+					{
+						DamageAnimation();
+					}
+					if (think.CheckMotionCancel())
+					{
+						entity->GetComponent<AnimationController>().SetAnimationTime(20,2);
+					}
 					break;
 				case PlayerData::State::Death:
+					if (think.GetNowMotionCnt() == 1)
+					{
+						if (!entity->HasComponent<KillEntity>())
+						{
+							entity->AddComponent<KillEntity>(30);
+						}
+					}
 					break;
 				}
 			}
@@ -97,6 +115,22 @@ namespace ECS
 		}
 	private:
 		void	Draw3D() override {}
+		void DamageAnimation()
+		{
+			entity->AddComponent<ECS::AnimationController>().SetAnimationTime(8, 4,2);
+		}
+		void JumpDamageAnimation()
+		{
+			entity->DeleteComponent<ECS::AnimationDraw>();
+			entity->AddComponent<ECS::AnimationDraw>("rollingDamage");
+			entity->AddComponent<ECS::AnimationController>().SetAnimationTime(7, 8,4);
+		}
+		void NormalAnimation()
+		{
+			entity->DeleteComponent<ECS::AnimationDraw>();
+			entity->AddComponent<ECS::AnimationDraw>("player");
+			entity->GetComponent<ECS::AnimationController>().SetAnimationTime(20, 2);
+		}
 	private:
 		TriggerJumpMove* jumpMove;
 		Think* think;

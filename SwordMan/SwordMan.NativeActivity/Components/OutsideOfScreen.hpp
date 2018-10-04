@@ -34,7 +34,12 @@ namespace ECS
 		{
 			pos = &entity->GetComponent<Position>();
 			float sizeX = entity->GetComponent<HitBase>().w();
+			float sizeY = entity->GetComponent<HitBase>().h();
 			if (pos->val.x < 0 - sizeX)
+			{
+				entity->GetComponent<Think>().ChangeMotion(PlayerData::State::Death);
+			}
+			if (pos->val.y > System::SCREEN_HEIGHT + sizeY)
 			{
 				entity->GetComponent<Think>().ChangeMotion(PlayerData::State::Death);
 			}

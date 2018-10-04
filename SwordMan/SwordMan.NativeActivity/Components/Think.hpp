@@ -36,6 +36,8 @@ namespace ECS
 		{
 			PlayerData::State	nowState = data.state;
 			
+			
+			//個別の状態遷移
 			switch (nowState)
 			{
 			case PlayerData::State::Walk:
@@ -93,7 +95,7 @@ namespace ECS
 						nowState = PlayerData::State::Walk;
 					}
 				}
-				if (motionCnt.GetCurrentCount() > 16)
+				if (motionCnt.GetCurrentCount() >= 8)
 				{
 					motionEndFlag = true;
 				}
@@ -111,42 +113,44 @@ namespace ECS
 				{
 					nowState = PlayerData::State::Death;
 				}
-				if (motionCnt.GetCurrentCount() >= 30)
+				if (motionEndFlag)
 				{
 					if (jumpMove->IsLanding())
 					{
 						nowState = PlayerData::State::Walk;
 					}
+					else
+					{
+						nowState = PlayerData::State::Airworthiness;
+					}
+				}
+				if (motionCnt.GetCurrentCount() >= 30)
+				{
+					motionEndFlag = true;
 				}
 				break;
 			case PlayerData::State::Death:
-				if (!entity->HasComponent<KillEntity>())
-				{
-					entity->AddComponent<KillEntity>(30);
-				}
 				break;
 			}
 			motionCnt.Add();
 			UpdateState(nowState);
 		}
-		void	Draw2D() override
-		{
-			//printfDx("状態:%d", data.state);
-		}
-		//!@brief	現在の状態を取得
-		PlayerData::State	GetNowState() const
+		void	Draw2D() override {}
+	public:
+		//現在の状態を取得
+		const PlayerData::State&	GetNowState() const
 		{
 			return data.state;
 		}
-		//!@brief	現在のモーションカウントを取得
-		Counter	GetNowMotionCnt() const
+		//現在のモーションカウントを取得
+		const int	GetNowMotionCnt() const
 		{
-			return motionCnt;
+			return motionCnt.GetCurrentCount();
 		}
 		//モーションを変化させます
 		void	ChangeMotion(const PlayerData::State& motionState)
 		{
-			data.state = motionState;
+			UpdateState(motionState);
 		}
 		//モーションの終了かのどうかのチェック
 		//true:終了 false:終了していない
@@ -155,9 +159,7 @@ namespace ECS
 			return motionEndFlag;
 		}
 	private:
-		void	Draw3D() override
-		{
-		}
+		void	Draw3D() override {}
 		bool	UpdateState(const PlayerData::State& nowState)
 		{
 			if (data.state == nowState) { return false; }

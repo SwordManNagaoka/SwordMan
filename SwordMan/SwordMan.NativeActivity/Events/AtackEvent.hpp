@@ -37,17 +37,17 @@ namespace Event
 
 		static void PlayerToEnemy()
 		{
-			const auto& players = ECS::EcsSystem().GetManager().GetEntitiesByGroup(ENTITY_GROUP::Player);
+			const auto& player = ECS::EcsSystem().GetManager().GetEntitiesByGroup(ENTITY_GROUP::Player);
 			const auto& enemys = ECS::EcsSystem().GetManager().GetEntitiesByGroup(ENTITY_GROUP::Enemy);
-			for (const auto& player : players)
-			{
-				for (const auto& enemy : enemys)
+			
+			if (player.size() == 0) { return; }
+			for (const auto& enemy : enemys)
+			{	
+				if (Collision::BoxAndBox<ECS::HitBase, ECS::HitBase>(*player[0], *enemy))
 				{
-					if (Collision::BoxAndBox<ECS::HitBase, ECS::HitBase>(*player, *enemy))
-					{
-						player->GetComponent<ECS::Think>().ChangeMotion(PlayerData::State::Damage);
-						break;
-					}
+					if (player[0]->GetComponent<ECS::Think>().GetNowState() == PlayerData::State::Damage) { return; }
+					player[0]->GetComponent<ECS::Think>().ChangeMotion(PlayerData::State::Damage);
+					break;
 				}
 			}
 		}

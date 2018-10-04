@@ -28,11 +28,11 @@ namespace ECS
 			ECS::Entity*	entity = &ECS::EcsSystem::GetManager().AddEntity();
 			entity->AddComponent<Position>(pos);
 			entity->AddComponent<Rotation>();
-			entity->AddComponent<HitBase>(size.x,size.y).SetColor(255, 0, 0);
+			entity->AddComponent<HitBase>(size.x,size.y).SetOffset(16.0f,0.0f);
 			entity->AddComponent<Physics>();
 			entity->AddComponent<TriggerJumpMove>(-24);
 			entity->AddComponent<SideHitBase>(1.0f,96.0f).SetColor(0,255,0);
-			entity->GetComponent<SideHitBase>().SetOffset(96.0f, 0.0f);
+			entity->GetComponent<SideHitBase>().SetOffset(82.0f, 0.0f);
 			entity->AddComponent<CorrectionPosition>(pos);
 			entity->AddComponent<OutsideOfScreen>();
 			entity->AddComponent<HealthCounter>(3);

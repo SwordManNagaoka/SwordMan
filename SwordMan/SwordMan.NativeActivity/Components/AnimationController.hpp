@@ -32,23 +32,24 @@ namespace ECS
 		{
 			frameTime = 60;
 			chipNumber = 1;
+			startArrayNumber = 0;
 		}
 		AnimationController(const int frameTime, const int chipNumber)
 			: frameTime(frameTime)
 			, chipNumber(chipNumber)
+			, startArrayNumber(0)
 		{
 		}
 		void	Initialize() override
 		{
 			animationID = 0;
 			animationCnt.Reset();
-			//entity->GetComponent<ECS::AnimationDraw>().SetIndex(animationID);
 		}
 		void	Update() override
 		{
 			int currentTime = animationCnt.GetCurrentCount();
 			if (frameTime == 0) { return; }
-			animationID = currentTime / frameTime % chipNumber;
+			animationID = startArrayNumber + (currentTime / frameTime % chipNumber);
 			animationCnt.Add();
 		}
 		void	Draw2D() override
@@ -64,15 +65,17 @@ namespace ECS
 		//!@brief	アニメーションを切り替えるフレーム時間と枚数を設定
 		//!@param[in]	frameTime	フレーム時間
 		//!@param[in]	chipNumber	画像チップの枚数
-		void	SetAnimationTime(const int frameTime, const int chipNumber)
+		void	SetAnimationTime(const int frameTime, const int chipNumber,const int startArrayNum = 0)
 		{
 			this->frameTime = frameTime;
 			this->chipNumber = chipNumber;
+			startArrayNumber = startArrayNum;
 			animationCnt.Reset();
 		}
 	private:
 		int		frameTime;
 		int		chipNumber;
+		int		startArrayNumber;
 		int		animationID;
 		Counter	animationCnt;
 	};

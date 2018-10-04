@@ -7,7 +7,7 @@
 #include "../../Class/Scene/SceneManager.hpp"
 #include "../../Class/TouchInput.hpp"
 #include "../../ArcheType/Enemy.hpp"
-
+#include "../../ArcheType/Health.hpp"
 
 namespace Scene
 {
@@ -18,48 +18,12 @@ namespace Scene
 
 		mapCreator.SetMapParam(mapLoader.GetStageParam());
 		mapCreator.FillUpFlatMap(ECS::MapArcheType());
+		//ステージの生成
 		mapCreator.Run(&mapLoader.GetStageData(), &mapLoader.GetEnemyData());
-
-		//敵の生成
-		/*ECS::EnemyCommonData data;
-		data.imageName = "enemy1";
-		data.pos = Vec2(1500, 100);
-		data.size = Vec2(96, 96);
-		data.animNum = 2;
-		data.changeAnimFrameTime = 20;
-		data.jumpPower = 0;
-		data.moveSpeed = 0;
-		ECS::EnemyCommonArcheType()(data, 0);
-
-		ECS::EnemyCommonData data2;
-		data2.imageName = "enemy2";
-		data2.pos = Vec2(2100, 150);
-		data2.size = Vec2(96, 96);
-		data2.animNum = 4;
-		data2.changeAnimFrameTime = 10;
-		data2.jumpPower = 0.0f;
-		data2.moveSpeed = 3.0f;
-		ECS::EnemyCommonArcheType()(data2, 1);
-
-		ECS::EnemyCommonData data3;
-		data3.imageName = "enemy3";
-		data3.pos = Vec2(1600, 130);
-		data3.size = Vec2(96, 96);
-		data3.animNum = 5;
-		data3.changeAnimFrameTime = 45;
-		data3.jumpPower = -12.0f;
-		data3.moveSpeed = 0.0f;
-		ECS::EnemyCommonArcheType()(data3, 2);
-
-		ECS::EnemyCommonData data4;
-		data4.imageName = "enemy4";
-		data4.pos = Vec2(2000, 160);
-		data4.size = Vec2(96, 96);
-		data4.animNum = 4;
-		data4.changeAnimFrameTime = 10;
-		data4.jumpPower = 0.0f;
-		data4.moveSpeed = 0.0f;
-		ECS::EnemyCommonArcheType()(data4, 3);*/
+		for (int i = 0; i < 3; ++i)
+		{
+			ECS::HealthArcheType()(i,Vec2(500 + i * 144, 640));
+		}
 	}
 	void Game::Update()
 	{

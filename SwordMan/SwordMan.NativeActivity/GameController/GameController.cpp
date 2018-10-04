@@ -1,4 +1,4 @@
-﻿#include "GameController.h"
+#include "GameController.h"
 #include "../ResourceManager/ResourceManager.hpp"
 #include "../../Components/BasicComponents.hpp"
 #include "../../Components/Renderer.hpp"
@@ -14,14 +14,16 @@
 
 void GameController::ResourceLoad()
 {
-	ResourceManager::GetGraph().LoadDiv("image/player.png", "player", 2, 2, 1, 96, 96);
+	ResourceManager::GetGraph().Load("image/a.png", "health");
 	ResourceManager::GetGraph().LoadDiv("image/sword.png", "sword", 5, 5, 1, 192, 192);
 	ResourceManager::GetGraph().LoadDiv("image/rolling.png", "rolling", 4, 4, 1, 288, 288);
 	ResourceManager::GetGraph().LoadDiv("image/enemy01.png", "enemy1", 2, 2, 1, 96, 96);
 	ResourceManager::GetGraph().LoadDiv("image/enemy02.png", "enemy2", 4, 4, 1, 96, 96);
 	ResourceManager::GetGraph().LoadDiv("image/enemy03.png", "enemy3", 6, 6, 1, 96, 96);
 	ResourceManager::GetGraph().LoadDiv("image/enemy04.png", "enemy4", 4, 4, 1, 96, 96);
+
 	ResourceManager::GetGraph().LoadDiv("image/goal.png", "goal", 1, 1, 1, 144, 192);
+	ResourceManager::GetGraph().LoadDiv("image/player.png", "player", 6, 2, 3, 96, 96);
 }
 
 GameController::GameController()
@@ -30,7 +32,7 @@ GameController::GameController()
 	ResourceLoad();
 	pManager = &ECS::EcsSystem::GetManager();	
 	//初期シーン
-	ECS::PlayerArcheType()(Vec2(250,300),Vec2(96,96));
+	ECS::PlayerArcheType()(Vec2(250,300),Vec2(64,96));
 	
 	Scene::SceneManager::Get().ChangeScene(Scene::SceneManager::State::Game);
 

@@ -48,7 +48,7 @@ namespace ECS
 			entity->AddComponent<ECS::Position>(pos);
 			entity->AddComponent<ECS::ChaseEntity>(player[0]);
 			entity->AddComponent<ECS::HitBase>(size.x,size.y).SetColor(128, 0, 0);
-			entity->GetComponent<ECS::HitBase>().SetOffset(size.x, 0.0f);
+			entity->GetComponent<ECS::HitBase>().SetOffset(-size.x / 3.0f, -size.y / 3.0f);
 			entity->AddComponent<ECS::KillEntity>(killTime);
 			entity->AddGroup(ENTITY_GROUP::Wepon);
 			return entity;
