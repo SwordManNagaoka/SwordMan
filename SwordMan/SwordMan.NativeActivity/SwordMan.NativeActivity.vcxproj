@@ -241,7 +241,7 @@
   <ItemGroup>
     <ClInclude Include="ArcheType\AttackCollision.hpp" />
     <ClInclude Include="ArcheType\Enemy.hpp" />
-    <ClInclude Include="ArcheType\Health.hpp" />
+    <ClInclude Include="ArcheType\HealthUI.hpp" />
     <ClInclude Include="ArcheType\Map.hpp" />
     <ClInclude Include="ArcheType\Player.hpp" />
     <ClInclude Include="Class\DXFilieRead.hpp" />

@@ -100,10 +100,7 @@ namespace ECS
 				case PlayerData::State::Death:
 					if (think.GetNowMotionCnt() == 1)
 					{
-						if (!entity->HasComponent<KillEntity>())
-						{
-							entity->AddComponent<KillEntity>(30);
-						}
+						entity->Destroy();
 					}
 					break;
 				}

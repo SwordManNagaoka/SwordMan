@@ -94,6 +94,10 @@ namespace ECS
 					{
 						nowState = PlayerData::State::Walk;
 					}
+					else
+					{
+						nowState = PlayerData::State::Airworthiness;
+					}
 				}
 				if (motionCnt.GetCurrentCount() >= 8)
 				{

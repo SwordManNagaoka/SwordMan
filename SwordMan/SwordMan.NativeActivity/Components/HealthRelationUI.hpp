@@ -35,11 +35,13 @@ namespace ECS
 		}
 		void Initialize() override
 		{
-			auto& players = ECS::EcsSystem::GetManager().GetEntitiesByGroup(ENTITY_GROUP::Player);
-			health = &players[0]->GetComponent<HealthCounter>();
+			
 		}
 		void Update() override
 		{
+			auto& players = ECS::EcsSystem::GetManager().GetEntitiesByGroup(ENTITY_GROUP::Player);
+			if (players.size() == 0) { return; }
+			health = &players[0]->GetComponent<HealthCounter>();
 			if (id == health->GetCurrentHealth())
 			{
 				entity->Destroy();

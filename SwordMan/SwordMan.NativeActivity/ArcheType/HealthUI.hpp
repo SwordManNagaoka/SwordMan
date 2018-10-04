@@ -12,7 +12,7 @@
 
 namespace ECS
 {
-	class HealthArcheType : public IArcheType<const int, const Vec2&>
+	class HealthUIArcheType : public IArcheType<const int, const Vec2&>
 	{
 	public:
 		ECS::Entity* operator()(const int id, const Vec2& pos)
