@@ -244,9 +244,9 @@
     <ClInclude Include="ArcheType\Map.hpp" />
     <ClInclude Include="ArcheType\Player.hpp" />
     <ClInclude Include="Class\DXFilieRead.hpp" />
-    <ClInclude Include="Class\MapCreator.hpp" />
-    <ClInclude Include="Class\MapLoader.hpp" />
-    <ClInclude Include="Class\MapData.hpp" />
+    <ClInclude Include="Class\StageCreator.hpp" />
+    <ClInclude Include="Class\StageLoader.hpp" />
+    <ClInclude Include="Class\StageData.hpp" />
     <ClInclude Include="Class\Scene\Game.h" />
     <ClInclude Include="Class\Scene\Menu.h" />
     <ClInclude Include="Class\Scene\Pause.h" />

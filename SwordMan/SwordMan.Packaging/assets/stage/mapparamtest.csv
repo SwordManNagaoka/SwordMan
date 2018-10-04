@@ -1,6 +1,13 @@
-maptest stage/maptest.csv 
-13 8 
-96 
-5 
-backimg01.png backimg02.png backimg03.png 
-image/ground01.png 
+maptest
+stage/stage01_map.csv
+stage/stage01_enemy.csv
+200 8
+96
+5
+backimg01.png backimg02.png backimg03.png
+image/ground01.png
+enemy/enemy01.csv
+enemy/enemy02.csv
+enemy/enemy03.csv
+enemy/enemy04.csv
+enemy/goal.csv

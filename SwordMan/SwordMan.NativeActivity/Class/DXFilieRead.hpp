@@ -13,7 +13,7 @@ class DXFilieRead final
 private:
 	char pathBuffer[1024];
 public:
-	const char* GetPath(const std::string& path)
+	const char* GetPath(const std::string& path, const char* tempFileName)
 	{
 		//ファイルを開く
 		int handle = FileRead_open(path.c_str());
@@ -39,7 +39,7 @@ public:
 		//アプリのデータ保存用のディレクトリパスを取得する
 		GetInternalDataPath(pathBuffer, sizeof(pathBuffer));
 		//ディレクトリパスにディレクトリ区切りの『/』とテンポラリファイルの名前を追加する
-		strcat(pathBuffer, "/tempfile.txt");
+		strcat(pathBuffer, tempFileName);
 		//テンポラリファイルを書き込み用に開く
 		FILE* fp = fopen(pathBuffer, "wb");
 		if (fp != NULL)

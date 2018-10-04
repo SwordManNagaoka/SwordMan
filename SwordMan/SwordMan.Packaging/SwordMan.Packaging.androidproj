@@ -119,17 +119,25 @@
     </AntPackage>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <Content Include="assets\enemy\enemy01.csv" />
+    <Content Include="assets\enemy\enemy02.csv" />
+    <Content Include="assets\enemy\enemy03.csv" />
+    <Content Include="assets\enemy\enemy04.csv" />
+    <Content Include="assets\enemy\goal.csv" />
     <Content Include="assets\image\a.png" />
     <Content Include="assets\image\enemy01.png" />
     <Content Include="assets\image\enemy02.png" />
     <Content Include="assets\image\enemy03.png" />
     <Content Include="assets\image\enemy04.png" />
+    <Content Include="assets\image\goal.png" />
     <Content Include="assets\image\ground01.png" />
     <Content Include="assets\image\player.png" />
     <Content Include="assets\image\rolling.png" />
     <Content Include="assets\image\sword.png" />
     <Content Include="assets\image\tekito.png" />
     <Content Include="assets\image\temp.png" />
+    <Content Include="assets\stage\stage01_enemy.csv" />
+    <Content Include="assets\stage\stage01_map.csv" />
     <Content Include="assets\stage\mapparamtest.csv" />
     <Content Include="assets\stage\maptest.csv" />
     <Content Include="res\drawable\icon.png" />
