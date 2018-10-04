@@ -30,7 +30,7 @@ namespace ECS
 			entity->AddComponent<ECS::KillEntity>(killTime);
 			entity->AddComponent<ECS::Direction>();
 			entity->AddComponent<ECS::AnimationDraw>("sword").Offset(Vec2(-12.0f, -84.0f));
-			entity->AddComponent<ECS::AnimationController>(5, 5);
+			entity->AddComponent<ECS::AnimationController>(4, 5);
 			entity->AddGroup(ENTITY_GROUP::Wepon);
 			return entity;
 		}

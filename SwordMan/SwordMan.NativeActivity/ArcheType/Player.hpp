@@ -13,7 +13,7 @@
 #include "../Components/Think.hpp"
 #include "../Components/Behavior.hpp"
 #include "../Components/AnimationController.hpp"
-#include "../Components/HealthCounter.hpp"
+#include "../Components/EntityHealth.hpp"
 #include "../Components/CorrectionPosition.hpp"
 #include "../Components/OutsideOfScreen.hpp"
 #include "../Components/SideHitBase.hpp"
@@ -29,13 +29,13 @@ namespace ECS
 			entity->AddComponent<Position>(pos);
 			entity->AddComponent<Rotation>();
 			entity->AddComponent<HitBase>(size.x,size.y).SetOffset(16.0f,0.0f);
-			entity->AddComponent<Physics>();
-			entity->AddComponent<TriggerJumpMove>(-24);
+			entity->AddComponent<Physics>().SetGravity(9.8f / 60 / 60 * 32 * 5);
+			entity->AddComponent<TriggerJumpMove>(-40);
 			entity->AddComponent<SideHitBase>(1.0f,96.0f).SetColor(0,255,0);
-			entity->GetComponent<SideHitBase>().SetOffset(83.0f, 0.0f);
+			entity->GetComponent<SideHitBase>().SetOffset(84.0f, 0.0f);
 			entity->AddComponent<CorrectionPosition>(pos);
 			entity->AddComponent<OutsideOfScreen>();
-			entity->AddComponent<HealthCounter>(3);
+			entity->AddComponent<EntityHealth>(3);
 			entity->AddComponent<Think>();
 			entity->AddComponent<Behavior>();
 			entity->AddComponent<Direction>();

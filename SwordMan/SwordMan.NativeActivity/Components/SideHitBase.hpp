@@ -76,7 +76,6 @@ namespace ECS
 				}
 			}
 			LeftMove();
-			DrawFormatString(0, 0, GetColor(255, 0, 0), "%d : ", entity->GetComponent<Velocity>().val.y);
 		}
 		void Draw2D() override
 		{
