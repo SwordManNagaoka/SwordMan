@@ -30,15 +30,11 @@ namespace ECS
 	public:
 		AnimationController()
 		{
-			widthAnim = AnimationData();
-			heightAnim = AnimationData();
 			widthAnim.frameTime = 60;
 			widthAnim.chipSize = 1;
 		}
 		AnimationController(const int frameTime, const int chipNumber)
 		{
-			widthAnim = AnimationData();
-			heightAnim = AnimationData();
 			widthAnim.frameTime = frameTime;
 			widthAnim.chipSize = chipNumber;
 			widthAnim.offsetAnim = 0;
@@ -126,6 +122,14 @@ namespace ECS
 			{
 				heightAnim = AnimationData();
 			}
+		}
+		//縦のアニメーション番号を設定
+		void SetHeightAnimationNumber(const int heightAnimNumber)
+		{
+			heightAnim.baseData.animationNumber = heightAnimNumber;
+			heightAnim.frameTime = 0;
+			heightAnim.chipSize = 1;
+			animationID = widthAnim.baseData.animationNumber + widthAnim.chipSize * heightAnim.baseData.animationNumber;
 		}
 	private:
 		struct BaseData
