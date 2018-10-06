@@ -8,6 +8,7 @@
 #include "../../Class/TouchInput.hpp"
 #include "../../ArcheType/Enemy.hpp"
 #include "../../ArcheType/HealthUI.hpp"
+#include "../../ArcheType/Score.hpp"
 
 namespace Scene
 {
@@ -24,6 +25,7 @@ namespace Scene
 		{
 			ECS::HealthUIArcheType()(i,Vec2(500 + i * 144, 640));
 		}
+		ECS::TotalScoreArcheType()("font", Vec2(0, 0));
 	}
 	void Game::Update()
 	{

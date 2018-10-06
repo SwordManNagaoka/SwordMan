@@ -244,6 +244,7 @@
     <ClInclude Include="ArcheType\HealthUI.hpp" />
     <ClInclude Include="ArcheType\Map.hpp" />
     <ClInclude Include="ArcheType\Player.hpp" />
+    <ClInclude Include="ArcheType\Score.hpp" />
     <ClInclude Include="Class\DXFilieRead.hpp" />
     <ClInclude Include="Class\StageCreator.hpp" />
     <ClInclude Include="Class\StageLoader.hpp" />
@@ -269,13 +270,16 @@
     <ClInclude Include="Components\EnemyDefaultMove.hpp" />
     <ClInclude Include="Components\EntityHealthState.hpp" />
     <ClInclude Include="Components\HealthRelationUI.hpp" />
+    <ClInclude Include="Components\ImageFontDraw.hpp" />
     <ClInclude Include="Components\Jump.hpp" />
     <ClInclude Include="Components\MapMove.hpp" />
     <ClInclude Include="Components\OutsideOfScreen.hpp" />
     <ClInclude Include="Components\Renderer.hpp" />
     <ClInclude Include="Components\SideHitBase.hpp" />
     <ClInclude Include="Components\Think.hpp" />
+    <ClInclude Include="Components\TotalScoreDraw.hpp" />
     <ClInclude Include="ECS\ECS.hpp" />
+    <ClInclude Include="Events\AddScoreEvent.hpp" />
     <ClInclude Include="Events\AtackEvent.hpp" />
     <ClInclude Include="Events\ContinueTap.hpp" />
     <ClInclude Include="Events\EventManager.hpp" />
@@ -287,6 +291,7 @@
     <ClInclude Include="GameController\GameMain.hpp" />
     <ClInclude Include="ResourceManager\ResourceManager.hpp" />
     <ClInclude Include="System\System.hpp" />
+    <ClInclude Include="Utility\Converter.hpp" />
     <ClInclude Include="Utility\Counter.hpp" />
     <ClInclude Include="Utility\Easing.hpp" />
     <ClInclude Include="Utility\FPS.hpp" />

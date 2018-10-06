@@ -225,5 +225,20 @@
     <ClInclude Include="Components\EntityHealthState.hpp">
       <Filter>Components</Filter>
     </ClInclude>
+    <ClInclude Include="Components\ImageFontDraw.hpp">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\TotalScoreDraw.hpp">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="ArcheType\Score.hpp">
+      <Filter>ArcheType</Filter>
+    </ClInclude>
+    <ClInclude Include="Events\AddScoreEvent.hpp">
+      <Filter>Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\Converter.hpp">
+      <Filter>Utility</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

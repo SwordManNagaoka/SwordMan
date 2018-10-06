@@ -129,6 +129,7 @@
     <Content Include="assets\image\enemy02.png" />
     <Content Include="assets\image\enemy03.png" />
     <Content Include="assets\image\enemy04.png" />
+    <Content Include="assets\image\font_text.png" />
     <Content Include="assets\image\goal.png" />
     <Content Include="assets\image\ground01.png" />
     <Content Include="assets\image\player.png" />

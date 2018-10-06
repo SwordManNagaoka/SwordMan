@@ -47,6 +47,7 @@ namespace ECS
 	{
 	private:
 		Position * pos = nullptr;
+		Vec2 offset;
 		RECT rect;
 		std::string name;
 	public:
@@ -65,6 +66,7 @@ namespace ECS
 		void Initialize() override
 		{
 			pos = &entity->GetComponent<Position>();
+			offset = { 0, 0 };
 		}
 		void Update() override {}
 		void Draw2D() override
@@ -72,13 +74,27 @@ namespace ECS
 			if (ResourceManager::GetGraph().IsExistenceHandle(name))
 			{
 				DrawRectGraphF(
-					pos->val.x, pos->val.y,
+					pos->val.x + offset.x, pos->val.y + offset.y,
 					rect.left, rect.right,
 					rect.bottom,
 					rect.top,
 					ResourceManager::GetGraph().GetHandle(name),
 					true);
 			}
+		}
+		//描画矩形の設定・変更
+		void SetRect(const int srcX, const int srcY, const int width, const int height)
+		{
+			rect.left = srcX;
+			rect.right = srcY;
+			rect.bottom = width;
+			rect.top = height;
+		}
+		//描画位置をずらす
+		void SetOffset(const int drawX, const int drawY)
+		{
+			offset.x = drawX;
+			offset.y = drawY;
 		}
 	};
 	//分割画像描画用
