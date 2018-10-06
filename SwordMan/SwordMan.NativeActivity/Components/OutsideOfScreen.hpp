@@ -7,17 +7,15 @@
 #pragma once
 #include "../ECS/ECS.hpp"
 #include "../Utility/Vec.hpp"
-#include "../ResourceManager/ResourceManager.hpp"
 #include "../Components/BasicComponents.hpp"
 #include "../../Components/ComponentDatas/PlayerData.hpp"
 #include "../Components/Renderer.hpp"
-#include "../Components/Think.hpp"
-
+#include "../Components/EntityHealthState.hpp"
 
 namespace ECS
 {
 	//--------------------------------------------------------------
-	//画面外(左側のみ)に出たら、プレイヤーの状態をDeathにします
+	//画面外(左側のみ+落下)に出たら、プレイヤーの状態をDeathにします
 	//--------------------------------------------------------------
 	class OutsideOfScreen : public Component
 	{
@@ -35,13 +33,9 @@ namespace ECS
 			pos = &entity->GetComponent<Position>();
 			float sizeX = entity->GetComponent<HitBase>().w();
 			float sizeY = entity->GetComponent<HitBase>().h();
-			if (pos->val.x < 0 - sizeX)
+			if (pos->val.x < 0 - sizeX || pos->val.y > System::SCREEN_HEIGHT + sizeY)
 			{
-				entity->GetComponent<Think>().ChangeMotion(PlayerData::State::Death);
-			}
-			if (pos->val.y > System::SCREEN_HEIGHT + sizeY)
-			{
-				entity->GetComponent<Think>().ChangeMotion(PlayerData::State::Death);
+				entity->GetComponent<EntityHealthState>().ChangeState(EntityHealthState::State::Death);
 			}
 		}
 		void Draw2D() override {}

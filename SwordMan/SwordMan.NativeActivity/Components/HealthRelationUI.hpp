@@ -13,7 +13,7 @@
 #include "../../Class/TouchInput.hpp"
 #include "../Components/Renderer.hpp"
 #include "../Utility/Counter.hpp"
-#include "../../Components/EntityHealth.hpp"
+#include "../../Components/EntityHealthState.hpp"
 #include "../../GameController/GameController.h"
 
 
@@ -41,7 +41,7 @@ namespace ECS
 		{
 			auto& players = ECS::EcsSystem::GetManager().GetEntitiesByGroup(ENTITY_GROUP::Player);
 			if (players.size() == 0) { return; }
-			health = &players[0]->GetComponent<EntityHealth>();
+			health = &players[0]->GetComponent<EntityHealthState>();
 			if (id == health->GetCurrentHealth())
 			{
 				entity->Destroy();
@@ -53,7 +53,7 @@ namespace ECS
 	private:
 		void Draw3D() override {}
 	private:
-		EntityHealth* health;
+		EntityHealthState* health;
 		int id;
 	};
 }

@@ -267,7 +267,7 @@
     <ClInclude Include="Components\ComponentDatas\PlayerData.hpp" />
     <ClInclude Include="Components\CorrectionPosition.hpp" />
     <ClInclude Include="Components\EnemyDefaultMove.hpp" />
-    <ClInclude Include="Components\EntityHealth.hpp" />
+    <ClInclude Include="Components\EntityHealthState.hpp" />
     <ClInclude Include="Components\HealthRelationUI.hpp" />
     <ClInclude Include="Components\Jump.hpp" />
     <ClInclude Include="Components\MapMove.hpp" />

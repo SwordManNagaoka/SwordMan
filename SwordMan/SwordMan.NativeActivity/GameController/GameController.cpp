@@ -16,7 +16,7 @@ void GameController::ResourceLoad()
 {
 	ResourceManager::GetGraph().Load("image/a.png", "health");
 	ResourceManager::GetGraph().LoadDiv("image/sword.png", "sword", 5, 5, 1, 192, 192);
-	ResourceManager::GetGraph().LoadDiv("image/rolling.png", "rolling", 4, 4, 1, 288, 288);
+	ResourceManager::GetGraph().LoadDiv("image/rolling.png", "rolling", 12, 4, 3, 288, 288);	
 	ResourceManager::GetGraph().LoadDiv("image/enemy01.png", "enemy1", 2, 2, 1, 96, 96);
 	ResourceManager::GetGraph().LoadDiv("image/enemy02.png", "enemy2", 4, 4, 1, 96, 96);
 	ResourceManager::GetGraph().LoadDiv("image/enemy03.png", "enemy3", 6, 6, 1, 96, 96);
@@ -24,6 +24,7 @@ void GameController::ResourceLoad()
 
 	ResourceManager::GetGraph().LoadDiv("image/goal.png", "goal", 1, 1, 1, 144, 192);
 	ResourceManager::GetGraph().LoadDiv("image/player.png", "player", 6, 2, 3, 96, 96);
+
 }
 
 GameController::GameController()

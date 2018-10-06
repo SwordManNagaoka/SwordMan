@@ -70,10 +70,7 @@ namespace ECS
 				case PlayerData::State::JumpAttack:
 					if (think.GetNowMotionCnt() == 0)
 					{
-						entity->DeleteComponent<AnimationDraw>();
-						entity->AddComponent<AnimationDraw>("rolling").Offset(Vec2(-96.0f,-96.0f));
-						entity->GetComponent<AnimationController>().SetAnimationTime(2, 4);
-
+						JumpAttackAnimation();
 						auto pos = entity->GetComponent<Position>().val;
 						JumpAttackCollision()(Vec2(pos.x,pos.y), Vec2(3*96.0f, 3*96.0f), 20);
 					}
@@ -87,46 +84,25 @@ namespace ECS
 						}
 					}
 					break;
-				case PlayerData::State::Damage:
-					if (think.GetNowMotionCnt() == 1)
-					{
-						DamageAnimation();
-					}
-					if (think.CheckMotionCancel())
-					{
-						entity->GetComponent<AnimationController>().SetAnimationTime(20,2);
-					}
-					break;
-				case PlayerData::State::Death:
-					if (think.GetNowMotionCnt() == 1)
-					{
-						entity->Destroy();
-					}
-					break;
 				}
 			}
 		}
-		void	Draw2D() override
-		{
-
-		}
+		void	Draw2D() override {}
 	private:
 		void	Draw3D() override {}
-		void DamageAnimation()
-		{
-			entity->AddComponent<ECS::AnimationController>().SetAnimationTime(8, 4,2);
-		}
-		void JumpDamageAnimation()
-		{
-			entity->DeleteComponent<ECS::AnimationDraw>();
-			entity->AddComponent<ECS::AnimationDraw>("rollingDamage");
-			entity->AddComponent<ECS::AnimationController>().SetAnimationTime(7, 8,4);
-		}
 		void NormalAnimation()
 		{
 			entity->DeleteComponent<ECS::AnimationDraw>();
 			entity->AddComponent<ECS::AnimationDraw>("player");
-			entity->GetComponent<ECS::AnimationController>().SetAnimationTime(20, 2);
+			entity->GetComponent<AnimationController>().SetWidthAnimation(20, 2);
+			entity->GetComponent<AnimationController>().SetIsHeightAnimation(false);
+		}
+		void JumpAttackAnimation()
+		{
+			entity->DeleteComponent<AnimationDraw>();
+			entity->AddComponent<AnimationDraw>("rolling").Offset(Vec2(-96.0f, -96.0f));
+			entity->GetComponent<AnimationController>().SetWidthAnimation(2, 4);
+			entity->GetComponent<AnimationController>().SetIsHeightAnimation(false);
 		}
 	private:
 		TriggerJumpMove* jumpMove;

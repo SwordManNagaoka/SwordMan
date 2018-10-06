@@ -10,7 +10,7 @@
 #include "../Collision/Collision.hpp"
 #include "../Components/BasicComponents.hpp"
 #include "../System/System.hpp"
-#include "../../Components/EntityHealth.hpp"
+#include "../../Components/EntityHealthState.hpp"
 
 
 namespace Event
@@ -45,8 +45,8 @@ namespace Event
 			{	
 				if (Collision::BoxAndBox<ECS::HitBase, ECS::HitBase>(*player[0], *enemy))
 				{
-					if (player[0]->GetComponent<ECS::Think>().GetNowState() == PlayerData::State::Damage) { return; }
-					player[0]->GetComponent<ECS::Think>().ChangeMotion(PlayerData::State::Damage);
+					if (player[0]->GetComponent<ECS::EntityHealthState>().GetCurrentState() == ECS::EntityHealthState::State::Damage) { return; }
+					player[0]->GetComponent<ECS::EntityHealthState>().ChangeState(ECS::EntityHealthState::State::Damage);
 					break;
 				}
 			}

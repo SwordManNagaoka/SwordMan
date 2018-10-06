@@ -14,8 +14,6 @@ struct PlayerData
 		Airworthiness,	//耐空
 		Attack,			//地面上の攻撃
 		JumpAttack,		//耐空の攻撃
-		Damage,			//ダメージ
-		Death			//死亡
 	};
 	State	state;
 };

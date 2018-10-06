@@ -30,27 +30,28 @@ namespace ECS
 	public:
 		AnimationController()
 		{
-			frameTime = 60;
-			chipNumber = 1;
-			startArrayNumber = 0;
+			widthAnim = AnimationData();
+			heightAnim = AnimationData();
+			widthAnim.frameTime = 60;
+			widthAnim.chipSize = 1;
 		}
 		AnimationController(const int frameTime, const int chipNumber)
-			: frameTime(frameTime)
-			, chipNumber(chipNumber)
-			, startArrayNumber(0)
 		{
+			widthAnim = AnimationData();
+			heightAnim = AnimationData();
+			widthAnim.frameTime = frameTime;
+			widthAnim.chipSize = chipNumber;
+			widthAnim.offsetAnim = 0;
 		}
 		void	Initialize() override
 		{
 			animationID = 0;
-			animationCnt.Reset();
+			widthAnim.baseData.isAnimation = true;
+			heightAnim.baseData.isAnimation = false;
 		}
 		void	Update() override
 		{
-			int currentTime = animationCnt.GetCurrentCount();
-			if (frameTime == 0) { return; }
-			animationID = startArrayNumber + (currentTime / frameTime % chipNumber);
-			animationCnt.Add();
+			Animation();
 		}
 		void	Draw2D() override
 		{
@@ -61,22 +62,89 @@ namespace ECS
 		}
 	private:
 		void	Draw3D() override {}
-	public:
-		//!@brief	アニメーションを切り替えるフレーム時間と枚数を設定
-		//!@param[in]	frameTime	フレーム時間
-		//!@param[in]	chipNumber	画像チップの枚数
-		void	SetAnimationTime(const int frameTime, const int chipNumber,const int startArrayNum = 0)
+	private:
+		//アニメーションを行う
+		void Animation()
 		{
-			this->frameTime = frameTime;
-			this->chipNumber = chipNumber;
-			startArrayNumber = startArrayNum;
-			animationCnt.Reset();
+			if (!widthAnim.baseData.isAnimation) { return; }
+			if (widthAnim.frameTime == 0) { return; }
+
+			int widthCurrentTime = widthAnim.baseData.animationCnt.GetCurrentCount();
+			int heightCurrentTime = heightAnim.baseData.animationCnt.GetCurrentCount();
+			
+			widthAnim.baseData.animationNumber
+				= widthCurrentTime / widthAnim.frameTime % widthAnim.chipSize;
+			widthAnim.baseData.animationCnt.Add();
+			
+			//横のみのアニメーション
+			animationID = widthAnim.baseData.animationNumber;
+
+			if (!heightAnim.baseData.isAnimation) { return; }
+			if (heightAnim.frameTime == 0) { return; }
+			heightAnim.baseData.animationNumber
+				= heightCurrentTime / heightAnim.frameTime % heightAnim.chipSize;
+			heightAnim.baseData.animationCnt.Add();
+
+			//横 + 縦のアニメーション
+			animationID = widthAnim.baseData.animationNumber + widthAnim.chipSize * heightAnim.baseData.animationNumber;
+		}
+	public:
+		//横のアニメーションをセット
+		//引数1: frameTime フレーム時間
+		//引数2: widthChipNumber 横の画像チップ数
+		//引数3: offsetAnimNumber アニメーション番号のオフセット
+		void SetWidthAnimation(const int frameTime,const int chipSize, const int offsetAnimNumber = 0)
+		{
+			widthAnim.frameTime = frameTime;
+			widthAnim.chipSize = chipSize;
+			widthAnim.offsetAnim = offsetAnimNumber;
+		}
+		//縦のアニメーションをセット
+		//引数1: frameTime フレーム時間
+		//引数2: widthChipNumber 縦の画像チップ数
+		//引数3: offsetAnimNumber アニメーション番号のオフセット
+		void SetHeightAnimation(const int frameTime, const int chipSize, const int offsetAnimNumber = 0)
+		{
+			heightAnim.frameTime = frameTime;
+			heightAnim.chipSize = chipSize;
+			heightAnim.offsetAnim = offsetAnimNumber;
+		}
+		//横のアニメーションを行うか設定
+		void SetIsWidthAnimation(bool isWidthAnim)
+		{
+			widthAnim.baseData.isAnimation = isWidthAnim;
+			if (!widthAnim.baseData.isAnimation)
+			{
+				widthAnim = AnimationData();
+			}
+		}
+		//縦のアニメーションを行うか設定
+		void SetIsHeightAnimation(bool isHeightAnim)
+		{
+			heightAnim.baseData.isAnimation = isHeightAnim;
+			if (!heightAnim.baseData.isAnimation)
+			{
+				heightAnim = AnimationData();
+			}
 		}
 	private:
-		int		frameTime;
-		int		chipNumber;
-		int		startArrayNumber;
+		struct BaseData
+		{
+			int animationNumber;	//アニメーション番号
+			Counter animationCnt;	//アニメーションカウント
+			bool isAnimation;		//アニメーションを行うか
+		};
+		//アニメーションデータ
+		struct AnimationData
+		{
+			BaseData	baseData;	//基本データ
+			int frameTime;			//切り替えるフレーム時間
+			int chipSize;			//チップサイズ
+			int offsetAnim;			//開始するアニメーション番号のオフセット
+		};
+	private:
 		int		animationID;
-		Counter	animationCnt;
+		AnimationData widthAnim;
+		AnimationData heightAnim;
 	};
 }

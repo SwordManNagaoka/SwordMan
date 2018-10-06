@@ -11,7 +11,6 @@
 #include "../Components/BasicComponents.hpp"
 #include "../../Components/ComponentDatas/PlayerData.hpp"
 #include "../../Class/TouchInput.hpp"
-#include "../../Components/EntityHealth.hpp"
 #include "../../Components/AnimationController.hpp"
 
 namespace ECS
@@ -27,16 +26,10 @@ namespace ECS
 			{
 				jumpMove = &entity->GetComponent<TriggerJumpMove>();
 			}
-			if (entity->HasComponent<EntityHealth>())
-			{
-				health = &entity->GetComponent<EntityHealth>();
-			}
 		}
 		void	Update() override
 		{
 			PlayerData::State	nowState = data.state;
-			
-			
 			//個別の状態遷移
 			switch (nowState)
 			{
@@ -108,33 +101,6 @@ namespace ECS
 					motionEndFlag = true;
 				}
 				break;
-			case PlayerData::State::Damage:
-				if (motionCnt.GetCurrentCount() == 0)
-				{
-					health->Sub();
-				}
-				if (health->GetCurrentHealth() <= 0)
-				{
-					nowState = PlayerData::State::Death;
-				}
-				if (motionEndFlag)
-				{
-					if (jumpMove->IsLanding())
-					{
-						nowState = PlayerData::State::Walk;
-					}
-					else
-					{
-						nowState = PlayerData::State::Airworthiness;
-					}
-				}
-				if (motionCnt.GetCurrentCount() >= 30)
-				{
-					motionEndFlag = true;
-				}
-				break;
-			case PlayerData::State::Death:
-				break;
 			}
 			motionCnt.Add();
 			UpdateState(nowState);
@@ -199,7 +165,6 @@ namespace ECS
 		PlayerData	data;
 		Counter		motionCnt;
 		TriggerJumpMove* jumpMove;
-		EntityHealth* health;
 		bool motionEndFlag;
 	};
 }
