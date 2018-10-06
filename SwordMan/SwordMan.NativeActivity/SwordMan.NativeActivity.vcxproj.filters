@@ -222,7 +222,7 @@
     <ClInclude Include="ArcheType\HealthUI.hpp">
       <Filter>ArcheType</Filter>
     </ClInclude>
-    <ClInclude Include="Components\EntityHealth.hpp">
+    <ClInclude Include="Components\EntityHealthState.hpp">
       <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>

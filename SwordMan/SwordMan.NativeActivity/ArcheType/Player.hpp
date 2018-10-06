@@ -13,7 +13,7 @@
 #include "../Components/Think.hpp"
 #include "../Components/Behavior.hpp"
 #include "../Components/AnimationController.hpp"
-#include "../Components/EntityHealth.hpp"
+#include "../Components/EntityHealthState.hpp"
 #include "../Components/CorrectionPosition.hpp"
 #include "../Components/OutsideOfScreen.hpp"
 #include "../Components/SideHitBase.hpp"
@@ -35,7 +35,7 @@ namespace ECS
 			entity->GetComponent<SideHitBase>().SetOffset(84.0f, 0.0f);
 			entity->AddComponent<CorrectionPosition>(pos);
 			entity->AddComponent<OutsideOfScreen>();
-			entity->AddComponent<EntityHealth>(3);
+			entity->AddComponent<EntityHealthState>(3);
 			entity->AddComponent<Think>();
 			entity->AddComponent<Behavior>();
 			entity->AddComponent<Direction>();
