@@ -10,7 +10,7 @@
 #include "../Components/BasicComponents.hpp"
 #include "../ArcheType/Score.hpp"
 #include "../GameController/GameController.h"
-
+#include "../Components/EntityCounter.hpp"
 
 namespace Event
 {
@@ -63,6 +63,8 @@ namespace Event
 						int plusScore = CalcScore(length,scoreLength);
 						//追加スコアとスコアの番号を検出
 						int addScoreNum = static_cast<int>(addScores.size());
+						//エフェクト作成
+						EnemyHitEffect(*enemy, plusScore);
 						//スコアEntityを作成
 						ECS::AddScoreArcheType()("font", Vec2(0, 50 + (addScoreNum % 3) * 32), plusScore);
 						totalScore->GetComponent<ECS::TotalScoreDraw>().AddScore(plusScore);
@@ -70,6 +72,7 @@ namespace Event
 					}
 				}
 			}
+			EnemyDestroyEffect();
 		}
 		private:
 			static int CalcScore(const float distance, const float scoreLength)
@@ -93,5 +96,47 @@ namespace Event
 				}
 				return plusScore;
 			}
+	private:
+		//敵の当たり判定時のエフェクト
+		static void EnemyHitEffect(ECS::Entity& enemy,const int score)
+		{
+			//エフェクトの作成
+			ECS::EffectData effect;
+			effect.imageName = "hitWeak";
+			effect.pos = enemy.GetComponent<ECS::Position>().val;
+			effect.killTime = 32;
+			effect.changeChipFrameTime = 8;
+			effect.chipNum = 4;
+			if (score >= 200)
+			{
+				effect.imageName = "hitStrong";
+				effect.changeChipFrameTime = 6;
+				effect.chipNum = 5;
+				effect.killTime = 30;
+			}
+			ECS::Entity* effectEntity = ECS::EffectArcheType()(effect);
+			effectEntity->GetComponent<ECS::AnimationDraw>().Offset(Vec2(-48.0f, -48.0f));
+		}
+		//敵の爆発時のエフェクト
+		static void EnemyDestroyEffect()
+		{
+			const auto& enemys = ECS::EcsSystem::GetManager().GetEntitiesByGroup(ENTITY_GROUP::Enemy);
+			for (const auto& enemy : enemys)
+			{
+				if (!enemy->HasComponent<ECS::KillEntity>()) { continue; }
+				if (enemy->GetComponent<ECS::EntityCounter>().IsSpecifyCnt())
+				{
+					ECS::EffectData effect;
+					effect.imageName = "bomb";
+					effect.pos = enemy->GetComponent<ECS::Position>().val;
+					effect.changeChipFrameTime = 8;
+					effect.chipNum = 4;
+					effect.killTime = 32;
+					ECS::Entity* effectEntity = ECS::EffectArcheType()(effect);
+					effectEntity->GetComponent<ECS::AnimationDraw>().Offset(Vec2(-48.0f, -48.0f));
+					break;
+				}
+			}
+		}
 	};
 }

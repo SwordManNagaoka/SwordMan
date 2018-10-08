@@ -11,7 +11,9 @@
 #include "../Components/BasicComponents.hpp"
 #include "../System/System.hpp"
 #include "../../Components/EntityHealthState.hpp"
-
+#include ".././ArcheType/Effect.hpp"
+#include "../Components/EntityCounter.hpp"
+#include "../Components/EnemyEffectMove.hpp"
 
 namespace Event
 {
@@ -28,7 +30,7 @@ namespace Event
 				{
 					if (Collision::BoxAndBox<ECS::HitBase, ECS::HitBase>(*attackCollision, *enemy))
 					{
-						enemy->Destroy();
+						EnemyDestroy(*enemy,*attackCollision);
 						break;
 					}
 				}
@@ -50,6 +52,35 @@ namespace Event
 					break;
 				}
 			}
+		}
+	private:
+		//敵の倒されたときの処理
+		static void EnemyDestroy(ECS::Entity& enemy,ECS::Entity& collision)
+		{
+			//攻撃された方向と逆の方向へ跳ねる
+			Vec2 collisionPos = collision.GetComponent<ECS::Position>().val;
+			collisionPos.x += 96.0f;
+			Vec2 enemyPos = enemy.GetComponent<ECS::Position>().val;
+			//方向ベクトル
+			Vec2 dirVec = (enemyPos - collisionPos).Normalize();
+			enemy.AddComponent<ECS::EnemyEffectMove>().SetDirMove(dirVec,18.0f);
+			
+			enemy.DeleteComponent<ECS::HitBase>();
+			enemy.DeleteComponent<ECS::EnemyDefaultMove>();
+			if (enemy.HasComponent<ECS::Physics>())
+			{
+				enemy.DeleteComponent<ECS::Physics>();
+			}
+			if (enemy.HasComponent<ECS::EnemyJumpMove>())
+			{
+				enemy.DeleteComponent<ECS::EnemyJumpMove>();
+			}
+			if (enemy.HasComponent<ECS::TriggerJumpMove>())
+			{
+				enemy.DeleteComponent<ECS::TriggerJumpMove>();
+			}
+			enemy.AddComponent<ECS::EntityCounter>().SetSpecifyCnt(30-1);
+			enemy.AddComponent<ECS::KillEntity>(30);
 		}
 	};
 }
