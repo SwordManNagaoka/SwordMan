@@ -18,9 +18,9 @@ namespace Scene
 		mapLoader.LoadStageConstitution();
 
 		mapCreator.SetMapParam(mapLoader.GetStageParam());
-		mapCreator.FillUpFlatMap(ECS::MapArcheType());
+		mapCreator.FillUpFlatMap();
 		//ステージの生成
-		mapCreator.Run(&mapLoader.GetStageData(), &mapLoader.GetEnemyData());
+		mapCreator.Run(&mapLoader.GetStageData(), &mapLoader.GetSkyData(),&mapLoader.GetEnemyData());
 		for (int i = 0; i < 3; ++i)
 		{
 			ECS::HealthUIArcheType()(i,Vec2(500 + i * 144, 640));
@@ -29,7 +29,7 @@ namespace Scene
 	}
 	void Game::Update()
 	{
-		mapCreator.Run(&mapLoader.GetStageData(), &mapLoader.GetEnemyData());
+		mapCreator.Run(&mapLoader.GetStageData(), &mapLoader.GetSkyData(), &mapLoader.GetEnemyData());
 		auto& player = ECS::EcsSystem::GetManager().GetEntitiesByGroup(ENTITY_GROUP::Player);
 		auto& ground = ECS::EcsSystem::GetManager().GetEntitiesByGroup(ENTITY_GROUP::Ground);
 		//地形との衝突応答を行う

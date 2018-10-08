@@ -15,7 +15,12 @@ struct StageParam
 {
 	std::string		mapImage;		//マップの画像名
 	std::string		mapDataPath;	//マップ上のブロック配置データへのパス
+
 	std::string		enemyConstitutionPath;	//敵の配置データへのパス
+
+	std::string		skyImage;		//背景(空)の画像名
+	std::string		skyDataPath;	//背景(空)の配置データへのパス
+
 	size_t	mapWidth, mapHeight;	//マップの広さ
 	int		chipSize;				//マップチップ(ブロック)画像の大きさ(横幅)
 	int		xSpeed;					//X方向への速度

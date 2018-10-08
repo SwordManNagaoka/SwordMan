@@ -17,9 +17,10 @@
 class StageLoader
 {
 private:
-	StageParam	mapParam;
+	StageParam	stageParam;
 	StageArrayData	mapData;
 	StageArrayData	enemyData;
+	StageArrayData	skyData;
 public:
 	StageLoader(const std::string& mapParamPath)
 	{
@@ -31,83 +32,91 @@ public:
 		}
 
 		//各種パラメーターを読み込む
-		fin >>	mapParam.mapImage >>
-				mapParam.mapDataPath >>
-				mapParam.enemyConstitutionPath >>
-				mapParam.mapWidth >> mapParam.mapHeight >>
-				mapParam.chipSize >>
-				mapParam.xSpeed >>
-				mapParam.backImagePath[0] >> mapParam.backImagePath[1] >> mapParam.backImagePath[2] >>
-				mapParam.chipImagePath >>
-				mapParam.enemyDataPath[0] >>
-				mapParam.enemyDataPath[1] >>
-				mapParam.enemyDataPath[2] >>
-				mapParam.enemyDataPath[3] >>
-				mapParam.enemyDataPath[4];
+		fin >>	stageParam.mapImage >> stageParam.mapDataPath >>
+				stageParam.enemyConstitutionPath >>
+				stageParam.skyImage >> stageParam.skyDataPath >>
+				stageParam.mapWidth >> stageParam.mapHeight >>
+				stageParam.chipSize >>
+				stageParam.xSpeed >>
+				stageParam.backImagePath[0] >>
+				stageParam.backImagePath[1] >>
+				stageParam.backImagePath[2] >>
+				stageParam.chipImagePath >>
+				stageParam.enemyDataPath[0] >>
+				stageParam.enemyDataPath[1] >>
+				stageParam.enemyDataPath[2] >>
+				stageParam.enemyDataPath[3] >>
+				stageParam.enemyDataPath[4];
 
 		fin.close();
 
 		//ここで使用するリソースを読み込む
-		for (int i = 0; i < 3; ++i)
+		for (int i = 0; i < 1; ++i)
 		{
 			//背景
-			//std::stringstream ss;
-			//ss << i;
-			//ResourceManager::GetGraph().Load(mapParam.backImagePath[i], mapParam.mapName + "back" + ss.str());
+			std::stringstream ss;
+			ss << i;
+			ResourceManager::GetGraph().Load(stageParam.backImagePath[i], stageParam.skyImage + ss.str());
 		}
 		//マップチップ
-		ResourceManager::GetGraph().Load(mapParam.chipImagePath, mapParam.mapImage);
+		ResourceManager::GetGraph().Load(stageParam.chipImagePath, stageParam.mapImage);
 	}
 
 	//マップと敵配置の構成、敵種類データを読み込む
 	void LoadStageConstitution()
 	{
-		mapData.resize(mapParam.mapHeight);	//1次元目
-		enemyData.resize(mapParam.mapHeight);
-		for (auto i(0u); i < mapParam.mapHeight; ++i)
+		mapData.resize(stageParam.mapHeight);	//1次元目
+		enemyData.resize(stageParam.mapHeight);
+		skyData.resize(stageParam.mapHeight);
+		for (auto i(0u); i < stageParam.mapHeight; ++i)
 		{
-			mapData[i].resize(mapParam.mapWidth);	//2次元目
-			enemyData[i].resize(mapParam.mapWidth);
+			mapData[i].resize(stageParam.mapWidth);	//2次元目
+			enemyData[i].resize(stageParam.mapWidth);
+			skyData[i].resize(stageParam.mapWidth);
 		}
 
 		//マップ構成ファイルを開く
-		std::ifstream mapfin(DXFilieRead().GetPath(mapParam.mapDataPath, "/map.txt"));
-		std::ifstream enemyfin(DXFilieRead().GetPath(mapParam.enemyConstitutionPath, "/enemy.txt"));
+		std::ifstream mapfin(DXFilieRead().GetPath(stageParam.mapDataPath, "/map.txt"));
+		std::ifstream enemyfin(DXFilieRead().GetPath(stageParam.enemyConstitutionPath, "/enemy.txt"));
+		std::ifstream skyfin(DXFilieRead().GetPath(stageParam.skyDataPath, "/sky.txt"));
 		if ((mapfin.is_open() == 0) ||
-			(enemyfin.is_open() == 0))
+			(enemyfin.is_open() == 0) ||
+			(skyfin.is_open() == 0))
 		{
 			printfDx("Error!!!");
 		}
 
 		//チップIDの読み込み
-		for (size_t y = 0; y < mapParam.mapHeight; ++y)
+		for (size_t y = 0; y < stageParam.mapHeight; ++y)
 		{
-			for (size_t x = 0; x < mapParam.mapWidth; ++x)
+			for (size_t x = 0; x < stageParam.mapWidth; ++x)
 			{
 				mapfin >> mapData[y][x];
 				enemyfin >> enemyData[y][x];
+				skyfin >> skyData[y][x];
 			}
 		}
 		mapfin.close();
 		enemyfin.close();
+		skyfin.close();
 
 		//敵種類データの読み込み
-		for (size_t i = 0; i < mapParam.enemyDataPath.size(); ++i)
+		for (size_t i = 0; i < stageParam.enemyDataPath.size(); ++i)
 		{
-			std::ifstream enemyfin(DXFilieRead().GetPath(mapParam.enemyDataPath[i], "/enemyData.txt"));
-			enemyfin >> mapParam.enemyData[i].size.x >> mapParam.enemyData[i].size.y >>
-						mapParam.enemyData[i].imageName >>
-						mapParam.enemyData[i].animNum >>
-						mapParam.enemyData[i].changeAnimFrameTime >>
-						mapParam.enemyData[i].moveSpeed >>
-						mapParam.enemyData[i].jumpPower;
+			std::ifstream enemyfin(DXFilieRead().GetPath(stageParam.enemyDataPath[i], "/enemyData.txt"));
+			enemyfin >> stageParam.enemyData[i].size.x >> stageParam.enemyData[i].size.y >>
+						stageParam.enemyData[i].imageName >>
+						stageParam.enemyData[i].animNum >>
+						stageParam.enemyData[i].changeAnimFrameTime >>
+						stageParam.enemyData[i].moveSpeed >>
+						stageParam.enemyData[i].jumpPower;
 			enemyfin.close();
 		}
 	}
 
 	const StageParam& GetStageParam()
 	{
-		return mapParam;
+		return stageParam;
 	}
 	const StageArrayData& GetStageData()
 	{
@@ -116,6 +125,10 @@ public:
 	const StageArrayData& GetEnemyData()
 	{
 		return enemyData;
+	}
+	const StageArrayData& GetSkyData()
+	{
+		return skyData;
 	}
 };
 

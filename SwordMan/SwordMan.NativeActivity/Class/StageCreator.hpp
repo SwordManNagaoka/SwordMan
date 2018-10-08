@@ -14,11 +14,12 @@
 #include "../System/System.hpp"
 #include "../../ArcheType/Map.hpp"
 #include "../../ArcheType/Enemy.hpp"
+#include "../../ArcheType/Sky.hpp"
 
 class StageCreator
 {
 private:
-	StageParam mapParam;
+	StageParam stageParam;
 	Counter cntTime;
 	Counter cntCreatMapNum;
 
@@ -26,34 +27,40 @@ public:
 	//マップパラメータを設定
 	void SetMapParam(const StageParam& setMapParam)
 	{
-		mapParam = setMapParam;
+		stageParam = setMapParam;
 		cntTime.Reset();
 		cntCreatMapNum.Reset();
 
-		cntCreatMapNum.SetEndTime(mapParam.mapWidth - 1, 0);
+		cntCreatMapNum.SetEndTime(stageParam.mapWidth - 1, 0);
 	}
 
 	//平坦なマップで画面内を埋める
-	void FillUpFlatMap(std::function<ECS::Entity*(const char*, const Vec2&, const Vec2&, const int, const int, const int)> tileMapArcheType)
+	void FillUpFlatMap()
 	{
-		int setNum = (System::SCREEN_WIDIH / mapParam.chipSize) + 1;
-		int excess = (setNum * mapParam.chipSize) - System::SCREEN_WIDIH;
+		ECS::MapArcheType tileMapArcheType;
+		ECS::SkyArcheType tileSkyArcheType;
+		int setNum = (System::SCREEN_WIDIH / stageParam.chipSize) + 1;
+		int excess = (setNum * stageParam.chipSize) - System::SCREEN_WIDIH;
 
 		int flatMap[8]{ -1, -1, -1, -1, -1, -1, 0, 1 };
+		int sc = cntCreatMapNum.IsMax() ? 10 : 0;
+		int flatSky[8]{ sc, sc + 11, sc + 22, sc + 33, sc + 44, sc + 55, sc + 66, sc + 77};
+
 		for (int i = 0; i < setNum; ++i)
 		{
 			for (int j = 0; j < 8; ++j)
 			{
-				Vec2 pos(float((i * mapParam.chipSize) - excess), float(j * mapParam.chipSize));
-				Vec2 velocity(float(mapParam.xSpeed), 0.f);
-				tileMapArcheType(mapParam.mapImage.c_str(), pos, velocity, mapParam.chipSize, mapParam.chipSize, flatMap[j]);
+				Vec2 pos(float((i * stageParam.chipSize) - excess), float(j * stageParam.chipSize));
+				Vec2 velocity(float(stageParam.xSpeed), 0.f);
+				tileMapArcheType(stageParam.mapImage.c_str(), pos, velocity, stageParam.chipSize, stageParam.chipSize, flatMap[j]);
+				tileSkyArcheType((stageParam.skyImage + "0").c_str(), pos, velocity, stageParam.chipSize, stageParam.chipSize, flatSky[j]);
 			}
 		}
 	}
 
 	//マップと敵の自動生成
 	//マップ、敵データを指定しない場合はフラットな地形が生成される
-	void Run(const StageArrayData* mapData = nullptr, const StageArrayData* enemyData = nullptr)
+	void Run(const StageArrayData* mapData = nullptr, const StageArrayData* skyData = nullptr, const StageArrayData* enemyData = nullptr)
 	{
 		int setChipNum = GetSetMapChipNum();
 		for (int i = 0; i < setChipNum; ++i)
@@ -65,7 +72,7 @@ public:
 			}
 			else
 			{
-				CreateMap(i, *mapData);
+				CreateMap(i, *mapData, *skyData);
 			}
 
 			if (enemyData != nullptr)
@@ -81,26 +88,33 @@ private:
 	void CreateFlatMap(int i)
 	{
 		ECS::MapArcheType tileMapArcheType;
-		int flatMap[8]{ -1, -1, -1, -1, -1, -1, 0, 1 };
+		ECS::SkyArcheType tileSkyArcheType;
+		int flatMap[8]{ -1, -1, -1, -1, -1, -1, 0, 1 }; 
+		int sc = cntCreatMapNum.IsMax() ? 10 : 0;
+		int flatSky[8]{ sc, sc + 11, sc + 22, sc + 33, sc + 44, sc + 55, sc + 66, sc + 77 };
+
 		for (int y = 0; y < 8; ++y)
 		{
-			Vec2 pos(float(System::SCREEN_WIDIH + (i * mapParam.chipSize)), float(y * mapParam.chipSize));
-			Vec2 velocity(float(mapParam.xSpeed), 0.f);
-			tileMapArcheType(mapParam.mapImage.c_str(), pos, velocity, mapParam.chipSize, mapParam.chipSize, flatMap[y]);
+			Vec2 pos(float(System::SCREEN_WIDIH + (i * stageParam.chipSize)), float(y * stageParam.chipSize));
+			Vec2 velocity(float(stageParam.xSpeed), 0.f);
+			tileMapArcheType(stageParam.mapImage.c_str(), pos, velocity, stageParam.chipSize, stageParam.chipSize, flatMap[y]);
+			tileSkyArcheType((stageParam.skyImage + "0").c_str(), pos, velocity, stageParam.chipSize, stageParam.chipSize, flatSky[y]);
 		}
 	}
 
 	//マップデータを参照し、マップを生成する
-	void CreateMap(int i, const StageArrayData& mapData)
+	void CreateMap(int i, const StageArrayData& mapData, const StageArrayData& skyData)
 	{
 		ECS::MapArcheType tileMapArcheType;
+		ECS::SkyArcheType tileSkyArcheType;
 		int x = cntCreatMapNum.GetCurrentCount();
 
-		for (int y = 0; y < mapParam.mapHeight; ++y)
+		for (int y = 0; y < stageParam.mapHeight; ++y)
 		{
-			Vec2 pos(float(System::SCREEN_WIDIH + (i * mapParam.chipSize)), float(y * mapParam.chipSize));
-			Vec2 velocity(float(mapParam.xSpeed), 0.f);
-			tileMapArcheType(mapParam.mapImage.c_str(), pos, velocity, mapParam.chipSize, mapParam.chipSize, mapData[y][x]);
+			Vec2 pos(float(System::SCREEN_WIDIH + (i * stageParam.chipSize)), float(y * stageParam.chipSize));
+			Vec2 velocity(float(stageParam.xSpeed), 0.f);
+			tileMapArcheType(stageParam.mapImage.c_str(), pos, velocity, stageParam.chipSize, stageParam.chipSize, mapData[y][x]); 
+			tileSkyArcheType((stageParam.skyImage + "0").c_str(), pos, velocity, stageParam.chipSize, stageParam.chipSize, skyData[y][x]);
 		}
 	}
 
@@ -110,15 +124,15 @@ private:
 		ECS::EnemyCommonArcheType enemyArcheType;
 		int x = cntCreatMapNum.GetCurrentCount();
 
-		for (int y = 0; y < mapParam.mapHeight; ++y)
+		for (int y = 0; y < stageParam.mapHeight; ++y)
 		{
 			int en = enemyConstitution[y][x];
 			if (en < 0)
 				continue;
 
-			Vec2 pos(float(System::SCREEN_WIDIH + (i * mapParam.chipSize)), float(y * mapParam.chipSize));
-			mapParam.enemyData[en].pos = pos;
-			enemyArcheType(mapParam.enemyData[en], en);
+			Vec2 pos(float(System::SCREEN_WIDIH + (i * stageParam.chipSize)), float(y * stageParam.chipSize));
+			stageParam.enemyData[en].pos = pos;
+			enemyArcheType(stageParam.enemyData[en], en);
 		}
 	}
 
@@ -128,14 +142,14 @@ private:
 		int nowTime = cntTime.GetCurrentCount();
 		int setChip = 0;
 
-		if (mapParam.chipSize % mapParam.xSpeed)
+		if (stageParam.chipSize % stageParam.xSpeed)
 		{
-			if (nowTime % mapParam.chipSize == 0)
-				setChip = mapParam.xSpeed;
+			if (nowTime % stageParam.chipSize == 0)
+				setChip = stageParam.xSpeed;
 		}
 		else
 		{
-			if (nowTime % (mapParam.chipSize / mapParam.xSpeed) == 0)
+			if (nowTime % (stageParam.chipSize / stageParam.xSpeed) == 0)
 				setChip = 1;
 		}
 
