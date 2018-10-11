@@ -14,6 +14,7 @@
 #include ".././ArcheType/Effect.hpp"
 #include "../Components/EntityCounter.hpp"
 #include "../Components/EnemyEffectMove.hpp"
+#include "../ArcheType/Score.hpp"
 
 namespace Event
 {
@@ -26,11 +27,13 @@ namespace Event
 			const auto& enemys = ECS::EcsSystem().GetManager().GetEntitiesByGroup(ENTITY_GROUP::Enemy);
 			for (const auto& attackCollision : attackCollisions)
 			{
+				if (!attackCollision->HasComponent<ECS::HitBase>()) { continue; }
 				for (const auto& enemy : enemys)
 				{
+					if (!enemy->HasComponent<ECS::HitBase>()) { continue; }
 					if (Collision::BoxAndBox<ECS::HitBase, ECS::HitBase>(*attackCollision, *enemy))
 					{
-						EnemyDestroy(*enemy,*attackCollision);
+						EnemyDestroy(*enemy, *attackCollision);
 						break;
 					}
 				}
@@ -41,10 +44,10 @@ namespace Event
 		{
 			const auto& player = ECS::EcsSystem().GetManager().GetEntitiesByGroup(ENTITY_GROUP::Player);
 			const auto& enemys = ECS::EcsSystem().GetManager().GetEntitiesByGroup(ENTITY_GROUP::Enemy);
-			
+
 			if (player.size() == 0) { return; }
 			for (const auto& enemy : enemys)
-			{	
+			{
 				if (Collision::BoxAndBox<ECS::HitBase, ECS::HitBase>(*player[0], *enemy))
 				{
 					if (player[0]->GetComponent<ECS::EntityHealthState>().GetCurrentState() == ECS::EntityHealthState::State::Damage) { return; }
@@ -55,7 +58,7 @@ namespace Event
 		}
 	private:
 		//敵の倒されたときの処理
-		static void EnemyDestroy(ECS::Entity& enemy,ECS::Entity& collision)
+		static void EnemyDestroy(ECS::Entity& enemy, ECS::Entity& collision)
 		{
 			//攻撃された方向と逆の方向へ跳ねる
 			Vec2 collisionPos = collision.GetComponent<ECS::Position>().val;
@@ -63,24 +66,95 @@ namespace Event
 			Vec2 enemyPos = enemy.GetComponent<ECS::Position>().val;
 			//方向ベクトル
 			Vec2 dirVec = (enemyPos - collisionPos).Normalize();
-			enemy.AddComponent<ECS::EnemyEffectMove>().SetDirMove(dirVec,18.0f);
-			
+			enemy.AddComponent<ECS::EnemyEffectMove>().SetDirMove(dirVec, 18.0f);
+
+			//スコアの決定
+			DecideScore(enemy, collision);
+
 			enemy.DeleteComponent<ECS::HitBase>();
 			enemy.DeleteComponent<ECS::EnemyDefaultMove>();
-			if (enemy.HasComponent<ECS::Physics>())
-			{
-				enemy.DeleteComponent<ECS::Physics>();
-			}
-			if (enemy.HasComponent<ECS::EnemyJumpMove>())
-			{
-				enemy.DeleteComponent<ECS::EnemyJumpMove>();
-			}
-			if (enemy.HasComponent<ECS::TriggerJumpMove>())
-			{
-				enemy.DeleteComponent<ECS::TriggerJumpMove>();
-			}
-			enemy.AddComponent<ECS::EntityCounter>().SetSpecifyCnt(30-1);
+			//enemy.DeleteComponent<ECS::EnemyJumpMove>();
+			//enemy.DeleteComponent<ECS::TriggerJumpMove>();
+			//enemy.DeleteComponent<ECS::Physics>();
+
+			enemy.AddComponent<ECS::EntityCounter>().SetSpecifyCnt(30 - 1);
 			enemy.AddComponent<ECS::KillEntity>(30);
+		}
+
+	private:
+		//スコアを決定する
+		static void DecideScore(ECS::Entity& enemy, ECS::Entity& collision)
+		{
+			std::vector<ECS::Entity*> addScores;
+			ECS::Entity* totalScore;
+			const auto& gameUI = ECS::EcsSystem::GetManager().GetEntitiesByGroup(ENTITY_GROUP::GameUI);
+			for (const auto& ui : gameUI)
+			{
+				if (ui->HasComponent<ECS::AddScoreTag>())
+				{
+					addScores.push_back(ui);
+				}
+				if (ui->HasComponent<ECS::TotalScoreDraw>())
+				{
+					totalScore = ui;
+				}
+			}
+
+			if (!enemy.HasComponent<ECS::HitBase>()) { return; }
+			if (!collision.HasComponent<ECS::HitBase>()) { return; }
+
+			if (Collision::BoxAndBox<ECS::HitBase, ECS::HitBase>(collision, enemy))
+			{
+				const auto& players = ECS::EcsSystem::GetManager().GetEntitiesByGroup(ENTITY_GROUP::Player);
+				if (players.size() == 0) { return; }
+				Vec2 playerPos = players[0]->GetComponent<ECS::Position>().val;
+
+				Vec2 enemyPos = enemy.GetComponent<ECS::Position>().val;
+				Vec2 enemySize = Vec2(enemy.GetComponent<ECS::HitBase>().w() / 2.0f, enemy.GetComponent<ECS::HitBase>().h() / 2.0f);
+				float enemyLength = fabsf(enemySize.Length());
+
+				//コリジョンの幅と高さ
+				Vec2 collisionPos = collision.GetComponent<ECS::Position>().val;
+				collisionPos.x += 96.0f;
+				Vec2 collisionSize = Vec2(collision.GetComponent<ECS::HitBase>().w() / 2.0f, collision.GetComponent<ECS::HitBase>().h() / 2.0f);
+				float collisionLength = fabsf(collisionSize.Length());
+
+				//プレイヤーと敵の距離
+				Vec2 distance = enemyPos - collisionPos;
+				float length = fabsf(distance.Length());
+				float scoreLength = collisionLength + enemyLength;
+
+				int plusScore = CalcScore(length, scoreLength);
+				//追加スコアとスコアの番号を検出
+				int addScoreNum = static_cast<int>(addScores.size());
+				//エフェクト作成
+				//EnemyHitEffect(*enemy, plusScore);
+				//スコアEntityを作成
+				ECS::AddScoreArcheType()("font", Vec2(0, 50 + (addScoreNum % 3) * 32), plusScore);
+				totalScore->GetComponent<ECS::TotalScoreDraw>().AddScore(plusScore);
+			}
+		}
+
+		static int CalcScore(const float distance, const float scoreLength)
+		{
+			int plusScore = 0;
+			if (distance >= scoreLength * 0.8f)
+			{
+				plusScore = 50;
+			}
+			else if (distance >= scoreLength * 0.6f)
+			{
+				plusScore = 100;
+			}
+			else if (distance >= scoreLength * 0.3f)
+			{
+				plusScore = 150;
+			}
+			else if (distance >= 0)
+			{
+				plusScore = 200;
+			}
+			return plusScore;
 		}
 	};
 }

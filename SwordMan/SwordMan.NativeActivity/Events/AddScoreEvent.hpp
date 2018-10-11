@@ -35,10 +35,15 @@ namespace Event
 			}
 			const auto& attackCollisions = ECS::EcsSystem::GetManager().GetEntitiesByGroup(ENTITY_GROUP::Wepon);
 			const auto& enemys = ECS::EcsSystem::GetManager().GetEntitiesByGroup(ENTITY_GROUP::Enemy);
+			if (attackCollisions.size() == 0) { return; }
+			if (enemys.size() == 0) { return; }
+			
 			for (const auto& collision : attackCollisions)
 			{
+				if (!collision->HasComponent<ECS::HitBase>()) { continue; }
 				for (const auto& enemy : enemys)
 				{
+					if (!enemy->HasComponent<ECS::HitBase>()) { continue; }
 					if (Collision::BoxAndBox<ECS::HitBase, ECS::HitBase>(*collision, *enemy))
 					{
 						const auto& players = ECS::EcsSystem::GetManager().GetEntitiesByGroup(ENTITY_GROUP::Player);
@@ -64,7 +69,7 @@ namespace Event
 						//追加スコアとスコアの番号を検出
 						int addScoreNum = static_cast<int>(addScores.size());
 						//エフェクト作成
-						EnemyHitEffect(*enemy, plusScore);
+						//EnemyHitEffect(*enemy, plusScore);
 						//スコアEntityを作成
 						ECS::AddScoreArcheType()("font", Vec2(0, 50 + (addScoreNum % 3) * 32), plusScore);
 						totalScore->GetComponent<ECS::TotalScoreDraw>().AddScore(plusScore);
@@ -72,7 +77,7 @@ namespace Event
 					}
 				}
 			}
-			EnemyDestroyEffect();
+			//EnemyDestroyEffect();
 		}
 		private:
 			static int CalcScore(const float distance, const float scoreLength)

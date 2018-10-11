@@ -20,11 +20,12 @@ namespace ECS
 	public:
 		ECS::Entity* operator()(const Vec2& pos, const Vec2& size,const int killTime)
 		{
-			ECS::Entity*	entity = &ECS::EcsSystem::GetManager().AddEntity();
 			const auto& player = ECS::EcsSystem::GetManager().GetEntitiesByGroup(ENTITY_GROUP::Player);
+			if (player.size() == 0) { return nullptr; }
 
+			ECS::Entity*	entity = &ECS::EcsSystem::GetManager().AddEntity();
 			entity->AddComponent<ECS::Position>(pos);
-			entity->AddComponent<ECS::ChaseEntity>(player[0]);
+			entity->AddComponent<ECS::ChaseEntity>(*player[0]);
 			entity->AddComponent<ECS::HitBase>(size.x,size.y).SetColor(0, 255, 0);
 			entity->GetComponent<ECS::HitBase>().SetOffset(size.x, 0.0f);
 			entity->AddComponent<ECS::KillEntity>(killTime);
@@ -42,11 +43,12 @@ namespace ECS
 	public:
 		ECS::Entity* operator()(const Vec2& pos, const Vec2& size,const int killTime)
 		{
-			ECS::Entity*	entity = &ECS::EcsSystem::GetManager().AddEntity();
 			const auto& player = ECS::EcsSystem::GetManager().GetEntitiesByGroup(ENTITY_GROUP::Player);
+			if (player.size() == 0) { return nullptr; }
 
+			ECS::Entity*	entity = &ECS::EcsSystem::GetManager().AddEntity();
 			entity->AddComponent<ECS::Position>(pos);
-			entity->AddComponent<ECS::ChaseEntity>(player[0]);
+			entity->AddComponent<ECS::ChaseEntity>(*player[0]);
 			entity->AddComponent<ECS::HitBase>(size.x,size.y).SetColor(128, 0, 0);
 			entity->GetComponent<ECS::HitBase>().SetOffset(-size.x / 3.0f, -size.y / 3.0f);
 			entity->AddComponent<ECS::KillEntity>(killTime);

@@ -17,6 +17,7 @@ namespace Scene
 		StageCreator mapCreator;
 	public:
 		Game();
+		~Game();
 		void Update() override;
 		void Draw() override;
 	};

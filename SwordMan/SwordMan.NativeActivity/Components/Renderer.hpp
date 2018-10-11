@@ -20,6 +20,7 @@ namespace ECS
 	private:
 		Position * pos = nullptr;
 		std::string name;
+		bool isDraw = true;
 	public:
 		SimpleDraw(const char* name_)
 		{
@@ -36,10 +37,17 @@ namespace ECS
 		void Update() override {}
 		void Draw2D() override
 		{
+			if (!isDraw) { return; }
 			if (ResourceManager::GetGraph().IsExistenceHandle(name))
 			{
 				DrawGraphF(pos->val.x, pos->val.y, ResourceManager::GetGraph().GetHandle(name), true);
 			}
+		}
+		//描画を行うか
+		//true: 描画する false:描画しない
+		void IsDraw(bool drawFlag)
+		{
+			isDraw = drawFlag;
 		}
 	};
 	//指定した範囲を切り取って描画

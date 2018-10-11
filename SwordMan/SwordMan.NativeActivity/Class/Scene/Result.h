@@ -11,6 +11,8 @@ namespace Scene
 	class Result final : public ISceneBase
 	{
 	public:
+		Result();
+		~Result();
 		void Update() override;
 		void Draw() override;
 	};

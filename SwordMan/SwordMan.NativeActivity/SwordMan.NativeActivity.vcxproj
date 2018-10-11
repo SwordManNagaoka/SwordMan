@@ -240,6 +240,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ArcheType\AttackCollision.hpp" />
+    <ClInclude Include="ArcheType\Button.hpp" />
     <ClInclude Include="ArcheType\Effect.hpp" />
     <ClInclude Include="ArcheType\Enemy.hpp" />
     <ClInclude Include="ArcheType\HealthUI.hpp" />
@@ -262,12 +263,14 @@
     <ClInclude Include="Components\AnimationController.hpp" />
     <ClInclude Include="Components\BasicComponents.hpp" />
     <ClInclude Include="Components\Behavior.hpp" />
+    <ClInclude Include="Components\BlendMode.hpp" />
     <ClInclude Include="Components\ChaseEntity.hpp" />
     <ClInclude Include="Components\Collider.hpp" />
     <ClInclude Include="Components\ComponentDatas\CollisionData.hpp" />
     <ClInclude Include="Components\ComponentDatas\EnemyData.hpp" />
     <ClInclude Include="Components\ComponentDatas\PlayerData.hpp" />
     <ClInclude Include="Components\CorrectionPosition.hpp" />
+    <ClInclude Include="Components\EasingMove.hpp" />
     <ClInclude Include="Components\EnemyDefaultMove.hpp" />
     <ClInclude Include="Components\EnemyEffectMove.hpp" />
     <ClInclude Include="Components\EntityCounter.hpp" />
@@ -277,6 +280,7 @@
     <ClInclude Include="Components\Jump.hpp" />
     <ClInclude Include="Components\MapMove.hpp" />
     <ClInclude Include="Components\OutsideOfScreen.hpp" />
+    <ClInclude Include="Components\PlayerDash.hpp" />
     <ClInclude Include="Components\Renderer.hpp" />
     <ClInclude Include="Components\SideHitBase.hpp" />
     <ClInclude Include="Components\Think.hpp" />
@@ -286,6 +290,7 @@
     <ClInclude Include="Events\AtackEvent.hpp" />
     <ClInclude Include="Events\ContinueTap.hpp" />
     <ClInclude Include="Events\EventManager.hpp" />
+    <ClInclude Include="Events\GoalEvent.hpp" />
     <ClInclude Include="Events\Observer.hpp" />
     <ClInclude Include="Events\PauseTap.hpp" />
     <ClInclude Include="Events\ReturnFirstTap.hpp" />

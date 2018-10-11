@@ -141,6 +141,12 @@
     <Content Include="assets\image\sword.png" />
     <Content Include="assets\image\tekito.png" />
     <Content Include="assets\image\temp.png" />
+    <Content Include="assets\image\ui\fade.png" />
+    <Content Include="assets\image\ui\goalMessage.png" />
+    <Content Include="assets\image\ui\life.png" />
+    <Content Include="assets\image\ui\pauseButton.png" />
+    <Content Include="assets\image\ui\pauseMessage.png" />
+    <Content Include="assets\image\ui\pauseUI.png" />
     <Content Include="assets\stage\stage01_enemy.csv" />
     <Content Include="assets\stage\stage01_map.csv" />
     <Content Include="assets\stage\mapparamtest.csv" />

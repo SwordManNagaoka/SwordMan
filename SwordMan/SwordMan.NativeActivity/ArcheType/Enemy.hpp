@@ -33,22 +33,26 @@ namespace ECS
 			entity->AddComponent<Direction>();
 			entity->AddComponent<AnimationDraw>(data.imageName.c_str());
 			entity->AddComponent<AnimationController>(data.changeAnimFrameTime, data.animNum);
-			entity->AddGroup(ENTITY_GROUP::Enemy);
 
 			switch (id)
 			{
 			case 0:	//青鎧
+				entity->AddGroup(ENTITY_GROUP::Enemy);
 				break;
 			case 1: //赤
+				entity->AddGroup(ENTITY_GROUP::Enemy);
 				break;
 			case 2: //緑バネ
 				entity->AddComponent<Physics>();
 				entity->AddComponent<TriggerJumpMove>(data.jumpPower);
 				entity->AddComponent<EnemyJumpMove>(data.changeAnimFrameTime * 2);
+				entity->AddGroup(ENTITY_GROUP::Enemy);
 				break;
 			case 3: //水色羽
+				entity->AddGroup(ENTITY_GROUP::Enemy);
 				break;
 			case 4: //ゴール
+				entity->AddGroup(ENTITY_GROUP::Back3);
 				break;
 			}
 			return entity;

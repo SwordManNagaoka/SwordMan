@@ -11,11 +11,17 @@
 #include "../../Events/AtackEvent.hpp"
 #include "../../ArcheType/Enemy.hpp"
 #include "../../Events/AddScoreEvent.hpp"
+#include "../../Events/GoalEvent.hpp"
 
 void GameController::ResourceLoad()
 {
-	ResourceManager::GetGraph().Load("image/a.png", "health");
+	ResourceManager::GetGraph().Load("image/a.png", "a");
 	ResourceManager::GetGraph().Load("image/font_text.png", "font");
+	ResourceManager::GetGraph().Load("image/ui/goalMessage.png", "goalMessage");
+	ResourceManager::GetGraph().Load("image/ui/pauseButton.png", "pauseButton");
+	ResourceManager::GetGraph().Load("image/ui/life.png", "health");
+	ResourceManager::GetGraph().Load("image/ui/pauseUI.png", "pauseUI");
+	ResourceManager::GetGraph().Load("image/ui/fade.png", "fade");
 	ResourceManager::GetGraph().LoadDiv("image/sword.png", "sword", 5, 5, 1, 192, 192);
 	ResourceManager::GetGraph().LoadDiv("image/rolling.png", "rolling", 12, 4, 3, 288, 288);	
 	ResourceManager::GetGraph().LoadDiv("image/enemy01.png", "enemy1", 2, 2, 1, 96, 96);
@@ -35,14 +41,13 @@ GameController::GameController()
 	ResourceLoad();
 	pManager = &ECS::EcsSystem::GetManager();	
 	//初期シーン
-	ECS::PlayerArcheType()(Vec2(250,300),Vec2(64,96));
-	
 	Scene::SceneManager::Get().ChangeScene(Scene::SceneManager::State::Game);
 
 	//イベント関数の登録
-	Event::EventManager().Get().Add(Scene::SceneManager::State::Game, Event::AddScoreEvent::Do);
+	//Event::EventManager().Get().Add(Scene::SceneManager::State::Game, Event::AddScoreEvent::Do);
 	Event::EventManager().Get().Add(Scene::SceneManager::State::Game, Event::CollisionEvent::AttackCollisionToEnemy);
 	Event::EventManager().Get().Add(Scene::SceneManager::State::Game, Event::CollisionEvent::PlayerToEnemy);
+	Event::EventManager().Get().Add(Scene::SceneManager::State::Game, Event::GoalEvent::HitPlayer);
 }
 
 void GameController::ResetGame()

@@ -20,7 +20,8 @@ namespace ECS
 		void Initialize() override
 		{
 			auto& grounds = ECS::EcsSystem::GetManager().GetEntitiesByGroup(ENTITY_GROUP::Ground);
-
+			if (grounds.size() == 0) { return; }
+			mapvel = 6.0f;
 			if (grounds[0]->HasComponent<ECS::Velocity>())
 			{
 				mapvel = grounds[0]->GetComponent<ECS::Velocity>().val.x;
@@ -40,11 +41,11 @@ namespace ECS
 		}
 		void Update() override
 		{
-			auto& grounds = ECS::EcsSystem::GetManager().GetEntitiesByGroup(ENTITY_GROUP::Ground)[0];
-
-			if (grounds->HasComponent<ECS::Velocity>())
+			auto& grounds = ECS::EcsSystem::GetManager().GetEntitiesByGroup(ENTITY_GROUP::Ground);
+			if (grounds.size() == 0) { return; }
+			if (grounds[0]->HasComponent<ECS::Velocity>())
 			{
-				mapvel = grounds->GetComponent<ECS::Velocity>().val.x;
+				mapvel = grounds[0]->GetComponent<ECS::Velocity>().val.x;
 			}
 			pos->val.x -= mapvel + myvel->val.x;
 			if (pos->val.x < 0 - size.x)

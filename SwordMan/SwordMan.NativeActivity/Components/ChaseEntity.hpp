@@ -17,12 +17,12 @@ namespace ECS
 	//-----------------------------------------------------------------
 	//コンストラクタ
 	//
-	//ChaseEntity( ターゲットのEntityのポインタ );
+	//ChaseEntity( ターゲットのEntityの参照 );
 	//-----------------------------------------------------------------
 	class ChaseEntity : public Component
 	{
 	public:
-		ChaseEntity(Entity* targetEntity)
+		ChaseEntity(Entity& targetEntity)
 			: targetEntity(targetEntity)
 		{
 		}
@@ -32,15 +32,15 @@ namespace ECS
 		void	Update() override
 		{
 			Vec2& myPos = entity->GetComponent<Position>().val;
-			if (targetEntity->HasComponent<Position>())
+			if (targetEntity.HasComponent<Position>())
 			{
-				myPos = targetEntity->GetComponent<Position>().val;
+				myPos = targetEntity.GetComponent<Position>().val;
 			}
 		}
 		void	Draw2D() override {}
 	private:
 		void	Draw3D() override {}
 	private:
-		Entity*	targetEntity;
+		Entity&	targetEntity;
 	};
 }

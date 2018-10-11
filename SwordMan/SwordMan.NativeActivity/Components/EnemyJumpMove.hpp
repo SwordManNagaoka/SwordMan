@@ -32,6 +32,11 @@ namespace ECS
 		}
 		void Update() override
 		{
+			if (jumpMove == nullptr) { return; }
+			if (entity->HasComponent<TriggerJumpMove>())
+			{
+				jumpMove = &entity->GetComponent<TriggerJumpMove>();
+			}
 			jumpCounter.Add();
 			if (jumpCounter.IsMax())
 			{

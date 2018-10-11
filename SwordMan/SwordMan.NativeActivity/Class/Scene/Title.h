@@ -11,6 +11,8 @@ namespace Scene
 	class Title final : public ISceneBase
 	{
 	public:
+		Title();
+		~Title();
 		void Update() override;
 		void Draw() override;
 	};
