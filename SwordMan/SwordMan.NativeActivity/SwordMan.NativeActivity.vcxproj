@@ -240,6 +240,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ArcheType\AttackCollision.hpp" />
+    <ClInclude Include="ArcheType\Effect.hpp" />
     <ClInclude Include="ArcheType\Enemy.hpp" />
     <ClInclude Include="ArcheType\HealthUI.hpp" />
     <ClInclude Include="ArcheType\Map.hpp" />
@@ -268,6 +269,8 @@
     <ClInclude Include="Components\ComponentDatas\PlayerData.hpp" />
     <ClInclude Include="Components\CorrectionPosition.hpp" />
     <ClInclude Include="Components\EnemyDefaultMove.hpp" />
+    <ClInclude Include="Components\EnemyEffectMove.hpp" />
+    <ClInclude Include="Components\EntityCounter.hpp" />
     <ClInclude Include="Components\EntityHealthState.hpp" />
     <ClInclude Include="Components\HealthRelationUI.hpp" />
     <ClInclude Include="Components\ImageFontDraw.hpp" />

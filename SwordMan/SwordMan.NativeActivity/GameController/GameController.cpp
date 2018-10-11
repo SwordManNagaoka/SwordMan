@@ -24,7 +24,9 @@ void GameController::ResourceLoad()
 	ResourceManager::GetGraph().LoadDiv("image/enemy04.png", "enemy4", 4, 4, 1, 96, 96);
 	ResourceManager::GetGraph().LoadDiv("image/goal.png", "goal", 1, 1, 1, 144, 192);
 	ResourceManager::GetGraph().LoadDiv("image/player.png", "player", 6, 2, 3, 96, 96);
-
+	ResourceManager::GetGraph().LoadDiv("image/effect/hit_weak.png", "hitWeak", 4, 4, 1, 192, 192);
+	ResourceManager::GetGraph().LoadDiv("image/effect/bomb.png", "bomb", 4, 4, 1, 192, 192);
+	ResourceManager::GetGraph().LoadDiv("image/effect/hit_strong.png", "hitStrong", 5, 5, 1, 192, 192);
 }
 
 GameController::GameController()
@@ -38,9 +40,9 @@ GameController::GameController()
 	Scene::SceneManager::Get().ChangeScene(Scene::SceneManager::State::Game);
 
 	//イベント関数の登録
+	Event::EventManager().Get().Add(Scene::SceneManager::State::Game, Event::AddScoreEvent::Do);
 	Event::EventManager().Get().Add(Scene::SceneManager::State::Game, Event::CollisionEvent::AttackCollisionToEnemy);
 	Event::EventManager().Get().Add(Scene::SceneManager::State::Game, Event::CollisionEvent::PlayerToEnemy);
-	Event::EventManager().Get().Add(Scene::SceneManager::State::Game, Event::AddScoreEvent::Do);
 }
 
 void GameController::ResetGame()

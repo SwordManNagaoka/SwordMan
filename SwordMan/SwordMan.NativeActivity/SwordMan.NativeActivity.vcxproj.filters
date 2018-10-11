@@ -240,5 +240,14 @@
     <ClInclude Include="Utility\Converter.hpp">
       <Filter>Utility</Filter>
     </ClInclude>
+    <ClInclude Include="ArcheType\Effect.hpp">
+      <Filter>ArcheType</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\EnemyEffectMove.hpp">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\EntityCounter.hpp">
+      <Filter>Components</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
