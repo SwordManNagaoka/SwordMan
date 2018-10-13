@@ -41,6 +41,7 @@ namespace Scene
 			void ChangeScene(State scene)
 			{
 				Memory::SafeDelete(pScene);
+				Memory::SafeRelease(pScene);
 				state = scene;
 				switch (scene)
 				{

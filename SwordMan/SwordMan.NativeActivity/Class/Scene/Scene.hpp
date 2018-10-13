@@ -16,6 +16,8 @@ namespace Scene
 		virtual void Update() = 0;
 		//!Entityの描画をまとめます
 		virtual void Draw() = 0;
+		//!リソースやエンティティの開放を行います
+		virtual void Release() {};
 	};
 
 }
