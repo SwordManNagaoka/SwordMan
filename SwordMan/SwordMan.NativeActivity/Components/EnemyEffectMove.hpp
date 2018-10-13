@@ -20,7 +20,14 @@ namespace ECS
 		void Initialize() override
 		{
 			pos = &entity->GetComponent<Position>();
-			size = Vec2(entity->GetComponent<HitBase>().w() / 2.0f, entity->GetComponent<HitBase>().h() / 2.0f);
+			if (entity->HasComponent<HitBase>())
+			{
+				size = Vec2(entity->GetComponent<HitBase>().w() / 2.0f, entity->GetComponent<HitBase>().h() / 2.0f);
+			}
+			else
+			{
+				size = Vec2(96, 96);
+			}
 		}
 		void Update() override
 		{

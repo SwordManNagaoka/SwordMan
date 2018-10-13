@@ -34,6 +34,7 @@ namespace Event
 					if (Collision::BoxAndBox<ECS::HitBase, ECS::HitBase>(*attackCollision, *enemy))
 					{
 						EnemyDestroy(*enemy, *attackCollision);
+						//enemy->Destroy();
 						break;
 					}
 				}
@@ -43,9 +44,9 @@ namespace Event
 		static void PlayerToEnemy()
 		{
 			const auto& player = ECS::EcsSystem().GetManager().GetEntitiesByGroup(ENTITY_GROUP::Player);
-			const auto& enemys = ECS::EcsSystem().GetManager().GetEntitiesByGroup(ENTITY_GROUP::Enemy);
-
 			if (player.size() == 0) { return; }
+
+			const auto& enemys = ECS::EcsSystem().GetManager().GetEntitiesByGroup(ENTITY_GROUP::Enemy);
 			for (const auto& enemy : enemys)
 			{
 				if (Collision::BoxAndBox<ECS::HitBase, ECS::HitBase>(*player[0], *enemy))
@@ -100,15 +101,14 @@ namespace Event
 				}
 			}
 
-			if (!enemy.HasComponent<ECS::HitBase>()) { return; }
-			if (!collision.HasComponent<ECS::HitBase>()) { return; }
-
 			if (Collision::BoxAndBox<ECS::HitBase, ECS::HitBase>(collision, enemy))
 			{
 				const auto& players = ECS::EcsSystem::GetManager().GetEntitiesByGroup(ENTITY_GROUP::Player);
 				if (players.size() == 0) { return; }
 				Vec2 playerPos = players[0]->GetComponent<ECS::Position>().val;
 
+
+				//敵との距離を計算
 				Vec2 enemyPos = enemy.GetComponent<ECS::Position>().val;
 				Vec2 enemySize = Vec2(enemy.GetComponent<ECS::HitBase>().w() / 2.0f, enemy.GetComponent<ECS::HitBase>().h() / 2.0f);
 				float enemyLength = fabsf(enemySize.Length());
@@ -131,7 +131,10 @@ namespace Event
 				//EnemyHitEffect(*enemy, plusScore);
 				//スコアEntityを作成
 				ECS::AddScoreArcheType()("font", Vec2(0, 50 + (addScoreNum % 3) * 32), plusScore);
-				totalScore->GetComponent<ECS::TotalScoreDraw>().AddScore(plusScore);
+				if (totalScore->HasComponent<ECS::TotalScoreDraw>())
+				{
+					totalScore->GetComponent<ECS::TotalScoreDraw>().AddScore(plusScore);
+				}
 			}
 		}
 

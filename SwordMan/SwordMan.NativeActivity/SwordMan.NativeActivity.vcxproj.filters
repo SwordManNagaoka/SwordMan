@@ -264,5 +264,8 @@
     <ClInclude Include="Components\BlendMode.hpp">
       <Filter>Components</Filter>
     </ClInclude>
+    <ClInclude Include="Events\ButtonEvent.hpp">
+      <Filter>Events</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

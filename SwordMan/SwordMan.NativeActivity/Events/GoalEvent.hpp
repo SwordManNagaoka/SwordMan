@@ -15,6 +15,7 @@
 #include "../Components/PlayerDash.hpp"
 #include "../Components/EasingMove.hpp"
 
+
 namespace Event
 {
 	class GoalEvent
@@ -29,7 +30,6 @@ namespace Event
 			if (events.size() == 0) { return; }
 			for (auto& e : events)
 			{
-				if (!e->HasComponent<ECS::HitBase>()) { continue; }
 				if (Collision::BoxAndBox<ECS::HitBase, ECS::HitBase>(*players[0], *e))
 				{
 					//ゲームクリア
@@ -56,10 +56,10 @@ namespace Event
 			{
 				//プレイヤーを消去
 				players[0]->Destroy();
-				Scene::SceneManager::Get().ChangeScene(Scene::SceneManager::State::Result);
+				//Scene::SceneManager::Get().ChangeScene(Scene::SceneManager::State::Result);
 			}
 		}
-	private:
+	public:
 		//ゴール文字の作成
 		static void CreateGoalCharacter()
 		{

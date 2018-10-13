@@ -29,6 +29,18 @@ namespace Scene
 			ECS::HealthUIArcheType()(i,Vec2(500 + i * 144, 640));
 		}
 		ECS::TotalScoreArcheType()("font", Vec2(0, 0));
+
+		ECS::EnemyCommonData data;
+		data.pos = Vec2(2330, 400);
+		data.size = Vec2(198, 198);
+		data.jumpPower = 0.0f;
+		data.moveSpeed = 0.0f;
+		data.animNum = 1;
+		data.changeAnimFrameTime = 60;
+		data.imageName = "goal";
+		ECS::EnemyCommonArcheType()(data, 4);
+
+		ECS::ButtonArcheType()("pauseButton", Vec2(1280 - 96, 96), Vec2(0, 0), Vec2(96, 96), 50);
 	}
 	Game::~Game()
 	{

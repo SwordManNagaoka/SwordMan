@@ -17,6 +17,7 @@
 #include "../Components/CorrectionPosition.hpp"
 #include "../Components/OutsideOfScreen.hpp"
 #include "../Components/SideHitBase.hpp"
+#include "../Components/PlayerDash.hpp"
 
 namespace ECS
 {
@@ -41,6 +42,7 @@ namespace ECS
 			entity->AddComponent<Direction>();
 			entity->AddComponent<AnimationDraw>("player");
 			entity->AddComponent<AnimationController>(20, 2);
+			entity->AddComponent<PlayerDash>().SetIsMove(false);
 			entity->AddGroup(ENTITY_GROUP::Player);
 			return entity;
 		}

@@ -20,13 +20,18 @@ namespace ECS
 	public:
 		void Initialize() override
 		{
-			pos = &entity->GetComponent<Position>();
+			if (entity->HasComponent<Position>())
+			{
+				pos = &entity->GetComponent<Position>();
+			}
 			moveSpeed = 1.0f;
 			addMoveSpeed = 0.0f;
 			tolerance = 3.0f;
 		}
 		void Update() override
 		{
+			if (!moveFlag) { return; }
+			if (pos == nullptr) { return; }
 			if (IsTargetPos()) { return; }
 			pos->val.x += moveSpeed;
 			moveSpeed += addMoveSpeed;
@@ -55,6 +60,10 @@ namespace ECS
 			}
 			return false;
 		}
+		void SetIsMove(bool isMove)
+		{
+			moveFlag = isMove;
+		}
 	private:
 		void Draw3D() override {}
 	private:
@@ -63,5 +72,6 @@ namespace ECS
 		float tolerance;
 		float moveSpeed;
 		float addMoveSpeed;
+		bool moveFlag = true;
 	};
 }

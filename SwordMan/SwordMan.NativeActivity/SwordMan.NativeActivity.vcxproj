@@ -288,6 +288,7 @@
     <ClInclude Include="ECS\ECS.hpp" />
     <ClInclude Include="Events\AddScoreEvent.hpp" />
     <ClInclude Include="Events\AtackEvent.hpp" />
+    <ClInclude Include="Events\ButtonEvent.hpp" />
     <ClInclude Include="Events\ContinueTap.hpp" />
     <ClInclude Include="Events\EventManager.hpp" />
     <ClInclude Include="Events\GoalEvent.hpp" />

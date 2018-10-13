@@ -24,6 +24,7 @@ namespace ECS
 			entity->AddComponent<CircleColiider>(radius);
 			entity->GetComponent<CircleColiider>().SetOffset(srcSize.x / 2.0f, srcSize.y / 2.0f);
 			entity->AddComponent<RectDraw>(texName.c_str(),srcPos.x,srcPos.y,srcSize.x,srcSize.y);
+			entity->AddGroup(ENTITY_GROUP::GameUI);
 			return entity;
 		}
 	};

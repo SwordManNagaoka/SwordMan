@@ -12,6 +12,7 @@
 #include "../../ArcheType/Enemy.hpp"
 #include "../../Events/AddScoreEvent.hpp"
 #include "../../Events/GoalEvent.hpp"
+#include ".././Events/PauseTap.hpp"
 
 void GameController::ResourceLoad()
 {
@@ -41,13 +42,14 @@ GameController::GameController()
 	ResourceLoad();
 	pManager = &ECS::EcsSystem::GetManager();	
 	//初期シーン
-	Scene::SceneManager::Get().ChangeScene(Scene::SceneManager::State::Game);
+	Scene::SceneManager::Get().ChangeScene(Scene::SceneManager::State::Title);
 
 	//イベント関数の登録
 	//Event::EventManager().Get().Add(Scene::SceneManager::State::Game, Event::AddScoreEvent::Do);
 	Event::EventManager().Get().Add(Scene::SceneManager::State::Game, Event::CollisionEvent::AttackCollisionToEnemy);
 	Event::EventManager().Get().Add(Scene::SceneManager::State::Game, Event::CollisionEvent::PlayerToEnemy);
-	Event::EventManager().Get().Add(Scene::SceneManager::State::Game, Event::GoalEvent::HitPlayer);
+	//Event::EventManager().Get().Add(Scene::SceneManager::State::Game, Event::GoalEvent::HitPlayer);
+	Event::EventManager().Get().Add(Scene::SceneManager::State::Game, Event::PouseButtonEvent::PouseButtonTap);
 }
 
 void GameController::ResetGame()
