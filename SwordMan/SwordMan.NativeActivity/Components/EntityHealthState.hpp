@@ -154,7 +154,6 @@ namespace ECS
 				{
 					a->Destroy();
 				}
-				entity->GetComponent<Think>().ChangeMotion(PlayerData::State::Walk);
 				entity->Destroy();
 				break;
 			}

@@ -32,19 +32,20 @@ namespace ECS
 			if (Collision::BoxAndBox<HitBase, HitBase>(*entity, *players[0]))
 			{
 				//当たり判定時のイベント
-				players[0]->GetComponent<ECS::PlayerDash>().SetIsMove(true);
-				players[0]->GetComponent<ECS::PlayerDash>().SetTargetPos(Vec2(1300, 0));
-				players[0]->GetComponent<ECS::PlayerDash>().SetAddSpeed(0.2f);
-				players[0]->DeleteComponent<ECS::Think>();
-				players[0]->DeleteComponent<ECS::Behavior>();
 				if (isEventFunc)
 				{
 					if (onlyone)
 					{
 						if (!onceReferrd)
 						{
-							onceReferrd = true;
+							players[0]->GetComponent<Think>().ChangeMotion(PlayerData::State::Walk);
+							players[0]->GetComponent<ECS::PlayerDash>().SetIsMove(true);
+							players[0]->GetComponent<ECS::PlayerDash>().SetTargetPos(Vec2(1300, 0));
+							players[0]->GetComponent<ECS::PlayerDash>().SetAddSpeed(0.2f);
+							players[0]->DeleteComponent<ECS::Think>();
+							players[0]->DeleteComponent<ECS::Behavior>();
 							eventFunc();
+							onceReferrd = true;
 						}
 					}
 					else
