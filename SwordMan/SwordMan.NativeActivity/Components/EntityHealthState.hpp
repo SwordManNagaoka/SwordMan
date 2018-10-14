@@ -15,6 +15,7 @@
 #include "../Utility/Counter.hpp"
 #include "../Components/AnimationController.hpp"
 #include "../Components/Think.hpp"
+#include "../Utility/FPS.hpp"
 
 namespace ECS
 {
@@ -128,6 +129,7 @@ namespace ECS
 					{
 						entity->GetComponent<AnimationController>().SetIsHeightAnimation(true);
 						entity->GetComponent<AnimationController>().SetHeightAnimation(1, 3, 1);
+						oneFlag = true;
 					}
 					else
 					{
@@ -152,6 +154,7 @@ namespace ECS
 				{
 					a->Destroy();
 				}
+				entity->GetComponent<Think>().ChangeMotion(PlayerData::State::Walk);
 				entity->Destroy();
 				break;
 			}

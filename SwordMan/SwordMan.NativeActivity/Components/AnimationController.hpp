@@ -44,6 +44,7 @@ namespace ECS
 			animationID = 0;
 			widthAnim.baseData.isAnimation = true;
 			heightAnim.baseData.isAnimation = false;
+			heightAnim.baseData.animationNumber = 0;
 		}
 		void	Update() override
 		{
@@ -69,18 +70,25 @@ namespace ECS
 			int heightCurrentTime = heightAnim.baseData.animationCnt.GetCurrentCount();
 			
 			widthAnim.baseData.animationNumber
-				= widthCurrentTime / widthAnim.frameTime % widthAnim.chipSize;
+				= (widthAnim.offsetAnim + (widthCurrentTime / widthAnim.frameTime)) % widthAnim.chipSize;
 			widthAnim.baseData.animationCnt.Add();
-			
+			if (widthAnim.baseData.animationNumber >= widthAnim.chipSize)
+			{
+				widthAnim.baseData.animationNumber = 0;
+			}
 			//横のみのアニメーション
 			animationID = widthAnim.baseData.animationNumber;
 
 			if (!heightAnim.baseData.isAnimation) { return; }
 			if (heightAnim.frameTime == 0) { return; }
 			heightAnim.baseData.animationNumber
-				= heightCurrentTime / heightAnim.frameTime % heightAnim.chipSize;
+				= (heightAnim.offsetAnim + (heightCurrentTime / heightAnim.frameTime)) % heightAnim.chipSize;
 			heightAnim.baseData.animationCnt.Add();
 
+			if (heightAnim.baseData.animationNumber >= heightAnim.chipSize)
+			{
+				heightAnim.baseData.animationNumber = 0;
+			}
 			//横 + 縦のアニメーション
 			animationID = widthAnim.baseData.animationNumber + widthAnim.chipSize * heightAnim.baseData.animationNumber;
 		}
@@ -111,7 +119,11 @@ namespace ECS
 			widthAnim.baseData.isAnimation = isWidthAnim;
 			if (!widthAnim.baseData.isAnimation)
 			{
-				widthAnim = AnimationData();
+				widthAnim.chipSize = 0;
+				widthAnim.frameTime = 0;
+				widthAnim.offsetAnim = 0;
+				widthAnim.baseData.animationCnt.Reset();
+				widthAnim.baseData.animationNumber = 0;
 			}
 		}
 		//縦のアニメーションを行うか設定
@@ -120,7 +132,11 @@ namespace ECS
 			heightAnim.baseData.isAnimation = isHeightAnim;
 			if (!heightAnim.baseData.isAnimation)
 			{
-				heightAnim = AnimationData();
+				heightAnim.chipSize = 0;
+				heightAnim.frameTime = 0;
+				heightAnim.offsetAnim = 0;
+				heightAnim.baseData.animationCnt.Reset();
+				heightAnim.baseData.animationNumber = 0;
 			}
 		}
 		//縦のアニメーション番号を設定
