@@ -17,10 +17,10 @@
 #include "../Class/Scene/Title.h"
 #include "../Class/Scene/Game.h"
 #include "../Class/Scene/Pause.h"
+#include "../Class/Scene/Result.h"
 
 void GameController::ResourceLoad()
 {
-
 	ResourceManager::GetGraph().Load("image/a.png", "a");
 	ResourceManager::GetGraph().Load("image/font_text.png", "font");
 	ResourceManager::GetGraph().Load("image/ui/goalMessage.png", "goalMessage");
@@ -93,6 +93,11 @@ void GameController::OnSceneChange(const Scene::SceneName& scene, const Paramete
 		break;
 	case Scene::SceneName::Pause:
 		sceneStack.push(std::make_unique<Scene::Pause>(this, parame));
+		break;
+	case Scene::SceneName::Menu:
+		break;
+	case Scene::SceneName::Result:
+		sceneStack.push(std::make_unique<Scene::Result>(this, parame));
 		break;
 	default:
 		break;

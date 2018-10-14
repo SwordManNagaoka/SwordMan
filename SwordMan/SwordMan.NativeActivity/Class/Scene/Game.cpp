@@ -85,6 +85,12 @@ namespace Scene
 				};
 				b->GetComponent<ECS::PushButton>().SetEventFunction(changeFunc);
 			}
+			else if (player.size() == 0)
+			{
+				Parameter param;
+				callBack->OnSceneChange(SceneName::Result, param, false);
+				return;
+			}
 		}
 	}
 	void Game::Draw()

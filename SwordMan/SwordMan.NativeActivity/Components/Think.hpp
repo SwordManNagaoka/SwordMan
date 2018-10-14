@@ -70,7 +70,7 @@ namespace ECS
 				}
 				break;
 			case PlayerData::State::Attack:
-				if (motionCnt.GetCurrentCount() >= 20)
+				if (motionCnt.GetCurrentCount() >= 15)
 				{
 					if (jumpMove->IsLanding())
 					{
