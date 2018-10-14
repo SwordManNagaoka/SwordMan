@@ -147,6 +147,11 @@ namespace ECS
 				}
 				break;
 			case State::Death:
+				auto& attack = ECS::EcsSystem::GetManager().GetEntitiesByGroup(ENTITY_GROUP::Wepon);
+				for (auto& a : attack)
+				{
+					a->Destroy();
+				}
 				entity->Destroy();
 				break;
 			}
