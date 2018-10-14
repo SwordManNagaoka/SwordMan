@@ -156,8 +156,16 @@ namespace ECS
 		{
 			if (TouchInput::GetInput().Push(0))
 			{
+				//Pauseボタンの矩形との当たり判定
 				if (TouchInput::GetInput().GetTouchIDPos(0).x > (System::SCREEN_WIDIH / 2.0f))
 				{
+					if (TouchInput::GetInput().GetTouchIDPos(0).x >= (System::SCREEN_WIDIH - 98) && TouchInput::GetInput().GetTouchIDPos(0).x <= System::SCREEN_WIDIH)
+					{
+						if (TouchInput::GetInput().GetTouchIDPos(0).y <= 98 && TouchInput::GetInput().GetTouchIDPos(0).y >= 0)
+						{
+							return false;
+						}
+					}
 					return true;
 				}
 			}
