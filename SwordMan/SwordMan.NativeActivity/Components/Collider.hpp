@@ -70,7 +70,12 @@ namespace ECS
 		float W, H;
 		unsigned int color = 4294967295;
 		bool isFill = false;
+#if DEBUG
 		bool isDraw = true;
+#else
+		bool isDraw = false;
+#endif
+
 	public:
 		explicit HitBase(const float ww, const float hh)
 		{
@@ -127,7 +132,12 @@ namespace ECS
 		float W, H;
 		unsigned int color = 4294967295;
 		bool isFill = false;
+#if DEBUG
 		bool isDraw = true;
+#else
+		bool isDraw = false;
+#endif
+
 	public:
 		explicit FootBase(const float ww, const float hh)
 		{
@@ -184,7 +194,12 @@ namespace ECS
 		float r;
 		unsigned int color = 4294967295;
 		bool isFill = false;
+#if DEBUG
 		bool isDraw = true;
+#else
+		bool isDraw = false;
+#endif
+
 	public:
 		explicit CircleColiider(const float r_)
 		{
