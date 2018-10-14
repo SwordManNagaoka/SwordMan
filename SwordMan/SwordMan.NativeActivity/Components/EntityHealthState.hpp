@@ -128,13 +128,13 @@ namespace ECS
 					if (playerState == PlayerData::State::JumpAttack)
 					{
 						entity->GetComponent<AnimationController>().SetIsHeightAnimation(true);
-						entity->GetComponent<AnimationController>().SetHeightAnimation(1, 3, 1);
+						entity->GetComponent<AnimationController>().SetHeightAnimation(1, 3, 0);
 						oneFlag = true;
 					}
 					else
 					{
 						entity->GetComponent<AnimationController>().SetIsHeightAnimation(true);
-						entity->GetComponent<AnimationController>().SetHeightAnimation(10, 3, 1);
+						entity->GetComponent<AnimationController>().SetHeightAnimation(10, 3, 0);
 					}
 				}
 				if (stateCnt.GetCurrentCount() > 1)
@@ -143,7 +143,7 @@ namespace ECS
 					if (playerState == PlayerData::State::JumpAttack)
 					{
 						entity->GetComponent<AnimationController>().SetIsHeightAnimation(true);
-						entity->GetComponent<AnimationController>().SetHeightAnimation(1, 3, 1);
+						entity->GetComponent<AnimationController>().SetHeightAnimation(1, 3, 0);
 						oneFlag = true;
 					}
 				}

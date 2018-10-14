@@ -20,6 +20,8 @@ namespace Scene
 		Title,
 		Game,
 		Pause,
+		Menu,
+		Result,
 		BackToScene,	//前のシーンに戻る
 	};
 

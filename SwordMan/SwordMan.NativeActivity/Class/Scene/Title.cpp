@@ -24,6 +24,11 @@ namespace Scene
 		stageCreator.FillUpFlatMap();
 		//ステージの生成
 		stageCreator.Run(nullptr, nullptr, nullptr);
+
+		ECS::Entity* startLogo = &ECS::EcsSystem::GetManager().AddEntity();
+		startLogo->AddComponent<ECS::Position>(Vec2(500, 400));
+		startLogo->AddComponent<ECS::ImageFontDraw>("font",Vec2(32,32),16).SetDrawData("TapToStart");
+		startLogo->AddGroup(ENTITY_GROUP::GameUI);
 	}
 	Title::~Title()
 	{
