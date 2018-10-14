@@ -28,8 +28,9 @@ namespace Scene
 		//ECS::PlayerArcheType()(Vec2(250, 300), Vec2(64, 96));
 		for (int i = 0; i < 3; ++i)
 		{
-			ECS::HealthUIArcheType()(i,Vec2(500 + i * 144, 640));
+			ECS::HealthUIArcheType()(i,Vec2(450 + i * 144, 640));
 		}
+		//トータルスコアの生成
 		ECS::TotalScoreArcheType()("font", Vec2(0, 0));
 		//ポーズボタン生成
 		ECS::Entity* pauseBtn = ECS::ButtonArcheType()("pauseButton", Vec2(1280 - 96, 0), Vec2(0, 0), Vec2(96, 96), 50);

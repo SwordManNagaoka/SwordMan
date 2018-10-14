@@ -8,14 +8,18 @@
 #include "../ECS/ECS.hpp"
 #include "../GameController/GameController.h"
 #include "../Collision/Collision.hpp"
-#include "../Components/BasicComponents.hpp"
 #include "../System/System.hpp"
-#include "../Components/EntityHealthState.hpp"
+//アーキタイプ
+#include "../ArcheType/Score.hpp"
 #include "../ArcheType/Effect.hpp"
+//コンポーネント
+#include "../Components/BasicComponents.hpp"
+#include "../Components/EnemyDefaultMove.hpp"
+#include "../Components/Jump.hpp"
+#include "../Components/EntityHealthState.hpp"
 #include "../Components/EntityCounter.hpp"
 #include "../Components/EnemyEffectMove.hpp"
-#include "../ArcheType/Score.hpp"
-#include "../Components/EnemyDefaultMove.hpp"
+#include "../Components/EnemyJumpMove.hpp"
 
 namespace Event
 {
@@ -35,7 +39,6 @@ namespace Event
 					if (Collision::BoxAndBox<ECS::HitBase, ECS::HitBase>(*attackCollision, *enemy))
 					{
 						EnemyDestroy(*enemy, *attackCollision);
-						//enemy->Destroy();
 						break;
 					}
 				}
@@ -73,20 +76,17 @@ namespace Event
 
 			//スコアの決定
 			DecideScore(enemy, collision);
-
 			//エフェクト
 			EnemyHitEffect(enemy, 100);
 
 			enemy.DeleteComponent<ECS::HitBase>();
 			enemy.DeleteComponent<ECS::EnemyDefaultMove>();
-			//enemy.DeleteComponent<ECS::EnemyJumpMove>();
-			//enemy.DeleteComponent<ECS::TriggerJumpMove>();
-			//enemy.DeleteComponent<ECS::Physics>();
-
+			enemy.DeleteComponent<ECS::EnemyJumpMove>();
+			enemy.DeleteComponent<ECS::TriggerJumpMove>();
+			enemy.DeleteComponent<ECS::Physics>();
 			enemy.AddComponent<ECS::EntityCounter>().SetSpecifyCnt(30 - 1);
 			enemy.AddComponent<ECS::KillEntity>(30);
 		}
-
 	private:
 		//スコアを決定する
 		static void DecideScore(ECS::Entity& enemy, ECS::Entity& collision)
@@ -142,7 +142,7 @@ namespace Event
 				}
 			}
 		}
-
+		//スコアの計算
 		static int CalcScore(const float distance, const float scoreLength)
 		{
 			int plusScore = 0;

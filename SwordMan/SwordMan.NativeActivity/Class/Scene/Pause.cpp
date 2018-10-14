@@ -16,6 +16,7 @@ namespace Scene
 	Pause::Pause(IOnSceneChangeCallback* sceneTitleChange, const Parameter& parame)
 		:AbstractScene(sceneTitleChange)
 	{
+		//ボタン生成
 		for (int i = 0; i < 3; ++i)
 		{
 			ECS::Entity* e = ECS::ButtonArcheType()("pauseUI", Vec2(400 + i * 150, 400), Vec2(i * 96, 0), Vec2(96, 144), 50);
@@ -28,17 +29,18 @@ namespace Scene
 			case 2: e->AddComponent<ECS::BackMenuButtonTag>(); break;
 			}
 		}
+		//ポーズ文字画像生成
 		for (int i = 0; i < 5; ++i)
 		{
 			ECS::Entity* entity = &ECS::EcsSystem::GetManager().AddEntity();
 			entity->AddComponent<ECS::Position>(Vec2(1300 + i * 170, 150));
 			entity->AddComponent<ECS::RectDraw>("pauseMessage", i * 144, 0, 144, 180);
 			entity->AddComponent<ECS::EasingMove>(Easing::QuartOut, ECS::EasingMove::DirectionState::LeftAndRight);
-			entity->GetComponent<ECS::EasingMove>().SetBeginToEndPoint(1300 + i * 170, 250 + i * 170);
+			entity->GetComponent<ECS::EasingMove>().SetBeginToEndPoint(1300 + i * 170, 220 + i * 170);
 			entity->GetComponent<ECS::EasingMove>().SetTimeToDuration(30, 60);
 			entity->AddGroup(ENTITY_GROUP::PauseUI);
 		}
-
+		//フェード画像生成
 		ECS::Entity* entity = &ECS::EcsSystem::GetManager().AddEntity();
 		entity->AddComponent<ECS::Position>();
 		entity->AddComponent<ECS::SimpleDraw>("fade");
