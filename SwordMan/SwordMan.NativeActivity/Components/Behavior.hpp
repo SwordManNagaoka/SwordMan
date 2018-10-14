@@ -9,11 +9,11 @@
 #include "../Utility/Vec.hpp"
 #include "../ResourceManager/ResourceManager.hpp"
 #include "../Components/BasicComponents.hpp"
-#include "../../Components/ComponentDatas/PlayerData.hpp"
-#include "../../Components/Think.hpp"
-#include "../../Components/Jump.hpp"
-#include "../../Components/AnimationController.hpp"
-#include "../../ArcheType/AttackCollision.hpp"
+#include "../Components/ComponentDatas/PlayerData.hpp"
+#include "../Components/Think.hpp"
+#include "../Components/Jump.hpp"
+#include "../Components/AnimationController.hpp"
+#include "../ArcheType/AttackCollision.hpp"
 
 
 namespace ECS

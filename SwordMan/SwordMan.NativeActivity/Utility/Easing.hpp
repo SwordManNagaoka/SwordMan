@@ -206,7 +206,8 @@ public:
 
 	static float QuartIn(float time, float duration)
 	{
-		return (time /= duration)*time*time*time;
+		float sss = (time /= duration);	//Androidで四則演算の順序を正しくしないと警告が発生する(time /= duration)
+		return sss*time*time*time;
 	}
 	static float QuartOut(float time, float duration)
 	{

@@ -240,5 +240,38 @@
     <ClInclude Include="Utility\Converter.hpp">
       <Filter>Utility</Filter>
     </ClInclude>
+    <ClInclude Include="ArcheType\Effect.hpp">
+      <Filter>ArcheType</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\EnemyEffectMove.hpp">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\EntityCounter.hpp">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Events\GoalEvent.hpp">
+      <Filter>Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\PlayerDash.hpp">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\EasingMove.hpp">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="ArcheType\Button.hpp">
+      <Filter>ArcheType</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\BlendMode.hpp">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Events\ButtonEvent.hpp">
+      <Filter>Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\ComponentDatas\ButtonTag.hpp">
+      <Filter>Components\ComponentDatas</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\PlayerAddComponent.hpp">
+      <Filter>Components</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

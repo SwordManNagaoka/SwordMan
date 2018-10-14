@@ -9,27 +9,42 @@
 #include "../../ArcheType/Enemy.hpp"
 #include "../../ArcheType/HealthUI.hpp"
 #include "../../ArcheType/Score.hpp"
+#include "../../ArcheType/Button.hpp"
+#include "../../Events/AtackEvent.hpp"
+
 
 namespace Scene
 {
-	Game::Game() :
-		mapLoader("stage/mapparamtest.csv")
+	Game::Game(IOnSceneChangeCallback* sceneTitleChange, const Parameter& parame)
+		: AbstractScene(sceneTitleChange)
 	{
-		mapLoader.LoadStageConstitution();
-
-		mapCreator.SetMapParam(mapLoader.GetStageParam());
-		mapCreator.FillUpFlatMap();
+		stageLoader.LoadStage("stage/mapparamtest.csv");
+		stageLoader.LoadStageConstitution();
+		stageCreator.SetMapParam(stageLoader.GetStageParam());
+		stageCreator.FillUpFlatMap();
 		//ステージの生成
-		mapCreator.Run(&mapLoader.GetStageData(), &mapLoader.GetSkyData(),&mapLoader.GetEnemyData());
+		stageCreator.Run(&stageLoader.GetStageData(), &stageLoader.GetSkyData(),&stageLoader.GetEnemyData());
+		//Entityの生成
+		//ECS::PlayerArcheType()(Vec2(250, 300), Vec2(64, 96));
 		for (int i = 0; i < 3; ++i)
 		{
-			ECS::HealthUIArcheType()(i,Vec2(500 + i * 144, 640));
+			ECS::HealthUIArcheType()(i,Vec2(450 + i * 144, 640));
 		}
+		//トータルスコアの生成
 		ECS::TotalScoreArcheType()("font", Vec2(0, 0));
+		//ポーズボタン生成
+		ECS::Entity* pauseBtn = ECS::ButtonArcheType()("pauseButton", Vec2(1280 - 96, 0), Vec2(0, 0), Vec2(96, 96), 50);
+		pauseBtn->AddComponent<ECS::PauseButtonTag>();
+		pauseBtn->AddGroup(ENTITY_GROUP::GameUI);
 	}
+	Game::~Game()
+	{
+		ECS::EcsSystem::GetManager().AllKill();
+	}
+	
 	void Game::Update()
 	{
-		mapCreator.Run(&mapLoader.GetStageData(), &mapLoader.GetSkyData(), &mapLoader.GetEnemyData());
+		stageCreator.Run(&stageLoader.GetStageData(), &stageLoader.GetSkyData(), &stageLoader.GetEnemyData());
 		auto& player = ECS::EcsSystem::GetManager().GetEntitiesByGroup(ENTITY_GROUP::Player);
 		auto& ground = ECS::EcsSystem::GetManager().GetEntitiesByGroup(ENTITY_GROUP::Ground);
 		//地形との衝突応答を行う
@@ -47,12 +62,33 @@ namespace Scene
 				e->GetComponent<ECS::Physics>().SetCollisionFunction(Collision::BoxAndBox<ECS::HitBase, ECS::HitBase>);
 			}
 		}
+		Event::CollisionEvent::AttackCollisionToEnemy();
+		Event::CollisionEvent::PlayerToEnemy();
 		ECS::EcsSystem::GetManager().Update();
+		//ボタンイベント
+		auto& gameUI = ECS::EcsSystem::GetManager().GetEntitiesByGroup(ENTITY_GROUP::GameUI);
+		for (auto& b : gameUI)
+		{
+			if (b->HasComponent<ECS::PauseButtonTag>())
+			{
+				b->GetComponent<ECS::PushButton>().SetSceneCallBack(callBack);
+				auto changeFunc = [](Scene::IOnSceneChangeCallback* callBack)
+				{
+					Parameter param;
+					callBack->OnSceneChange(SceneName::Pause, param, false);
+					auto& gameUI = ECS::EcsSystem::GetManager().GetEntitiesByGroup(ENTITY_GROUP::GameUI);
+					for (auto& b : gameUI)
+					{
+						if (b->HasComponent<ECS::PauseButtonTag>()) { b->Destroy(); }
+					}
+					return;
+				};
+				b->GetComponent<ECS::PushButton>().SetEventFunction(changeFunc);
+			}
+		}
 	}
-
 	void Game::Draw()
 	{
 		ECS::EcsSystem::GetManager().OrderByDraw(ENTITY_GROUP::Max);
 	}
-
 }

@@ -8,13 +8,13 @@
 #pragma once
 #include <functional>
 #include "../ECS/ECS.hpp"
-#include "../../Utility/Vec.hpp"
-#include "../../Utility/Counter.hpp"
+#include "../Utility/Vec.hpp"
+#include "../Utility/Counter.hpp"
 #include "StageData.hpp"
 #include "../System/System.hpp"
-#include "../../ArcheType/Map.hpp"
-#include "../../ArcheType/Enemy.hpp"
-#include "../../ArcheType/Sky.hpp"
+#include "../ArcheType/Map.hpp"
+#include "../ArcheType/Enemy.hpp"
+#include "../ArcheType/Sky.hpp"
 
 class StageCreator
 {

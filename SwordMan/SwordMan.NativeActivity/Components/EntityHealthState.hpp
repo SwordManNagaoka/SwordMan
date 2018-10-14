@@ -9,8 +9,8 @@
 #include "../Utility/Vec.hpp"
 #include "../ResourceManager/ResourceManager.hpp"
 #include "../Components/BasicComponents.hpp"
-#include "../../Components/ComponentDatas/PlayerData.hpp"
-#include "../../Class/TouchInput.hpp"
+#include "../Components/ComponentDatas/PlayerData.hpp"
+#include "../Class/TouchInput.hpp"
 #include "../Components/Renderer.hpp"
 #include "../Utility/Counter.hpp"
 #include "../Components/AnimationController.hpp"
@@ -147,6 +147,11 @@ namespace ECS
 				}
 				break;
 			case State::Death:
+				auto& attack = ECS::EcsSystem::GetManager().GetEntitiesByGroup(ENTITY_GROUP::Wepon);
+				for (auto& a : attack)
+				{
+					a->Destroy();
+				}
 				entity->Destroy();
 				break;
 			}

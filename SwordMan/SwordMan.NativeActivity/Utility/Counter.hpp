@@ -15,8 +15,8 @@ template <typename T>
 */
 class TemplateCounter
 {
-#undef max
 #undef min
+#undef max
 private:
 	bool isMax;
 	bool isMin;
