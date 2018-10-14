@@ -87,6 +87,13 @@ namespace Scene
 			}
 			else if (player.size() == 0)
 			{
+				for (auto& ui : gameUI)
+				{
+					if(ui->HasComponent<ECS::PauseButtonTag>())
+					{
+						ui->Destroy();
+					}
+				}
 				Parameter param;
 				callBack->OnSceneChange(SceneName::Result, param, false);
 				return;
