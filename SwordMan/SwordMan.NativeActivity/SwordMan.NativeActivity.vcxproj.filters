@@ -267,5 +267,8 @@
     <ClInclude Include="Events\ButtonEvent.hpp">
       <Filter>Events</Filter>
     </ClInclude>
+    <ClInclude Include="Components\ComponentDatas\ButtonTag.hpp">
+      <Filter>Components\ComponentDatas</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

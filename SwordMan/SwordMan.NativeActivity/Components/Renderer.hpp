@@ -120,6 +120,7 @@ namespace ECS
 		{
 			if (!ResourceManager::GetGraph().IsExistenceDivHandle(name_))
 			{
+				DOUT << name << std::endl;
 				assert(false);
 			}
 			name = name_;

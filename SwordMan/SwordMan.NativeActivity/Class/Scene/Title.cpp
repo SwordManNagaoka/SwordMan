@@ -5,17 +5,25 @@
 //クラス
 #include "../../Class/TouchInput.hpp"
 #include "../../Class/Scene/SceneManager.hpp"
+#include "../../Utility/Input.hpp"
+#include "../../ResourceManager/ResourceManager.hpp"
 //アーキタイプ
 #include "../../ArcheType/Button.hpp"
+#include "../../ArcheType/Player.hpp"
 //コンポーネント
-
 
 
 namespace Scene
 {
-	Title::Title()
+	Title::Title(IOnSceneChangeCallback* sceneTitleChange, const Parameter& parame)
+		: AbstractScene(sceneTitleChange)
 	{
-		ECS::ButtonArcheType()("pauseButton", Vec2(300, 300), Vec2(0, 0), Vec2(98, 98), 50)->AddGroup(ENTITY_GROUP::GameUI);
+		stageLoader.LoadStage("stage/mapparamtest.csv");
+		stageLoader.LoadStageConstitution();
+		stageCreator.SetMapParam(stageLoader.GetStageParam());
+		stageCreator.FillUpFlatMap();
+		//ステージの生成
+		stageCreator.Run(nullptr, nullptr, nullptr);
 	}
 	Title::~Title()
 	{
@@ -26,13 +34,18 @@ namespace Scene
 			e->Destroy();
 		}
 	}
+	
 	void Title::Update()
 	{
-		if (TouchInput::GetInput().Push(0))
-		{
-			Scene::SceneManager::Get().ChangeScene(Scene::SceneManager::State::Game);
-		}
+		stageCreator.Run(nullptr, nullptr, nullptr);
 		ECS::EcsSystem::GetManager().Update();
+		if (TouchInput::GetInput().GetBtnPress(0) == 1)
+		{
+			Parameter param;
+			ECS::PlayerArcheType()(Vec2(250, 300), Vec2(64, 96));
+			callBack->OnSceneChange(SceneName::Game, param, true);
+			return;
+		}
 	}
 
 	void Title::Draw()

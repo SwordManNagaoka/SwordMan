@@ -6,12 +6,14 @@
 */
 #pragma once
 #include "Scene.hpp"
+#include "../Scene/SceneManager.hpp"
+
 namespace Scene
 {
-	class Result final : public ISceneBase
+	class Result final : public AbstractScene
 	{
 	public:
-		Result();
+		Result(IOnSceneChangeCallback* sceneTitleChange, const Parameter& parame);
 		~Result();
 		void Update() override;
 		void Draw() override;

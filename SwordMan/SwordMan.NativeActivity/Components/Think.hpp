@@ -9,9 +9,11 @@
 #include "../Utility/Vec.hpp"
 #include "../ResourceManager/ResourceManager.hpp"
 #include "../Components/BasicComponents.hpp"
-#include "../../Components/ComponentDatas/PlayerData.hpp"
-#include "../../Class/TouchInput.hpp"
-#include "../../Components/AnimationController.hpp"
+#include "../Components/ComponentDatas/PlayerData.hpp"
+#include "../Class/TouchInput.hpp"
+#include "../Components/AnimationController.hpp"
+#include "../Components/Jump.hpp"
+
 
 namespace ECS
 {

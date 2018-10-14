@@ -10,11 +10,11 @@
 #include "../Collision/Collision.hpp"
 #include "../Components/BasicComponents.hpp"
 #include "../System/System.hpp"
-#include "../../Components/EntityHealthState.hpp"
+#include "../Components/EntityHealthState.hpp"
 #include ".././ArcheType/Effect.hpp"
 #include "../Components/EntityCounter.hpp"
 #include "../Components/EnemyEffectMove.hpp"
-#include "../../Class/Scene/SceneManager.hpp"
+#include "../Class/Scene/SceneManager.hpp"
 
 
 namespace Event
@@ -35,12 +35,10 @@ namespace Event
 					Vec2 circlePos = Vec2(circle.x(), circle.y());
 					float radius = circle.radius();
 					auto touchPos = TouchInput::GetInput().GetTouchIDPos(0);
-
+					printfDx("ゲームシーンからポーズへ\n");
 					if (Collision::CircleAndPoint(circlePos, radius, touchPos))
 					{
 						//シーンをゲームシーンへ
-						printfDx("ポーズからゲームシーンへ\n");
-						Scene::SceneManager::Get().ChangeScene(Scene::SceneManager::State::Game);
 						break;
 					}
 				}

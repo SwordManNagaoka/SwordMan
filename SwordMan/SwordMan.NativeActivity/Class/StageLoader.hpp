@@ -22,6 +22,7 @@ private:
 	StageArrayData	enemyData;
 	StageArrayData	skyData;
 public:
+	StageLoader() {} 
 	StageLoader(const std::string& mapParamPath)
 	{
 		//ファイルを開く
@@ -32,21 +33,21 @@ public:
 		}
 
 		//各種パラメーターを読み込む
-		fin >>	stageParam.mapImage >> stageParam.mapDataPath >>
-				stageParam.enemyConstitutionPath >>
-				stageParam.skyImage >> stageParam.skyDataPath >>
-				stageParam.mapWidth >> stageParam.mapHeight >>
-				stageParam.chipSize >>
-				stageParam.xSpeed >>
-				stageParam.backImagePath[0] >>
-				stageParam.backImagePath[1] >>
-				stageParam.backImagePath[2] >>
-				stageParam.chipImagePath >>
-				stageParam.enemyDataPath[0] >>
-				stageParam.enemyDataPath[1] >>
-				stageParam.enemyDataPath[2] >>
-				stageParam.enemyDataPath[3] >>
-				stageParam.enemyDataPath[4];
+		fin >> stageParam.mapImage >> stageParam.mapDataPath >>
+			stageParam.enemyConstitutionPath >>
+			stageParam.skyImage >> stageParam.skyDataPath >>
+			stageParam.mapWidth >> stageParam.mapHeight >>
+			stageParam.chipSize >>
+			stageParam.xSpeed >>
+			stageParam.backImagePath[0] >>
+			stageParam.backImagePath[1] >>
+			stageParam.backImagePath[2] >>
+			stageParam.chipImagePath >>
+			stageParam.enemyDataPath[0] >>
+			stageParam.enemyDataPath[1] >>
+			stageParam.enemyDataPath[2] >>
+			stageParam.enemyDataPath[3] >>
+			stageParam.enemyDataPath[4];
 
 		fin.close();
 
@@ -61,7 +62,46 @@ public:
 		//マップチップ
 		ResourceManager::GetGraph().Load(stageParam.chipImagePath, stageParam.mapImage);
 	}
+	void LoadStage(const std::string& mapParamPath)
+	{
+		//ファイルを開く
+		std::ifstream fin(DXFilieRead().GetPath(mapParamPath, "/mapData.txt"));
+		if (fin.is_open() == 0)
+		{
+			printfDx("Error!!!");
+		}
 
+		//各種パラメーターを読み込む
+		fin >> stageParam.mapImage >> stageParam.mapDataPath >>
+			stageParam.enemyConstitutionPath >>
+			stageParam.skyImage >> stageParam.skyDataPath >>
+			stageParam.mapWidth >> stageParam.mapHeight >>
+			stageParam.chipSize >>
+			stageParam.xSpeed >>
+			stageParam.backImagePath[0] >>
+			stageParam.backImagePath[1] >>
+			stageParam.backImagePath[2] >>
+			stageParam.chipImagePath >>
+			stageParam.enemyDataPath[0] >>
+			stageParam.enemyDataPath[1] >>
+			stageParam.enemyDataPath[2] >>
+			stageParam.enemyDataPath[3] >>
+			stageParam.enemyDataPath[4];
+
+		fin.close();
+
+		//ここで使用するリソースを読み込む
+		for (int i = 0; i < 1; ++i)
+		{
+			//背景
+			std::stringstream ss;
+			ss << i;
+			ResourceManager::GetGraph().Load(stageParam.backImagePath[i], stageParam.skyImage + ss.str());
+		}
+		//マップチップ
+		ResourceManager::GetGraph().Load(stageParam.chipImagePath, stageParam.mapImage);
+	}
+	
 	//マップと敵配置の構成、敵種類データを読み込む
 	void LoadStageConstitution()
 	{
@@ -76,7 +116,7 @@ public:
 		}
 
 		//マップ構成ファイルを開く
-		std::ifstream mapfin(DXFilieRead().GetPath(stageParam.mapDataPath, "/map.txt"));
+		std::ifstream mapfin(DXFilieRead().GetPath(stageParam.mapDataPath,"/map.txt"));
 		std::ifstream enemyfin(DXFilieRead().GetPath(stageParam.enemyConstitutionPath, "/enemy.txt"));
 		std::ifstream skyfin(DXFilieRead().GetPath(stageParam.skyDataPath, "/sky.txt"));
 		if ((mapfin.is_open() == 0) ||
@@ -103,7 +143,7 @@ public:
 		//敵種類データの読み込み
 		for (size_t i = 0; i < stageParam.enemyDataPath.size(); ++i)
 		{
-			std::ifstream enemyfin(DXFilieRead().GetPath(stageParam.enemyDataPath[i], "/enemyData.txt"));
+			std::ifstream enemyfin(DXFilieRead().GetPath(stageParam.enemyDataPath[i],"/enemyData.txt"));
 			enemyfin >> stageParam.enemyData[i].size.x >> stageParam.enemyData[i].size.y >>
 						stageParam.enemyData[i].imageName >>
 						stageParam.enemyData[i].animNum >>

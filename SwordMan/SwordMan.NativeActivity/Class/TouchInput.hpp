@@ -9,6 +9,7 @@
 //TouchInput
 //製作者: 日比野　真聖
 //日付: 2018/9/14
+//更新:tonarinohito フレームを返すメソッド追加
 //--------------------------------------------------------------------
 class TouchInput
 {
@@ -22,6 +23,11 @@ private:
 			for (int i = 0; i < 2; ++i)
 			{
 				buttonState[i] = BtnState::ReleaseBtn;
+			}
+			btnCounter.resize(2);
+			for (int i = 0;i < 2;++i)
+			{
+				btnCounter[i] = 0;
 			}
 		}
 		InputSystem(const int touchNum)
@@ -92,6 +98,7 @@ private:
 					{
 						btnNumState[i] = 2;
 					}
+					++btnCounter[i];
 				}
 			}
 			else
@@ -106,6 +113,7 @@ private:
 					{
 						btnNumState[i] = -2;
 					}
+					btnCounter[i] = 0;
 				}
 			}
 			for (size_t i = 0; i < buttonState.size(); ++i)
@@ -128,9 +136,15 @@ private:
 				}
 			}
 		}
+		//ボタンを押しているフレーム数を返す
+		int GetBtnPress(int btnNumber)
+		{
+			return btnCounter[btnNumber];
+		}
 	private:
 		std::unordered_map<int, BtnState>	buttonState;
 		std::vector<int>					btnNumState;
+		std::vector<int>					btnCounter;
 	};
 public:
 	//!@brief	入力システムにアクセスします

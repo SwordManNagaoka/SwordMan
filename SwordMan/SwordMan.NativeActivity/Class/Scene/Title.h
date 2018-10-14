@@ -6,14 +6,24 @@
 */
 #pragma once
 #include "Scene.hpp"
+#include "../Scene/SceneManager.hpp"
+#include "../../ArcheType/Player.hpp"
+#include "../../Class/StageLoader.hpp"
+#include "../../Class/StageCreator.hpp"
+
+
 namespace Scene
 {
-	class Title final : public ISceneBase
+	class Title : public AbstractScene
 	{
 	public:
-		Title();
+		Title(IOnSceneChangeCallback* sceneTitleChange, const Parameter& parame);
 		~Title();
-		void Update() override;
-		void Draw() override;
+		virtual void Update() override;
+		virtual void Draw() override;
+	private:
+		StageLoader stageLoader;
+		StageCreator stageCreator;
 	};
+
 }

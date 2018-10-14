@@ -8,7 +8,7 @@
 #include "../ECS/ECS.hpp"
 #include "../Utility/Vec.hpp"
 #include "../Components/BasicComponents.hpp"
-#include "../../Components/ComponentDatas/PlayerData.hpp"
+#include "../Components/ComponentDatas/PlayerData.hpp"
 #include "../Components/Renderer.hpp"
 #include "../Components/EntityHealthState.hpp"
 

@@ -6,8 +6,8 @@
 //----------------------------------------------------
 #pragma once
 #include "../ECS/ECS.hpp"
-#include "../../Components/Collider.hpp"
-#include "../../Components/Renderer.hpp"
+#include "../Components/Collider.hpp"
+#include "../Components/Renderer.hpp"
 #include "../GameController/GameController.h"
 #include "../Components/Jump.hpp"
 #include "../Components/Think.hpp"
@@ -26,7 +26,7 @@ namespace ECS
 	public:
 		ECS::Entity* operator()(const Vec2& pos,const Vec2& size)
 		{
-			ECS::Entity*	entity = &ECS::EcsSystem::GetManager().AddEntity();
+			ECS::Entity*	entity = &ECS::EcsSystem::GetManager().AddEntityAddTag("player");
 			entity->AddComponent<Position>(pos);
 			entity->AddComponent<Rotation>();
 			entity->AddComponent<HitBase>(size.x,size.y).SetOffset(16.0f,0.0f);

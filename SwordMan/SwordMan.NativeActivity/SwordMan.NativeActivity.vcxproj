@@ -154,7 +154,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <CompileAs>CompileAsCpp</CompileAs>
       <AdditionalIncludeDirectories>DxLib/Android_ARM;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <CppLanguageStandard>c++1y</CppLanguageStandard>
+      <CppLanguageStandard>c++1z</CppLanguageStandard>
       <ExceptionHandling>Disabled</ExceptionHandling>
     </ClCompile>
     <Link>
@@ -168,7 +168,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <CompileAs>CompileAsCpp</CompileAs>
       <AdditionalIncludeDirectories>DxLib/Android_ARM;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <CppLanguageStandard>c++1y</CppLanguageStandard>
+      <CppLanguageStandard>c++1z</CppLanguageStandard>
       <ExceptionHandling>Disabled</ExceptionHandling>
     </ClCompile>
     <Link>
@@ -266,6 +266,7 @@
     <ClInclude Include="Components\BlendMode.hpp" />
     <ClInclude Include="Components\ChaseEntity.hpp" />
     <ClInclude Include="Components\Collider.hpp" />
+    <ClInclude Include="Components\ComponentDatas\ButtonTag.hpp" />
     <ClInclude Include="Components\ComponentDatas\CollisionData.hpp" />
     <ClInclude Include="Components\ComponentDatas\EnemyData.hpp" />
     <ClInclude Include="Components\ComponentDatas\PlayerData.hpp" />

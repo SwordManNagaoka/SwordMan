@@ -13,6 +13,7 @@
 #include "../Utility/Vec.hpp"
 #include "../ResourceManager/ResourceManager.hpp"
 #include <DxLib.h>
+#include <functional>
 namespace ECS
 {
 	/*! 

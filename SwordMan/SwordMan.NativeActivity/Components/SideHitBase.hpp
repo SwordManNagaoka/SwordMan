@@ -9,7 +9,7 @@
 #include "../Utility/Vec.hpp"
 #include "../ResourceManager/ResourceManager.hpp"
 #include "../Components/BasicComponents.hpp"
-#include "../../Components/ComponentDatas/PlayerData.hpp"
+#include "../Components/ComponentDatas/PlayerData.hpp"
 #include "../Components/Renderer.hpp"
 #include "../GameController/GameController.h"
 

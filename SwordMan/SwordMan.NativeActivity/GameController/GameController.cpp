@@ -1,21 +1,26 @@
 #include "GameController.h"
 #include "../ResourceManager/ResourceManager.hpp"
-#include "../../Components/BasicComponents.hpp"
-#include "../../Components/Renderer.hpp"
-#include "../../Components/Collider.hpp"
-#include "../../ArcheType/Map.hpp"
-#include "../../ArcheType/Player.hpp"
+#include "../Components/BasicComponents.hpp"
+#include "../Components/Renderer.hpp"
+#include "../Components/Collider.hpp"
+#include "../ArcheType/Map.hpp"
+#include "../ArcheType/Player.hpp"
 #include "../Class/TouchInput.hpp"
-#include "../../Class/Scene/SceneManager.hpp"
-#include "../../Events/EventManager.hpp"
-#include "../../Events/AtackEvent.hpp"
-#include "../../ArcheType/Enemy.hpp"
-#include "../../Events/AddScoreEvent.hpp"
-#include "../../Events/GoalEvent.hpp"
-#include ".././Events/PauseTap.hpp"
+#include "../Class/Scene/SceneManager.hpp"
+#include "../Events/EventManager.hpp"
+#include "../Events/AtackEvent.hpp"
+#include "../ArcheType/Enemy.hpp"
+#include "../Events/AddScoreEvent.hpp"
+#include "../Events/GoalEvent.hpp"
+#include "../Events/PauseTap.hpp"
+
+#include "../Class/Scene/Title.h"
+#include "../Class/Scene/Game.h"
+#include "../Class/Scene/Pause.h"
 
 void GameController::ResourceLoad()
 {
+
 	ResourceManager::GetGraph().Load("image/a.png", "a");
 	ResourceManager::GetGraph().Load("image/font_text.png", "font");
 	ResourceManager::GetGraph().Load("image/ui/goalMessage.png", "goalMessage");
@@ -23,6 +28,7 @@ void GameController::ResourceLoad()
 	ResourceManager::GetGraph().Load("image/ui/life.png", "health");
 	ResourceManager::GetGraph().Load("image/ui/pauseUI.png", "pauseUI");
 	ResourceManager::GetGraph().Load("image/ui/fade.png", "fade");
+	ResourceManager::GetGraph().Load("image/ui/pauseMessage.png", "pauseMessage");
 	ResourceManager::GetGraph().LoadDiv("image/sword.png", "sword", 5, 5, 1, 192, 192);
 	ResourceManager::GetGraph().LoadDiv("image/rolling.png", "rolling", 12, 4, 3, 288, 288);	
 	ResourceManager::GetGraph().LoadDiv("image/enemy01.png", "enemy1", 2, 2, 1, 96, 96);
@@ -42,14 +48,15 @@ GameController::GameController()
 	ResourceLoad();
 	pManager = &ECS::EcsSystem::GetManager();	
 	//初期シーン
-	Scene::SceneManager::Get().ChangeScene(Scene::SceneManager::State::Title);
+	sceneStack.push(std::make_unique< Scene::Title >(this, param));	//タイトルシーンを作成し、プッシュ
 
 	//イベント関数の登録
 	//Event::EventManager().Get().Add(Scene::SceneManager::State::Game, Event::AddScoreEvent::Do);
-	Event::EventManager().Get().Add(Scene::SceneManager::State::Game, Event::CollisionEvent::AttackCollisionToEnemy);
-	Event::EventManager().Get().Add(Scene::SceneManager::State::Game, Event::CollisionEvent::PlayerToEnemy);
+	//Event::EventManager().Get().Add(Scene::SceneManager::State::Game, Event::CollisionEvent::AttackCollisionToEnemy);
+	//Event::EventManager().Get().Add(Scene::SceneManager::State::Game, Event::CollisionEvent::PlayerToEnemy);
 	//Event::EventManager().Get().Add(Scene::SceneManager::State::Game, Event::GoalEvent::HitPlayer);
-	Event::EventManager().Get().Add(Scene::SceneManager::State::Game, Event::PouseButtonEvent::PouseButtonTap);
+	//Event::EventManager().Get().Add(Scene::SceneManager::State::Game, Event::PouseButtonEvent::PouseButtonTap);
+
 }
 
 void GameController::ResetGame()
@@ -61,12 +68,41 @@ void GameController::Update()
 {
 	TouchInput::GetInput().Update();
 	pManager->Refresh();
-	Event::EventManager::Get().Update();
-	Scene::SceneManager::Get().Update();
-
+	sceneStack.top()->Update();
 }
 
 void GameController::Draw()
 {
-	Scene::SceneManager::Get().Draw();
+	sceneStack.top()->Draw();
+}
+
+
+void GameController::OnSceneChange(const Scene::SceneName& scene, const Parameter& parame, bool stackClear)
+{
+	if (stackClear)
+	{
+		sceneStack.pop();
+	}
+	switch (scene)
+	{
+	case Scene::SceneName::Title:
+		sceneStack.push(std::make_unique<Scene::Title>(this, parame));
+		break;
+	case Scene::SceneName::Game:
+		sceneStack.push(std::make_unique<Scene::Game>(this, parame));
+		break;
+	case Scene::SceneName::Pause:
+		sceneStack.push(std::make_unique<Scene::Pause>(this, parame));
+		break;
+	default:
+		break;
+	}
+}
+
+void GameController::StackAllClear()
+{
+	while (!sceneStack.empty())
+	{
+		sceneStack.pop();
+	}
 }
