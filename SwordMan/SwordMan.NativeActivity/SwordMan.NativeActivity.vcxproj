@@ -281,6 +281,7 @@
     <ClInclude Include="Components\Jump.hpp" />
     <ClInclude Include="Components\MapMove.hpp" />
     <ClInclude Include="Components\OutsideOfScreen.hpp" />
+    <ClInclude Include="Components\PlayerAddComponent.hpp" />
     <ClInclude Include="Components\PlayerDash.hpp" />
     <ClInclude Include="Components\Renderer.hpp" />
     <ClInclude Include="Components\SideHitBase.hpp" />

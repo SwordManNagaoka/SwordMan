@@ -270,5 +270,8 @@
     <ClInclude Include="Components\ComponentDatas\ButtonTag.hpp">
       <Filter>Components\ComponentDatas</Filter>
     </ClInclude>
+    <ClInclude Include="Components\PlayerAddComponent.hpp">
+      <Filter>Components</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

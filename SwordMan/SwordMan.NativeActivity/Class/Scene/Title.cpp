@@ -42,7 +42,7 @@ namespace Scene
 		if (TouchInput::GetInput().GetBtnPress(0) == 1)
 		{
 			Parameter param;
-			ECS::PlayerArcheType()(Vec2(250, 300), Vec2(64, 96));
+			ECS::PlayerArcheType()(Vec2(-150, 300), Vec2(64, 96));
 			callBack->OnSceneChange(SceneName::Game, param, true);
 			return;
 		}
