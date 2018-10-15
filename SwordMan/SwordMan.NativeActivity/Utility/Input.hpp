@@ -1,14 +1,13 @@
 /**
 * @file Input.hpp
-* @brief å…¥åŠ›é–¢é€£ã®å‡¦ç†ã‚’ã¾ã¨ã‚ã¾ã™
-* @author tonarinohito
+* @brief “ü—ÍŠÖ˜A‚Ìˆ—‚ğ‚Ü‚Æ‚ß‚Ü‚·
 */
 #pragma once
 #include <memory>
 #include <DxLib.h>
 /*!
 @class Input
-@brief ã‚­ãƒ¼ã‚¤ãƒ™ãƒ³ãƒˆã‚¯ãƒ©ã‚¹ã§ã™
+@brief ƒL[ƒCƒxƒ“ƒgƒNƒ‰ƒX‚Å‚·
 */
 class Input final
 {
@@ -20,30 +19,30 @@ private:
 		Singleton(const Singleton&) = delete;
 		Singleton& operator=(const Singleton&) = delete;
 	public:
-		int key[256];	//ã‚­ãƒ¼ã®å…¥åŠ›çŠ¶æ…‹ã‚’æ ¼ç´ã™ã‚‹
+		int key[256];	//ƒL[‚Ì“ü—Íó‘Ô‚ğŠi”[‚·‚é
 		/**
-		* @brief ã‚­ãƒ¼ã®å…¥åŠ›çŠ¶æ…‹ã‚’æ›´æ–°ã—ã¾ã™
+		* @brief ƒL[‚Ì“ü—Íó‘Ô‚ğXV‚µ‚Ü‚·
 		*/
 		void Update_Key()
 		{
 			char tmpKey[256];
-			GetHitKeyStateAll(tmpKey);	//ç¾åœ¨ã®ã‚­ãƒ¼ã®çŠ¶æ…‹ã‚’æ ¼ç´
+			GetHitKeyStateAll(tmpKey);	//Œ»İ‚ÌƒL[‚Ìó‘Ô‚ğŠi”[
 			for (int i = 0; i < 256; ++i)
 			{
 				if (tmpKey[i] != 0)
 				{
 					++key[i];
 				}
-				else  //æŠ¼ã•ã‚Œã¦ã„ãªã‘ã‚Œã°
+				else  //‰Ÿ‚³‚ê‚Ä‚¢‚È‚¯‚ê‚Î
 				{
 					key[i] = 0;
 				}
 			}
 		}
 		/**
-		* @brief æœ¨ã®çŠ¶æ…‹ã‚’å–å¾—ã—ã¾ã™
-		* @param (keycode) èª¿ã¹ãŸã„ã‚­ãƒ¼ã‚³ãƒ¼ãƒ‰
-		* @return æŠ¼ã—ã¦ã„ã‚‹ãƒ•ãƒ¬ãƒ¼ãƒ æ•°ã€‚æŠ¼ã•ã‚Œã¦ã„ãªã„å ´åˆ0ãŒè¿”ã‚‹
+		* @brief –Ø‚Ìó‘Ô‚ğæ“¾‚µ‚Ü‚·
+		* @param (keycode) ’²‚×‚½‚¢ƒL[ƒR[ƒh
+		* @return ‰Ÿ‚µ‚Ä‚¢‚éƒtƒŒ[ƒ€”B‰Ÿ‚³‚ê‚Ä‚¢‚È‚¢ê‡0‚ª•Ô‚é
 		*/
 		int GetKeyFrame(int keycode)
 		{

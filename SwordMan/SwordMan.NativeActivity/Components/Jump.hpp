@@ -1,9 +1,4 @@
-/**
-* @file Jump.hpp
-* @brief Jumpのアルゴリズムをまとめたファイルです
-* @author tonarinohito
-*/﻿
-#pragma once
+﻿#pragma once
 #include "../ECS/ECS.hpp"
 #include "../Utility/Vec.hpp"
 #include "../ResourceManager/ResourceManager.hpp"
