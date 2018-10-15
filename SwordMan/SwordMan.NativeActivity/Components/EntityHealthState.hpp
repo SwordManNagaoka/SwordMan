@@ -137,7 +137,7 @@ namespace ECS
 						entity->GetComponent<AnimationController>().SetHeightAnimation(10, 3, 0);
 					}
 				}
-				if (stateCnt.GetCurrentCount() > 1)
+				if (stateCnt.GetCurrentCount() > 1 && stateCnt.GetCurrentCount() < 30-1)
 				{
 					if (oneFlag) { return; }
 					if (playerState == PlayerData::State::JumpAttack)

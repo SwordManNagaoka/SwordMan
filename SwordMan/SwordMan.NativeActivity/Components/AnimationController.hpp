@@ -72,10 +72,7 @@ namespace ECS
 			widthAnim.baseData.animationNumber
 				= (widthAnim.offsetAnim + (widthCurrentTime / widthAnim.frameTime)) % widthAnim.chipSize;
 			widthAnim.baseData.animationCnt.Add();
-			if (widthAnim.baseData.animationNumber >= widthAnim.chipSize)
-			{
-				widthAnim.baseData.animationNumber = 0;
-			}
+			
 			//横のみのアニメーション
 			animationID = widthAnim.baseData.animationNumber;
 
@@ -85,10 +82,6 @@ namespace ECS
 				= (heightAnim.offsetAnim + (heightCurrentTime / heightAnim.frameTime)) % heightAnim.chipSize;
 			heightAnim.baseData.animationCnt.Add();
 
-			if (heightAnim.baseData.animationNumber >= heightAnim.chipSize)
-			{
-				heightAnim.baseData.animationNumber = 0;
-			}
 			//横 + 縦のアニメーション
 			animationID = widthAnim.baseData.animationNumber + widthAnim.chipSize * heightAnim.baseData.animationNumber;
 		}
@@ -102,16 +95,22 @@ namespace ECS
 			widthAnim.frameTime = frameTime;
 			widthAnim.chipSize = chipSize;
 			widthAnim.offsetAnim = offsetAnimNumber;
+			widthAnim.baseData.isAnimation = true;
+			widthAnim.baseData.animationCnt.Reset();
+			widthAnim.baseData.animationNumber = 0;
 		}
 		//縦のアニメーションをセット
 		//引数1: frameTime フレーム時間
-		//引数2: widthChipNumber 縦の画像チップ数
+		//引数2: heightChipNumber 縦の画像チップ数
 		//引数3: offsetAnimNumber アニメーション番号のオフセット
 		void SetHeightAnimation(const int frameTime, const int chipSize, const int offsetAnimNumber = 0)
 		{
 			heightAnim.frameTime = frameTime;
 			heightAnim.chipSize = chipSize;
 			heightAnim.offsetAnim = offsetAnimNumber;
+			heightAnim.baseData.isAnimation = true;
+			heightAnim.baseData.animationCnt.Reset();
+			heightAnim.baseData.animationNumber = 0;
 		}
 		//横のアニメーションを行うか設定
 		void SetIsWidthAnimation(bool isWidthAnim)
@@ -144,8 +143,14 @@ namespace ECS
 		{
 			heightAnim.baseData.animationNumber = heightAnimNumber;
 			heightAnim.frameTime = 0;
-			heightAnim.chipSize = 1;
+			heightAnim.chipSize = 0;
 			animationID = widthAnim.baseData.animationNumber + widthAnim.chipSize * heightAnim.baseData.animationNumber;
+		}
+	private:
+		//横のアニメーション番号を取得します
+		int GetWidthAnimNumber() const
+		{
+			return animationID;
 		}
 	private:
 		struct BaseData
