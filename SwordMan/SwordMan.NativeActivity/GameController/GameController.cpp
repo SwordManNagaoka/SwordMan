@@ -30,7 +30,7 @@ void GameController::ResourceLoad()
 	ResourceManager::GetGraph().Load("image/ui/pauseUI.png", "pauseUI");
 	ResourceManager::GetGraph().Load("image/ui/fade.png", "fade");
 	ResourceManager::GetGraph().Load("image/ui/pauseMessage.png", "pauseMessage");
-	ResourceManager::GetGraph().LoadDiv("image/sword.png", "sword", 5, 5, 1, 192, 192);
+	ResourceManager::GetGraph().LoadDiv("image/sword.png", "sword", 5, 5, 1, 193, 193);
 	ResourceManager::GetGraph().LoadDiv("image/rolling.png", "rolling", 12, 4, 3, 288, 288);	
 	ResourceManager::GetGraph().LoadDiv("image/enemy01.png", "enemy1", 2, 2, 1, 96, 96);
 	ResourceManager::GetGraph().LoadDiv("image/enemy02.png", "enemy2", 4, 4, 1, 96, 96);

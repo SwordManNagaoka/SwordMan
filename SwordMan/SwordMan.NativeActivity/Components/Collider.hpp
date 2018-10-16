@@ -121,6 +121,10 @@ namespace ECS
 		float h() const override { return H; }
 		float x() const override { return pos->val.x + offSetPos.x; }
 		float y() const override { return pos->val.y + offSetPos.y; }
+		const Vec2& GetCenterPos() const
+		{
+			return { x() + (w() / 2.0f),y() + (h() / 2.0f) };
+		}
 	};
 	
 	//足元矩形の定義
