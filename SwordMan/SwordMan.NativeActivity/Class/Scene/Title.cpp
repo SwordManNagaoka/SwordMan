@@ -8,6 +8,7 @@
 #include "../../Utility/Input.hpp"
 #include "../../ResourceManager/ResourceManager.hpp"
 //アーキタイプ
+#include "../../ArcheType/Cloud.hpp"
 #include "../../ArcheType/Button.hpp"
 #include "../../ArcheType/Player.hpp"
 //コンポーネント
@@ -24,7 +25,7 @@ namespace Scene
 		stageCreator.FillUpFlatMap();
 		//ステージの生成
 		stageCreator.Run(nullptr, nullptr, nullptr);
-
+		ECS::Cloud()("cloud");
 		ECS::Entity* startLogo = &ECS::EcsSystem::GetManager().AddEntity();
 		startLogo->AddComponent<ECS::Position>(Vec2(500, 400));
 		startLogo->AddComponent<ECS::ImageFontDraw>("font",Vec2(32,32),16).SetDrawData("TapToStart");

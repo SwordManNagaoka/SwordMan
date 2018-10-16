@@ -273,5 +273,8 @@
     <ClInclude Include="Components\PlayerAddComponent.hpp">
       <Filter>Components</Filter>
     </ClInclude>
+    <ClInclude Include="ArcheType\Cloud.hpp">
+      <Filter>ArcheType</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

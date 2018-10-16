@@ -241,6 +241,7 @@
   <ItemGroup>
     <ClInclude Include="ArcheType\AttackCollision.hpp" />
     <ClInclude Include="ArcheType\Button.hpp" />
+    <ClInclude Include="ArcheType\Cloud.hpp" />
     <ClInclude Include="ArcheType\Effect.hpp" />
     <ClInclude Include="ArcheType\Enemy.hpp" />
     <ClInclude Include="ArcheType\HealthUI.hpp" />
