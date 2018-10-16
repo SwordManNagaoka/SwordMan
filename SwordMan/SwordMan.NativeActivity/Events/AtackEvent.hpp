@@ -20,6 +20,7 @@
 #include "../Components/EntityCounter.hpp"
 #include "../Components/EnemyEffectMove.hpp"
 #include "../Components/EnemyJumpMove.hpp"
+#include "../Components/TotalScoreDraw.hpp"
 
 namespace Event
 {
@@ -72,12 +73,10 @@ namespace Event
 			Vec2 enemyPos = enemy.GetComponent<ECS::Position>().val;
 			//方向ベクトル
 			Vec2 dirVec = (enemyPos - collisionPos).Normalize();
-			enemy.AddComponent<ECS::EnemyEffectMove>().SetDirMove(dirVec, 18.0f);
+			enemy.AddComponent<ECS::EnemyEffectMove>().SetDirMove(dirVec, 36.0f);
 
 			//スコアの決定
 			DecideScore(enemy, collision);
-			//エフェクト
-			EnemyHitEffect(enemy, 100);
 
 			enemy.DeleteComponent<ECS::HitBase>();
 			enemy.DeleteComponent<ECS::EnemyDefaultMove>();
@@ -133,13 +132,49 @@ namespace Event
 				//追加スコアとスコアの番号を検出
 				int addScoreNum = static_cast<int>(addScores.size());
 				//エフェクト作成
-				//EnemyHitEffect(*enemy, plusScore);
+				EnemyHitEffect(enemy, plusScore);
 				//スコアEntityを作成
 				ECS::AddScoreArcheType()("font", Vec2(0, 50 + (addScoreNum % 3) * 32), plusScore);
 				if (totalScore->HasComponent<ECS::TotalScoreDraw>())
 				{
 					totalScore->GetComponent<ECS::TotalScoreDraw>().AddScore(plusScore);
 				}
+
+
+				////コリジョンの中心とコリジョンの幅/2
+				//ECS::HitBase& col = collision.GetComponent<ECS::HitBase>();
+				//Vec2 collisionPos = Vec2(col.x(),col.y());
+				//Vec2 collisionSizePos = collisionPos + Vec2(col.w()/2.0f,0);
+				//Vec2 colDistance = collisionSizePos - collisionPos;
+				//float colLength = fabsf(colDistance.Length());
+				//printfDx("コリジョン距離%d ", colLength);
+
+				////敵の中心と敵の幅/2
+				//ECS::HitBase& eneCol = enemy.GetComponent<ECS::HitBase>();
+				//Vec2 enemyPos = Vec2(eneCol.x(),eneCol.y());
+				//Vec2 enemySizePos = enemyPos + Vec2(col.w() / 2.0f,0);
+				//Vec2 eneDistance = enemySizePos - enemyPos;
+				//float eneLength = fabsf(eneDistance.Length());
+				//printfDx("敵の距離%d ", eneLength);
+
+				////これらの距離を足す
+				//float scoreStandard = colLength + eneLength;
+
+				////位置同士の距離の算出
+				//Vec2 distance = enemyPos - collisionPos;
+				//float scoreLength = fabsf(distance.Length());
+
+				//int plusScore = CalcScore(scoreLength, scoreStandard);
+				////追加スコアとスコアの番号を検出
+				//int addScoreNum = static_cast<int>(addScores.size());
+				////エフェクト作成
+				////EnemyHitEffect(*enemy, plusScore);
+				////スコアEntityを作成
+				//ECS::AddScoreArcheType()("font", Vec2(0, 50 + (addScoreNum % 3) * 32), plusScore);
+				//if (totalScore->HasComponent<ECS::TotalScoreDraw>())
+				//{
+				//	totalScore->GetComponent<ECS::TotalScoreDraw>().AddScore(plusScore);
+				//}
 			}
 		}
 		//スコアの計算
@@ -154,7 +189,7 @@ namespace Event
 			{
 				plusScore = 100;
 			}
-			else if (distance >= scoreLength * 0.3f)
+			else if (distance >= scoreLength * 0.4f)
 			{
 				plusScore = 150;
 			}
@@ -172,15 +207,15 @@ namespace Event
 				ECS::EffectData effect;
 				effect.imageName = "hitWeak";
 				effect.pos = enemy.GetComponent<ECS::Position>().val;
-				effect.killTime = 32;
-				effect.changeChipFrameTime = 8;
+				effect.killTime = 12;
+				effect.changeChipFrameTime = 3;
 				effect.chipNum = 4;
 				if (score >= 200)
 				{
 					effect.imageName = "hitStrong";
-					effect.changeChipFrameTime = 6;
+					effect.changeChipFrameTime = 3;
 					effect.chipNum = 5;
-					effect.killTime = 30;
+					effect.killTime = 15;
 				}
 				ECS::Entity* effectEntity = ECS::EffectArcheType()(effect);
 				effectEntity->GetComponent<ECS::AnimationDraw>().Offset(Vec2(-48.0f, -48.0f));
@@ -197,9 +232,9 @@ namespace Event
 						ECS::EffectData effect;
 						effect.imageName = "bomb";
 						effect.pos = enemy->GetComponent<ECS::Position>().val;
-						effect.changeChipFrameTime = 8;
+						effect.changeChipFrameTime = 3;
 						effect.chipNum = 4;
-						effect.killTime = 32;
+						effect.killTime = 12;
 						ECS::Entity* effectEntity = ECS::EffectArcheType()(effect);
 						effectEntity->GetComponent<ECS::AnimationDraw>().Offset(Vec2(-48.0f, -48.0f));
 						break;
