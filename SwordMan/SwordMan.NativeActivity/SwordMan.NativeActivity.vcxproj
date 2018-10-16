@@ -296,7 +296,6 @@
     <ClInclude Include="Events\ContinueTap.hpp" />
     <ClInclude Include="Events\EventManager.hpp" />
     <ClInclude Include="Events\GoalEvent.hpp" />
-    <ClInclude Include="Events\Observer.hpp" />
     <ClInclude Include="Events\PauseTap.hpp" />
     <ClInclude Include="Events\ReturnFirstTap.hpp" />
     <ClInclude Include="Events\TitleTap.hpp" />

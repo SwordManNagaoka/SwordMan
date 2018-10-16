@@ -141,9 +141,6 @@
     <ClInclude Include="Components\Think.hpp">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="Events\Observer.hpp">
-      <Filter>Events</Filter>
-    </ClInclude>
     <ClInclude Include="GameController\GameController.h">
       <Filter>GameController</Filter>
     </ClInclude>

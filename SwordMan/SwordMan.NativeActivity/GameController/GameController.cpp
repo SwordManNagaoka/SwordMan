@@ -50,14 +50,6 @@ GameController::GameController()
 	pManager = &ECS::EcsSystem::GetManager();	
 	//初期シーン
 	sceneStack.push(std::make_unique< Scene::Title >(this, param));	//タイトルシーンを作成し、プッシュ
-
-	//イベント関数の登録
-	//Event::EventManager().Get().Add(Scene::SceneManager::State::Game, Event::AddScoreEvent::Do);
-	//Event::EventManager().Get().Add(Scene::SceneManager::State::Game, Event::CollisionEvent::AttackCollisionToEnemy);
-	//Event::EventManager().Get().Add(Scene::SceneManager::State::Game, Event::CollisionEvent::PlayerToEnemy);
-	//Event::EventManager().Get().Add(Scene::SceneManager::State::Game, Event::GoalEvent::HitPlayer);
-	//Event::EventManager().Get().Add(Scene::SceneManager::State::Game, Event::PouseButtonEvent::PouseButtonTap);
-
 }
 
 void GameController::ResetGame()
