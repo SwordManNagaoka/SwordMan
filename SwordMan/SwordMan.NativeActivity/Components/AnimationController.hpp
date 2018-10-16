@@ -98,6 +98,7 @@ namespace ECS
 			widthAnim.baseData.isAnimation = true;
 			widthAnim.baseData.animationCnt.Reset();
 			widthAnim.baseData.animationNumber = 0;
+			animationID = 0;
 		}
 		//縦のアニメーションをセット
 		//引数1: frameTime フレーム時間
