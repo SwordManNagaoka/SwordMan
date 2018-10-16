@@ -10,7 +10,7 @@
 #include "../../ArcheType/Player.hpp"
 #include "../../Class/StageLoader.hpp"
 #include "../../Class/StageCreator.hpp"
-
+#include "../../Class/CloudCreater.hpp"
 
 namespace Scene
 {
@@ -22,6 +22,7 @@ namespace Scene
 		virtual void Update() override;
 		virtual void Draw() override;
 	private:
+		CloudCreater cloud;
 		StageLoader stageLoader;
 		StageCreator stageCreator;
 	};

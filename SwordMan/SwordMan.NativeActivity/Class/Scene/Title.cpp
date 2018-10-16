@@ -43,6 +43,7 @@ namespace Scene
 	
 	void Title::Update()
 	{
+		cloud.Run();
 		stageCreator.Run(nullptr, nullptr, nullptr);
 		ECS::EcsSystem::GetManager().Update();
 		if (TouchInput::GetInput().GetBtnPress(0) == 1)
