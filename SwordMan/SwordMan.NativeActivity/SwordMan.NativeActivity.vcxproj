@@ -241,12 +241,14 @@
   <ItemGroup>
     <ClInclude Include="ArcheType\AttackCollision.hpp" />
     <ClInclude Include="ArcheType\Button.hpp" />
+    <ClInclude Include="ArcheType\Cloud.hpp" />
     <ClInclude Include="ArcheType\Effect.hpp" />
     <ClInclude Include="ArcheType\Enemy.hpp" />
     <ClInclude Include="ArcheType\HealthUI.hpp" />
     <ClInclude Include="ArcheType\Map.hpp" />
     <ClInclude Include="ArcheType\Player.hpp" />
     <ClInclude Include="ArcheType\Score.hpp" />
+    <ClInclude Include="Class\CloudCreater.hpp" />
     <ClInclude Include="Class\DXFilieRead.hpp" />
     <ClInclude Include="Class\StageCreator.hpp" />
     <ClInclude Include="Class\StageLoader.hpp" />

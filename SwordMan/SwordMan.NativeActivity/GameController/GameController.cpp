@@ -21,6 +21,7 @@
 
 void GameController::ResourceLoad()
 {
+	ResourceManager::GetGraph().Load("image/cloud.png", "cloud");
 	ResourceManager::GetGraph().Load("image/a.png", "a");
 	ResourceManager::GetGraph().Load("image/font_text.png", "font");
 	ResourceManager::GetGraph().Load("image/ui/goalMessage.png", "goalMessage");
