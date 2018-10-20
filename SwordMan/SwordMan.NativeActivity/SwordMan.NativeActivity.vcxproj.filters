@@ -276,5 +276,8 @@
     <ClInclude Include="Class\CloudCreater.hpp">
       <Filter>Class</Filter>
     </ClInclude>
+    <ClInclude Include="Class\Sound.hpp">
+      <Filter>Class</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
