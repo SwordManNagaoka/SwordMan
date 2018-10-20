@@ -148,6 +148,7 @@
     <Content Include="assets\image\ui\pauseButton.png" />
     <Content Include="assets\image\ui\pauseMessage.png" />
     <Content Include="assets\image\ui\pauseUI.png" />
+    <Content Include="assets\sounds\Grass.wav" />
     <Content Include="assets\stage\stage01_enemy.csv" />
     <Content Include="assets\stage\stage01_map.csv" />
     <Content Include="assets\stage\mapparamtest.csv" />
@@ -163,9 +164,6 @@
     <ProjectReference Include="..\SwordMan.NativeActivity\SwordMan.NativeActivity.vcxproj">
       <Project>{4555e2fc-ccfe-491f-8137-4069e13f5fad}</Project>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="assets\sounds\" />
   </ItemGroup>
   <Import Project="$(AndroidTargetsPath)\Android.targets" />
   <ImportGroup Label="ExtensionTargets" />
