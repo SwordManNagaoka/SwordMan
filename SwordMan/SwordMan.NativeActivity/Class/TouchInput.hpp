@@ -98,7 +98,6 @@ private:
 					{
 						btnNumState[i] = 2;
 					}
-					++btnCounter[i];
 				}
 			}
 			else
@@ -113,7 +112,6 @@ private:
 					{
 						btnNumState[i] = -2;
 					}
-					btnCounter[i] = 0;
 				}
 			}
 			for (size_t i = 0; i < buttonState.size(); ++i)
@@ -135,11 +133,31 @@ private:
 					buttonState[i] = BtnState::ReleaseBtn;
 				}
 			}
+			if (GetTouchInputNum() > 0)
+			{
+				for (int i = 0; i < GetTouchInputNum(); ++i)
+				{
+					if (btnCounter.size() < GetTouchInputNum()) { break; }
+					++btnCounter[i];
+				}
+			}
+			else
+			{
+				for (int i = 0; i < btnCounter.size(); ++i)
+				{
+					btnCounter[i] = 0;
+				}
+			}
 		}
 		//ボタンを押しているフレーム数を返す
-		int GetBtnPress(int btnNumber)
+		int GetBtnPress(const int btnNumber)
 		{
 			return btnCounter[btnNumber];
+		}
+		//ボタンを押したかをリセットする
+		void ResetBtnPush(const int btnNumber)
+		{
+			btnCounter[btnNumber] = 0;
 		}
 	private:
 		std::unordered_map<int, BtnState>	buttonState;
