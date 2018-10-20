@@ -250,6 +250,7 @@
     <ClInclude Include="ArcheType\Score.hpp" />
     <ClInclude Include="Class\CloudCreater.hpp" />
     <ClInclude Include="Class\DXFilieRead.hpp" />
+    <ClInclude Include="Class\Sound.hpp" />
     <ClInclude Include="Class\StageCreator.hpp" />
     <ClInclude Include="Class\StageLoader.hpp" />
     <ClInclude Include="Class\StageData.hpp" />

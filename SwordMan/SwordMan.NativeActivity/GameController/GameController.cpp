@@ -1,4 +1,5 @@
 #include "GameController.h"
+#include "../../Class/Sound.hpp"
 #include "../ResourceManager/ResourceManager.hpp"
 #include "../Components/BasicComponents.hpp"
 #include "../Components/Renderer.hpp"
@@ -21,6 +22,7 @@
 
 void GameController::ResourceLoad()
 {
+	ResourceManager::GetSound().Load("sounds/Grass.wav", "BGM",SoundType::BGM);
 	ResourceManager::GetGraph().Load("image/cloud.png", "cloud");
 	ResourceManager::GetGraph().Load("image/a.png", "a");
 	ResourceManager::GetGraph().Load("image/font_text.png", "font");
@@ -50,6 +52,8 @@ GameController::GameController()
 	pManager = &ECS::EcsSystem::GetManager();	
 	//初期シーン
 	sceneStack.push(std::make_unique< Scene::Title >(this, param));	//タイトルシーンを作成し、プッシュ
+	Sound s("BGM");
+	s.Play(true,false);
 }
 
 void GameController::ResetGame()
@@ -62,6 +66,7 @@ void GameController::Update()
 	TouchInput::GetInput().Update();
 	pManager->Refresh();
 	sceneStack.top()->Update();
+	MasterSound::Get().Update();
 }
 
 void GameController::Draw()
