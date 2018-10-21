@@ -44,7 +44,8 @@ public:
 	@param scene 変更するシーンのenum
 	@param stackClear 現在のシーンのスタックをクリアするか
 	*/
-	void OnSceneChange(const Scene::SceneName& scene, const Parameter& parame, bool stackClear) override;
+	void OnSceneChange(const Scene::SceneName& scene, const Parameter& parame, const Scene::SceneStack& stackClear) override;
+private:
 	//シーンのスタックを全て削除
 	void StackAllClear() override;
 };

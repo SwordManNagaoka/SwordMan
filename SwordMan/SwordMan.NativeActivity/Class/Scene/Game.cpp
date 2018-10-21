@@ -76,7 +76,7 @@ namespace Scene
 				auto changeFunc = [](Scene::IOnSceneChangeCallback* callBack)
 				{
 					Parameter param;
-					callBack->OnSceneChange(SceneName::Pause, param, false);
+					callBack->OnSceneChange(SceneName::Pause, param, SceneStack::Non);
 					auto& gameUI = ECS::EcsSystem::GetManager().GetEntitiesByGroup(ENTITY_GROUP::GameUI);
 					for (auto& b : gameUI)
 					{
@@ -96,7 +96,7 @@ namespace Scene
 					}
 				}
 				Parameter param;
-				callBack->OnSceneChange(SceneName::Result, param, false);
+				callBack->OnSceneChange(SceneName::Result, param, SceneStack::OneClear);
 				return;
 			}
 		}

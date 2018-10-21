@@ -34,7 +34,7 @@ namespace Scene
 				auto changeFunc = [](Scene::IOnSceneChangeCallback* callBack)
 				{
 					Parameter param;
-					callBack->OnSceneChange(SceneName::Title, param, true);
+					callBack->OnSceneChange(SceneName::Title, param, SceneStack::OneClear);
 					return;
 				};
 				b->GetComponent<ECS::PushButton>().SetEventFunction(changeFunc);

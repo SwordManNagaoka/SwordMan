@@ -72,8 +72,7 @@ namespace Scene
 				auto changeFunc = [](Scene::IOnSceneChangeCallback* callBack)
 				{
 					Parameter param;
-					callBack->StackAllClear();
-					callBack->OnSceneChange(SceneName::Title, param, false);
+					callBack->OnSceneChange(SceneName::Title, param, SceneStack::AllClear);
 					return;
 				};
 				b->GetComponent<ECS::PushButton>().SetEventFunction(changeFunc);
@@ -88,7 +87,7 @@ namespace Scene
 					pauseBtn->AddComponent<ECS::PauseButtonTag>();
 					pauseBtn->AddGroup(ENTITY_GROUP::GameUI);
 					Parameter param;
-					callBack->OnSceneChange(SceneName::BackToScene, param, true);
+					callBack->OnSceneChange(SceneName::BackToScene, param, SceneStack::OneClear);
 					return;
 				};
 				b->GetComponent<ECS::PushButton>().SetEventFunction(changeFunc);
