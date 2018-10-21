@@ -15,6 +15,8 @@ namespace Scene
 		btn->GetComponent<ECS::CircleColiider>().SetOffset(48, 48);
 		btn->AddComponent<ECS::BackTitleButtonTag>();
 		btn->AddGroup(ENTITY_GROUP::GameUI);
+
+		printfDx("%d\n", parame.Get<int>("score"));
 	}
 
 	Result::~Result()

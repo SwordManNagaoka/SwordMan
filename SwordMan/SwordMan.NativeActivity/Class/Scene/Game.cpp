@@ -88,15 +88,19 @@ namespace Scene
 			}
 			else if (player.size() == 0)
 			{
+				Parameter param;
 				for (auto& ui : gameUI)
 				{
 					if(ui->HasComponent<ECS::PauseButtonTag>())
 					{
 						ui->Destroy();
 					}
+					else if (ui->HasComponent<ECS::TotalScoreDraw>())
+					{
+						param.Set<int>("score", ui->GetComponent<ECS::TotalScoreDraw>().GetTotalScore());
+					}
 				}
-				Parameter param;
-				GetCallback().OnSceneChange(SceneName::Result, param, SceneStack::OneClear);
+				GetCallback().OnSceneChange(SceneName::Result, param, SceneStack::Non);
 				return;
 			}
 		}
