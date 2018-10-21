@@ -90,7 +90,7 @@ public:
 			std::cout << "キーのパラメータが存在しません";
 			assert(false);
 		}
-		return Utility::Cast<ValueType>(it->second);
+		return Utility::AnyCast<ValueType>(it->second);
 	}
 	template<typename ValueType>
 	const ValueType& GetPtr(const std::string& key) const noexcept
@@ -101,7 +101,7 @@ public:
 			std::cout << "キーのパラメータが存在しません";
 			assert(false);
 		}
-		return Utility::CastPtr<ValueType>(it->second);
+		return Utility::AnyCastPtr<ValueType>(it->second);
 	}
 private:
 	std::map<std::string, Utility::Any> map;
