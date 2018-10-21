@@ -54,12 +54,12 @@ namespace Utility
 	};
 
 	template<typename ValueType>
-	inline const ValueType& Cast(const Any& any) noexcept
+	inline const ValueType& AnyCast(const Any& any) noexcept
 	{
 		return std::move(*(any.GetValue<ValueType>()));
 	}
 	template<typename ValueType>
-	inline const ValueType& CastPtr(const Any& any) noexcept
+	inline const ValueType& AnyCastPtr(const Any& any) noexcept
 	{
 		return any.GetValuePtr<ValueType>();
 	}
