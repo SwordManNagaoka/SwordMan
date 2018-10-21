@@ -30,7 +30,7 @@ namespace Scene
 			b->Update();
 			if (b->HasComponent<ECS::BackTitleButtonTag>())
 			{
-				b->GetComponent<ECS::PushButton>().SetSceneCallBack(callBack);
+				b->GetComponent<ECS::PushButton>().SetSceneCallBack(&GetCallback());
 				auto changeFunc = [](Scene::IOnSceneChangeCallback* callBack)
 				{
 					Parameter param;

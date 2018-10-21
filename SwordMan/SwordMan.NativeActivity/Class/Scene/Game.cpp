@@ -72,7 +72,7 @@ namespace Scene
 		{
 			if (b->HasComponent<ECS::PauseButtonTag>())
 			{
-				b->GetComponent<ECS::PushButton>().SetSceneCallBack(callBack);
+				b->GetComponent<ECS::PushButton>().SetSceneCallBack(&GetCallback());
 				auto changeFunc = [](Scene::IOnSceneChangeCallback* callBack)
 				{
 					Parameter param;
@@ -96,7 +96,7 @@ namespace Scene
 					}
 				}
 				Parameter param;
-				callBack->OnSceneChange(SceneName::Result, param, SceneStack::OneClear);
+				GetCallback().OnSceneChange(SceneName::Result, param, SceneStack::OneClear);
 				return;
 			}
 		}

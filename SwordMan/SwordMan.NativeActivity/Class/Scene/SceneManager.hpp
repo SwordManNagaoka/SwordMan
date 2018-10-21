@@ -1,8 +1,8 @@
 ﻿/**
 * @file SceneManager.hpp
 * @brief Sceneオブジェクトを管理します
-* @author tonarinohito
-* @date 2018/10/06
+* @author 日比野　真聖
+* @date 2018/10/15
 */
 #pragma once
 #include "../../ECS/ECS.hpp"
@@ -45,14 +45,18 @@ namespace Scene
 	class AbstractScene
 	{
 	public:
-		AbstractScene(IOnSceneChangeCallback* sceneCallback)
+		AbstractScene(IOnSceneChangeCallback* sceneCallback) noexcept
 		{
 			callBack = sceneCallback;
 		}
 		virtual ~AbstractScene() = default;
 		virtual void Update() = 0;
 		virtual void Draw() = 0;
-	protected:
+		IOnSceneChangeCallback& GetCallback() const noexcept
+		{
+			return *callBack;
+		}
+	private:
 		IOnSceneChangeCallback* callBack;
 	};
 }

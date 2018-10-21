@@ -50,7 +50,7 @@ namespace Scene
 		{
 			Parameter param;
 			ECS::PlayerArcheType()(Vec2(-150, 300), Vec2(64, 96));
-			callBack->OnSceneChange(SceneName::Game, param, SceneStack::OneClear);
+			GetCallback().OnSceneChange(SceneName::Game, param, SceneStack::OneClear);
 			return;
 		}
 	}
