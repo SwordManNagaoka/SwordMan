@@ -1,7 +1,7 @@
-mapimg stage/stage01_map.csv
+mapimg stage/stage01_ground.csv
 stage/stage01_enemy.csv
 skyimg stage/stage01_sky.csv
-200 8
+300 8
 96
 6
 image/sky01.png
