@@ -15,6 +15,8 @@ namespace Scene
 		btn->GetComponent<ECS::CircleColiider>().SetOffset(48, 48);
 		btn->AddComponent<ECS::BackTitleButtonTag>();
 		btn->AddGroup(ENTITY_GROUP::GameUI);
+
+		//printfDx("%d\n", parame.Get<int>("score"));
 	}
 
 	Result::~Result()
@@ -30,11 +32,11 @@ namespace Scene
 			b->Update();
 			if (b->HasComponent<ECS::BackTitleButtonTag>())
 			{
-				b->GetComponent<ECS::PushButton>().SetSceneCallBack(callBack);
+				b->GetComponent<ECS::PushButton>().SetSceneCallBack(&GetCallback());
 				auto changeFunc = [](Scene::IOnSceneChangeCallback* callBack)
 				{
 					Parameter param;
-					callBack->OnSceneChange(SceneName::Title, param, true);
+					callBack->OnSceneChange(SceneName::Title, param, SceneStack::OneClear);
 					return;
 				};
 				b->GetComponent<ECS::PushButton>().SetEventFunction(changeFunc);

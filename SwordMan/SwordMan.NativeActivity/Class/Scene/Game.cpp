@@ -72,11 +72,11 @@ namespace Scene
 		{
 			if (b->HasComponent<ECS::PauseButtonTag>())
 			{
-				b->GetComponent<ECS::PushButton>().SetSceneCallBack(callBack);
+				b->GetComponent<ECS::PushButton>().SetSceneCallBack(&GetCallback());
 				auto changeFunc = [](Scene::IOnSceneChangeCallback* callBack)
 				{
 					Parameter param;
-					callBack->OnSceneChange(SceneName::Pause, param, false);
+					callBack->OnSceneChange(SceneName::Pause, param, SceneStack::Non);
 					auto& gameUI = ECS::EcsSystem::GetManager().GetEntitiesByGroup(ENTITY_GROUP::GameUI);
 					for (auto& b : gameUI)
 					{
@@ -88,15 +88,19 @@ namespace Scene
 			}
 			else if (player.size() == 0)
 			{
+				Parameter param;
 				for (auto& ui : gameUI)
 				{
 					if(ui->HasComponent<ECS::PauseButtonTag>())
 					{
 						ui->Destroy();
 					}
+					else if (ui->HasComponent<ECS::TotalScoreDraw>())
+					{
+						param.Set<int>("score", ui->GetComponent<ECS::TotalScoreDraw>().GetTotalScore());
+					}
 				}
-				Parameter param;
-				callBack->OnSceneChange(SceneName::Result, param, false);
+				GetCallback().OnSceneChange(SceneName::Result, param, SceneStack::Non);
 				return;
 			}
 		}

@@ -75,11 +75,18 @@ void GameController::Draw()
 }
 
 
-void GameController::OnSceneChange(const Scene::SceneName& scene, const Parameter& parame, bool stackClear)
+void GameController::OnSceneChange(const Scene::SceneName& scene, const Parameter& parame, const Scene::SceneStack& stackClear)
 {
-	if (stackClear)
+	switch (stackClear)
 	{
+	case Scene::SceneStack::Non:
+		break;
+	case Scene::SceneStack::OneClear:
 		sceneStack.pop();
+		break;
+	case Scene::SceneStack::AllClear:
+		StackAllClear();
+		break;
 	}
 	switch (scene)
 	{
