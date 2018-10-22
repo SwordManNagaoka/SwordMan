@@ -148,7 +148,11 @@
     <Content Include="assets\image\ui\pauseButton.png" />
     <Content Include="assets\image\ui\pauseMessage.png" />
     <Content Include="assets\image\ui\pauseUI.png" />
+    <Content Include="assets\sounds\bomb.wav" />
     <Content Include="assets\sounds\Grass.wav" />
+    <Content Include="assets\sounds\hit.wav" />
+    <Content Include="assets\sounds\rolling.wav" />
+    <Content Include="assets\sounds\smash.wav" />
     <Content Include="assets\stage\stage01_enemy.csv" />
     <Content Include="assets\stage\stage01_map.csv" />
     <Content Include="assets\stage\mapparamtest.csv" />
