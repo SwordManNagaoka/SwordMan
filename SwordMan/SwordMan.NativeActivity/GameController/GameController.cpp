@@ -27,6 +27,7 @@ void GameController::ResourceLoad()
 	ResourceManager::GetSound().Load("sounds/smash.wav", "smash", SoundType::SE);
 	ResourceManager::GetSound().Load("sounds/hit.wav", "hit", SoundType::SE);
 	ResourceManager::GetSound().Load("sounds/bomb.wav", "bomb", SoundType::SE);
+	ResourceManager::GetSound().Load("sounds/jump.wav", "jump", SoundType::SE);
 	ResourceManager::GetGraph().Load("image/cloud.png", "cloud");
 	ResourceManager::GetGraph().Load("image/a.png", "a");
 	ResourceManager::GetGraph().Load("image/font_text.png", "font");

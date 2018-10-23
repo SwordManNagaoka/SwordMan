@@ -10,7 +10,7 @@
 #include "../../Events/ContinueTap.hpp"
 #include "../../Components/ComponentDatas/ButtonTag.hpp"
 #include "../../Components/EasingMove.hpp"
-
+#include "../../Class/Sound.hpp"
 namespace Scene
 {
 	Pause::Pause(IOnSceneChangeCallback* sceneTitleChange, const Parameter& parame)
