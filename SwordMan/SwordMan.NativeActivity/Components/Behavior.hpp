@@ -76,7 +76,7 @@ namespace ECS
 						auto pos = entity->GetComponent<Position>().val;
 						SwordAttackCollision()(Vec2(pos.x ,pos.y), Vec2(96.0f, 96.0f), 15);
 						//サウンドの追加
-						Sound s("smash");
+						Sound s("rolling");
 						s.Play(false, true);
 					}
 					if (think->CheckMotionCancel())
