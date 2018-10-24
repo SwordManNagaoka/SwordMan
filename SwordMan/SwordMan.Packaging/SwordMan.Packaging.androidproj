@@ -155,10 +155,14 @@
     <Content Include="assets\sounds\jump.wav" />
     <Content Include="assets\sounds\rolling.wav" />
     <Content Include="assets\sounds\smash.wav" />
-    <Content Include="assets\stage\mapparamtest.csv" />
     <Content Include="assets\stage\stage01_enemy.csv" />
     <Content Include="assets\stage\stage01_ground.csv" />
     <Content Include="assets\stage\stage01_sky.csv" />
+    <Content Include="assets\stage\stage02_enemy.csv" />
+    <Content Include="assets\stage\stage02_ground.csv" />
+    <Content Include="assets\stage\stage02_sky.csv" />
+    <Content Include="assets\stage\stageparam01.csv" />
+    <Content Include="assets\stage\stageparam02.csv" />
     <Content Include="res\drawable\icon.png" />
     <Content Include="res\values\strings.xml" />
     <AntBuildXml Include="build.xml" />

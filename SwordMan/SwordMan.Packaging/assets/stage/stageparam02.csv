@@ -1,0 +1,15 @@
+mapimg stage/stage02_ground.csv
+stage/stage02_enemy.csv
+skyimg stage/stage02_sky.csv
+200 8
+96
+7
+image/sky01.png
+image/backimg02.png
+image/backimg03.png
+image/ground01.png
+enemy/enemy01.csv
+enemy/enemy02.csv
+enemy/enemy03.csv
+enemy/enemy04.csv
+enemy/goal.csv
