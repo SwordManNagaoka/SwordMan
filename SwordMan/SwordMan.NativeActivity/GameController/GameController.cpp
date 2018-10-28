@@ -22,7 +22,7 @@
 
 void GameController::ResourceLoad()
 {
-	ResourceManager::GetSound().Load("sounds/Grass.wav", "BGM",SoundType::BGM);
+	ResourceManager::GetSound().Load("sounds/nagaoka.wav", "BGM",SoundType::BGM);
 	ResourceManager::GetSound().Load("sounds/rolling.wav", "rolling", SoundType::SE);
 	ResourceManager::GetSound().Load("sounds/smash.wav", "smash", SoundType::SE);
 	ResourceManager::GetSound().Load("sounds/hit.wav", "hit", SoundType::SE);

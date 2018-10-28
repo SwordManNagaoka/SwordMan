@@ -153,6 +153,7 @@
     <Content Include="assets\sounds\Grass.wav" />
     <Content Include="assets\sounds\hit.wav" />
     <Content Include="assets\sounds\jump.wav" />
+    <Content Include="assets\sounds\nagaoka.wav" />
     <Content Include="assets\sounds\rolling.wav" />
     <Content Include="assets\sounds\smash.wav" />
     <Content Include="assets\stage\mapparamtest.csv" />
