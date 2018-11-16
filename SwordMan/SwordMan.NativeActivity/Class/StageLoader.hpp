@@ -26,7 +26,7 @@ public:
 	StageLoader(const std::string& mapParamPath)
 	{
 		//ファイルを開く
-		std::ifstream fin(DXFilieRead().GetPath(mapParamPath, "/mapData.txt"));
+		std::ifstream fin(DXFilieRead().GetPath(mapParamPath, "/mapData.csv"));
 		if (fin.is_open() == 0)
 		{
 			printfDx("Error!!!");
@@ -65,7 +65,7 @@ public:
 	void LoadStage(const std::string& mapParamPath)
 	{
 		//ファイルを開く
-		std::ifstream fin(DXFilieRead().GetPath(mapParamPath, "/mapData.txt"));
+		std::ifstream fin(DXFilieRead().GetPath(mapParamPath, "/mapData.csv"));
 		if (fin.is_open() == 0)
 		{
 			printfDx("Error!!!");
@@ -116,9 +116,9 @@ public:
 		}
 
 		//マップ構成ファイルを開く
-		std::ifstream mapfin(DXFilieRead().GetPath(stageParam.mapDataPath,"/map.txt"));
-		std::ifstream enemyfin(DXFilieRead().GetPath(stageParam.enemyConstitutionPath, "/enemy.txt"));
-		std::ifstream skyfin(DXFilieRead().GetPath(stageParam.skyDataPath, "/sky.txt"));
+		std::ifstream mapfin(DXFilieRead().GetPath(stageParam.mapDataPath,"/map.csv"));
+		std::ifstream enemyfin(DXFilieRead().GetPath(stageParam.enemyConstitutionPath, "/enemy.csv"));
+		std::ifstream skyfin(DXFilieRead().GetPath(stageParam.skyDataPath, "/sky.csv"));
 		if ((mapfin.is_open() == 0) ||
 			(enemyfin.is_open() == 0) ||
 			(skyfin.is_open() == 0))
@@ -143,7 +143,7 @@ public:
 		//敵種類データの読み込み
 		for (size_t i = 0; i < stageParam.enemyDataPath.size(); ++i)
 		{
-			std::ifstream enemyfin(DXFilieRead().GetPath(stageParam.enemyDataPath[i],"/enemyData.txt"));
+			std::ifstream enemyfin(DXFilieRead().GetPath(stageParam.enemyDataPath[i],"/enemyData.csv"));
 			enemyfin >> stageParam.enemyData[i].size.x >> stageParam.enemyData[i].size.y >>
 						stageParam.enemyData[i].imageName >>
 						stageParam.enemyData[i].animNum >>
