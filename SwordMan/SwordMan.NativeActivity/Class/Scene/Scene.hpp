@@ -37,7 +37,7 @@ namespace Utility
 		template<typename ValueType>
 		void SetValuePtr(const ValueType& valuePtr) noexcept
 		{
-			valueType = (void*)valuePtr;
+			valueType = static_cast<void*>(valuePtr);
 		}
 		template<typename ValueType>
 		ValueType* GetValue() const noexcept

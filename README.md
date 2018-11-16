@@ -13,6 +13,18 @@
 + 使用したコンパイラー：VisualStudio2017
 + 使用言語：C++17(アンドロイド環境では一部機能が使用不可)
 + 使用した外部エディター：Tiled
++ 使用した外部ライブラリ: DXライブラリ http://dxlib.o.oo7.jp/
+## 開発者
+### **Neighbor Sound https://github.com/tonarinohito**
++ プロジェクトマネジメント
++ 作曲,効果音制作
++ メインシステムプログラム
++ デバッグ
+### **feveleK5563 https://github.com/feveleK5563**
++ メイン企画
++ マップデザイン、キャラクタデザイン
++ 一部プログラム
+### **hibino0429 https://github.com/hibino0429**
++ アプリケーションメインプログラム
++ デバッグ
 
-**利用した外部ライブラリ**
-* DXライブラリ http://dxlib.o.oo7.jp/

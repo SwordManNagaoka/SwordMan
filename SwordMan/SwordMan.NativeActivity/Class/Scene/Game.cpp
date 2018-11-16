@@ -63,8 +63,6 @@ namespace Scene
 				e->GetComponent<ECS::Physics>().SetCollisionFunction(Collision::BoxAndBox<ECS::HitBase, ECS::HitBase>);
 			}
 		}
-		Event::CollisionEvent::AttackCollisionToEnemy();
-		Event::CollisionEvent::PlayerToEnemy();
 		ECS::EcsSystem::GetManager().Update();
 		//ボタンイベント
 		auto& gameUI = ECS::EcsSystem::GetManager().GetEntitiesByGroup(ENTITY_GROUP::GameUI);

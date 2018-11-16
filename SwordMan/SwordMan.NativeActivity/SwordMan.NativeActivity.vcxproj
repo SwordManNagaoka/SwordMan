@@ -279,6 +279,7 @@
     <ClInclude Include="Components\EnemyEffectMove.hpp" />
     <ClInclude Include="Components\EntityCounter.hpp" />
     <ClInclude Include="Components\EntityHealthState.hpp" />
+    <ClInclude Include="Components\EnemyEvent.hpp" />
     <ClInclude Include="Components\HealthRelationUI.hpp" />
     <ClInclude Include="Components\ImageFontDraw.hpp" />
     <ClInclude Include="Components\Jump.hpp" />

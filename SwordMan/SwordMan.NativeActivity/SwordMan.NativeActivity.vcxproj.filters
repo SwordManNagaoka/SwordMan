@@ -279,5 +279,8 @@
     <ClInclude Include="Class\Sound.hpp">
       <Filter>Class</Filter>
     </ClInclude>
+    <ClInclude Include="Components\EnemyEvent.hpp">
+      <Filter>Components</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
