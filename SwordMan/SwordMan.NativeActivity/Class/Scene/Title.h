@@ -17,7 +17,7 @@ namespace Scene
 	class Title : public AbstractScene
 	{
 	public:
-		Title(IOnSceneChangeCallback* sceneTitleChange, const Parameter& parame);
+		Title(IOnSceneChangeCallback* sceneTitleChange, Parameter* parame);
 		~Title();
 		virtual void Update() override;
 		virtual void Draw() override;

@@ -148,6 +148,8 @@
     <Content Include="assets\image\sword.png" />
     <Content Include="assets\image\tekito.png" />
     <Content Include="assets\image\temp.png" />
+    <Content Include="assets\image\title\taptostart.png" />
+    <Content Include="assets\image\title\title.png" />
     <Content Include="assets\image\ui\fade.png" />
     <Content Include="assets\image\ui\goalMessage.png" />
     <Content Include="assets\image\ui\life.png" />

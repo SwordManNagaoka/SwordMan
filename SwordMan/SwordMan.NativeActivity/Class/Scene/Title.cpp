@@ -16,10 +16,10 @@
 
 namespace Scene
 {
-	Title::Title(IOnSceneChangeCallback* sceneTitleChange, const Parameter& parame)
+	Title::Title(IOnSceneChangeCallback* sceneTitleChange, Parameter* parame)
 		: AbstractScene(sceneTitleChange)
 	{
-		stageLoader.LoadStage("stage/stageparam03.csv");
+		stageLoader.LoadStage("stage/stageparam01.csv");
 		stageLoader.LoadStageConstitution();
 		stageCreator.SetMapParam(stageLoader.GetStageParam());
 		stageCreator.FillUpFlatMap();
@@ -34,11 +34,7 @@ namespace Scene
 	Title::~Title()
 	{
 		//すべてのEntityを殺す処理があると便利
-		auto entity = ECS::EcsSystem::GetManager().GetEntitiesByGroup(ENTITY_GROUP::GameUI);
-		for (auto& e : entity)
-		{
-			e->Destroy();
-		}
+		ECS::EcsSystem::GetManager().AllKill();
 	}
 	
 	void Title::Update()
@@ -48,8 +44,7 @@ namespace Scene
 		ECS::EcsSystem::GetManager().Update();
 		if (TouchInput::GetInput().GetBtnPress(0) == 1)
 		{
-			Parameter param;
-			GetCallback().OnSceneChange(SceneName::Game, param, SceneStack::OneClear);
+			GetCallback().OnSceneChange(SceneName::Menu, nullptr, SceneStack::OneClear);
 			return;
 		}
 	}

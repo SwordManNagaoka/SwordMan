@@ -19,6 +19,7 @@
 #include "../Class/Scene/Game.h"
 #include "../Class/Scene/Pause.h"
 #include "../Class/Scene/Result.h"
+#include "../Class/Scene/Menu.h"
 
 void GameController::ResourceLoad()
 {
@@ -56,7 +57,7 @@ GameController::GameController()
 	ResourceLoad();
 	pManager = &ECS::EcsSystem::GetManager();	
 	//初期シーン
-	sceneStack.push(std::make_unique< Scene::Title >(this, param));	//タイトルシーンを作成し、プッシュ
+	sceneStack.push(std::make_unique< Scene::Title >(this, nullptr));	//タイトルシーンを作成し、プッシュ
 	Sound s("BGM");
 	s.Play(true,false);
 	MasterSound::Get().SetAllBGMGain(0.8f);
@@ -81,7 +82,7 @@ void GameController::Draw()
 }
 
 
-void GameController::OnSceneChange(const Scene::SceneName& scene, const Parameter& parame, const Scene::SceneStack& stackClear)
+void GameController::OnSceneChange(const Scene::SceneName& scene, Parameter* parame, const Scene::SceneStack& stackClear)
 {
 	switch (stackClear)
 	{
@@ -106,6 +107,7 @@ void GameController::OnSceneChange(const Scene::SceneName& scene, const Paramete
 		sceneStack.push(std::make_unique<Scene::Pause>(this, parame));
 		break;
 	case Scene::SceneName::Menu:
+		sceneStack.push(std::make_unique<Scene::Menu>(this, parame));
 		break;
 	case Scene::SceneName::Result:
 		sceneStack.push(std::make_unique<Scene::Result>(this, parame));

@@ -9,7 +9,7 @@
 #include <map>
 #include <assert.h>
 #include <iostream>
-
+#include <DxLib.h>
 
 namespace Utility
 {
@@ -87,7 +87,7 @@ public:
 		auto it = map.find(key);
 		if (map.end() == it)
 		{
-			std::cout << "キーのパラメータが存在しません";
+			printfDx("キーのパラメータが存在しません");
 			assert(false);
 		}
 		return Utility::AnyCast<ValueType>(it->second);
@@ -98,7 +98,7 @@ public:
 		auto it = map.find(key);
 		if (map.end() == it)
 		{
-			std::cout << "キーのパラメータが存在しません";
+			printfDx("キーのパラメータが存在しません");
 			assert(false);
 		}
 		return Utility::AnyCastPtr<ValueType>(it->second);

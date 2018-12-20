@@ -13,7 +13,7 @@ namespace Scene
 	class Pause final : public AbstractScene
 	{
 	public:
-		Pause(IOnSceneChangeCallback* sceneTitleChange, const Parameter& parame);
+		Pause(IOnSceneChangeCallback* sceneTitleChange, Parameter* parame);
 		~Pause();
 		void Update() override;
 		void Draw() override;

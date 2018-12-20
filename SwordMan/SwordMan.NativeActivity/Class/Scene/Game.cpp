@@ -15,18 +15,20 @@
 
 namespace Scene
 {
-	Game::Game(IOnSceneChangeCallback* sceneTitleChange, const Parameter& parame)
+	Game::Game(IOnSceneChangeCallback* sceneTitleChange, Parameter* parame)
 		: AbstractScene(sceneTitleChange)
 	{
+		//auto a = parame->Get<std::string>("stagePath");なんか落ちる
 		stageLoader.LoadStage("stage/stageparam03.csv");
 		stageLoader.LoadStageConstitution();
+		const_cast<StageParam&>(stageLoader.GetStageParam()).mapImage = std::string("stage3");
 		stageCreator.SetMapParam(stageLoader.GetStageParam());
 		stageCreator.FillUpFlatMap();
+		
 		//ステージの生成
 		stageCreator.Run(&stageLoader.GetStageData(), &stageLoader.GetSkyData(),&stageLoader.GetEnemyData());
 		//Entityの生成
 		ECS::PlayerArcheType()(Vec2(-150, 300), Vec2(64, 96));
-		//ECS::PlayerArcheType()(Vec2(250, 300), Vec2(64, 96));
 		for (int i = 0; i < 3; ++i)
 		{
 			ECS::HealthUIArcheType()(i,Vec2(450 + i * 144, 640));
@@ -74,8 +76,7 @@ namespace Scene
 				b->GetComponent<ECS::PushButton>().SetSceneCallBack(&GetCallback());
 				auto changeFunc = [](Scene::IOnSceneChangeCallback* callBack)
 				{
-					Parameter param;
-					callBack->OnSceneChange(SceneName::Pause, param, SceneStack::Non);
+					callBack->OnSceneChange(SceneName::Pause, nullptr, SceneStack::Non);
 					auto& gameUI = ECS::EcsSystem::GetManager().GetEntitiesByGroup(ENTITY_GROUP::GameUI);
 					for (auto& b : gameUI)
 					{
@@ -87,7 +88,7 @@ namespace Scene
 			}
 			else if (player.size() == 0)
 			{
-				Parameter param;
+				auto param = std::make_unique<Parameter>();
 				for (auto& ui : gameUI)
 				{
 					if(ui->HasComponent<ECS::PauseButtonTag>())
@@ -96,10 +97,10 @@ namespace Scene
 					}
 					else if (ui->HasComponent<ECS::TotalScoreDraw>())
 					{
-						param.Set<int>("score", ui->GetComponent<ECS::TotalScoreDraw>().GetTotalScore());
+						param->Set<int>("score", ui->GetComponent<ECS::TotalScoreDraw>().GetTotalScore());
 					}
 				}
-				GetCallback().OnSceneChange(SceneName::Result, param, SceneStack::Non);
+				GetCallback().OnSceneChange(SceneName::Result, param.get(), SceneStack::Non);
 				return;
 			}
 		}

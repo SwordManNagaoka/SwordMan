@@ -8,7 +8,7 @@
 
 namespace Scene
 {
-	Result::Result(IOnSceneChangeCallback* sceneTitleChange, const Parameter& parame)
+	Result::Result(IOnSceneChangeCallback* sceneTitleChange, Parameter* parame)
 		: AbstractScene(sceneTitleChange)
 	{
 		ECS::Entity* btn = ECS::ButtonArcheType()("pauseUI", Vec2(600, 400), Vec2(0, 0), Vec2(96, 144), 50);
@@ -16,7 +16,7 @@ namespace Scene
 		btn->AddComponent<ECS::BackTitleButtonTag>();
 		btn->AddGroup(ENTITY_GROUP::GameUI);
 
-		//printfDx("%d\n", parame.Get<int>("score"));
+		printfDx("%d\n", parame->Get<int>("score"));
 	}
 
 	Result::~Result()
@@ -35,8 +35,7 @@ namespace Scene
 				b->GetComponent<ECS::PushButton>().SetSceneCallBack(&GetCallback());
 				auto changeFunc = [](Scene::IOnSceneChangeCallback* callBack)
 				{
-					Parameter param;
-					callBack->OnSceneChange(SceneName::Title, param, SceneStack::OneClear);
+					callBack->OnSceneChange(SceneName::Title, nullptr, SceneStack::OneClear);
 					return;
 				};
 				b->GetComponent<ECS::PushButton>().SetEventFunction(changeFunc);
