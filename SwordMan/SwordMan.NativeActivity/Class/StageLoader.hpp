@@ -87,7 +87,6 @@ public:
 			stageParam.enemyDataPath[2] >>
 			stageParam.enemyDataPath[3] >>
 			stageParam.enemyDataPath[4];
-
 		fin.close();
 
 		//ここで使用するリソースを読み込む

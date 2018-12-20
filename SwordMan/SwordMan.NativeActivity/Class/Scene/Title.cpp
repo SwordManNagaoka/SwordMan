@@ -19,7 +19,7 @@ namespace Scene
 	Title::Title(IOnSceneChangeCallback* sceneTitleChange, const Parameter& parame)
 		: AbstractScene(sceneTitleChange)
 	{
-		stageLoader.LoadStage("stage/stageparam03.csv");
+		stageLoader.LoadStage("stage/stageparam01.csv");
 		stageLoader.LoadStageConstitution();
 		stageCreator.SetMapParam(stageLoader.GetStageParam());
 		stageCreator.FillUpFlatMap();
@@ -49,7 +49,7 @@ namespace Scene
 		if (TouchInput::GetInput().GetBtnPress(0) == 1)
 		{
 			Parameter param;
-			GetCallback().OnSceneChange(SceneName::Game, param, SceneStack::OneClear);
+			GetCallback().OnSceneChange(SceneName::Menu, param, SceneStack::OneClear);
 			return;
 		}
 	}

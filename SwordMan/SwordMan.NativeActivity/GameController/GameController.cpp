@@ -19,6 +19,7 @@
 #include "../Class/Scene/Game.h"
 #include "../Class/Scene/Pause.h"
 #include "../Class/Scene/Result.h"
+#include "../Class/Scene/Menu.h"
 
 void GameController::ResourceLoad()
 {
@@ -106,6 +107,7 @@ void GameController::OnSceneChange(const Scene::SceneName& scene, const Paramete
 		sceneStack.push(std::make_unique<Scene::Pause>(this, parame));
 		break;
 	case Scene::SceneName::Menu:
+		sceneStack.push(std::make_unique<Scene::Menu>(this, parame));
 		break;
 	case Scene::SceneName::Result:
 		sceneStack.push(std::make_unique<Scene::Result>(this, parame));

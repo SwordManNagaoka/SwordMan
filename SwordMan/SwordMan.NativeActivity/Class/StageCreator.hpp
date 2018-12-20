@@ -57,7 +57,29 @@ public:
 			}
 		}
 	}
+	//平坦なマップで画面内を埋める
+	void FillUpFlatMap2(const char* path)
+	{
+		ECS::MapArcheType tileMapArcheType;
+		ECS::SkyArcheType tileSkyArcheType;
+		int setNum = (System::SCREEN_WIDIH / stageParam.chipSize) + 1;
+		int excess = (setNum * stageParam.chipSize) - System::SCREEN_WIDIH;
 
+		int flatMap[8]{ -1, -1, -1, -1, -1, -1, 0, 1 };
+		int sc = cntCreatMapNum.IsMax() ? 10 : 0;
+		int flatSky[8]{ sc, sc + 11, sc + 22, sc + 33, sc + 44, sc + 55, sc + 66, sc + 77 };
+
+		for (int i = 0; i < setNum; ++i)
+		{
+			for (int j = 0; j < 8; ++j)
+			{
+				Vec2 pos(float((i * stageParam.chipSize) - excess), float(j * stageParam.chipSize));
+				Vec2 velocity(float(stageParam.xSpeed), 0.f);
+				tileMapArcheType(path, pos, velocity, stageParam.chipSize, stageParam.chipSize, flatMap[j]);
+				tileSkyArcheType((stageParam.skyImage + "0").c_str(), pos, velocity, stageParam.chipSize, stageParam.chipSize, flatSky[j]);
+			}
+		}
+	}
 	//マップと敵の自動生成
 	//マップ、敵データを指定しない場合はフラットな地形が生成される
 	void Run(const StageArrayData* mapData = nullptr, const StageArrayData* skyData = nullptr, const StageArrayData* enemyData = nullptr)
