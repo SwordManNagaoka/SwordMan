@@ -13,7 +13,7 @@
 #include "../../Class/Sound.hpp"
 namespace Scene
 {
-	Pause::Pause(IOnSceneChangeCallback* sceneTitleChange, const Parameter& parame)
+	Pause::Pause(IOnSceneChangeCallback* sceneTitleChange, Parameter* parame)
 		:AbstractScene(sceneTitleChange)
 	{
 		//ボタン生成
@@ -71,8 +71,7 @@ namespace Scene
 				b->GetComponent<ECS::PushButton>().SetSceneCallBack(&GetCallback());
 				auto changeFunc = [](Scene::IOnSceneChangeCallback* callBack)
 				{
-					Parameter param;
-					callBack->OnSceneChange(SceneName::Title, param, SceneStack::AllClear);
+					callBack->OnSceneChange(SceneName::Title, nullptr, SceneStack::AllClear);
 					return;
 				};
 				b->GetComponent<ECS::PushButton>().SetEventFunction(changeFunc);
@@ -86,8 +85,7 @@ namespace Scene
 					ECS::Entity* pauseBtn = ECS::ButtonArcheType()("pauseButton", Vec2(1280 - 96, 0), Vec2(0, 0), Vec2(96, 96), 50);
 					pauseBtn->AddComponent<ECS::PauseButtonTag>();
 					pauseBtn->AddGroup(ENTITY_GROUP::GameUI);
-					Parameter param;
-					callBack->OnSceneChange(SceneName::BackToScene, param, SceneStack::OneClear);
+					callBack->OnSceneChange(SceneName::BackToScene, nullptr, SceneStack::OneClear);
 					return;
 				};
 				b->GetComponent<ECS::PushButton>().SetEventFunction(changeFunc);

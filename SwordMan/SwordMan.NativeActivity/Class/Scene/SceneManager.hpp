@@ -37,7 +37,7 @@ namespace Scene
 	public:
 		IOnSceneChangeCallback() = default;
 		virtual ~IOnSceneChangeCallback() = default;
-		virtual void OnSceneChange(const SceneName& scene, const Parameter& parame, const SceneStack& stackClear) = 0;
+		virtual void OnSceneChange(const SceneName& scene, Parameter* parame, const SceneStack& stackClear) = 0;
 		virtual void StackAllClear() = 0;
 	};
 

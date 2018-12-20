@@ -21,7 +21,7 @@ namespace Scene
 		StageLoader stageLoader;
 		StageCreator stageCreator;
 	public:
-		Game(IOnSceneChangeCallback* sceneTitleChange, const Parameter& parame);
+		Game(IOnSceneChangeCallback* sceneTitleChange, Parameter* parame);
 		~Game();
 		virtual void Update() override;
 		virtual void Draw() override;

@@ -16,6 +16,7 @@ public:
 	enum class GameGroup : ECS::Group
 	{
 		//OrderByDraw使用時、番号が大きいほど手前に描画される
+		Back0,      //最背面
 		Back1,		//背景(空など)
 		Back2,		//背景(遠景など)
 		Back3,		//背景(雲など)
@@ -44,7 +45,7 @@ public:
 	@param scene 変更するシーンのenum
 	@param stackClear 現在のシーンのスタックをクリアするか
 	*/
-	void OnSceneChange(const Scene::SceneName& scene, const Parameter& parame, const Scene::SceneStack& stackClear) override;
+	void OnSceneChange(const Scene::SceneName& scene, Parameter* parame, const Scene::SceneStack& stackClear) override;
 private:
 	//シーンのスタックを全て削除
 	void StackAllClear() override;
