@@ -32,11 +32,19 @@ namespace Scene
 		stageCreator.Run(nullptr, nullptr, nullptr);
 		cloud.Run();
 		ECS::EcsSystem::GetManager().Update();
-		if (TouchInput::GetInput().GetBtnPress(0) == 1)
+		if (TouchInput::GetInput().GetBtnPress(0) == 1 && TouchInput::GetInput().GetTouchIDPos(0).x >= System::SCREEN_WIDIH/2)
 		{
 			auto param = std::make_unique<Parameter>();
 			param->Set<const char*>("stageNum", stage1.c_str());
 			param->Set<const char*>("stagePath", "stage/stageparam01.csv");		//stringだとなぜかバグる
+			GetCallback().OnSceneChange(SceneName::Game, param.get(), SceneStack::Non);
+			return;
+		}
+		if (TouchInput::GetInput().GetBtnPress(0) == 1 && TouchInput::GetInput().GetTouchIDPos(0).x <= System::SCREEN_WIDIH / 2)
+		{
+			auto param = std::make_unique<Parameter>();
+			param->Set<const char*>("stageNum", stage3.c_str());
+			param->Set<const char*>("stagePath", "stage/stageparam03.csv");		//stringだとなぜかバグる
 			GetCallback().OnSceneChange(SceneName::Game, param.get(), SceneStack::Non);
 			return;
 		}
