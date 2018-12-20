@@ -18,7 +18,7 @@ namespace Scene
 	Game::Game(IOnSceneChangeCallback* sceneTitleChange, const Parameter& parame)
 		: AbstractScene(sceneTitleChange)
 	{
-		stageLoader.LoadStage("stage/stageparam02.csv");
+		stageLoader.LoadStage("stage/stageparam03.csv");
 		stageLoader.LoadStageConstitution();
 		stageCreator.SetMapParam(stageLoader.GetStageParam());
 		stageCreator.FillUpFlatMap();

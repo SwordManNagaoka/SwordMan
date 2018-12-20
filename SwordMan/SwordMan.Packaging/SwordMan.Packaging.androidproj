@@ -136,6 +136,12 @@
     <Content Include="assets\image\font_text.png" />
     <Content Include="assets\image\goal.png" />
     <Content Include="assets\image\ground01.png" />
+    <Content Include="assets\image\ground03.png" />
+    <Content Include="assets\image\menu\cursor.png" />
+    <Content Include="assets\image\menu\hiscore.png" />
+    <Content Include="assets\image\menu\scorenum.png" />
+    <Content Include="assets\image\menu\stage1.png" />
+    <Content Include="assets\image\menu\stage3.png" />
     <Content Include="assets\image\player.png" />
     <Content Include="assets\image\rolling.png" />
     <Content Include="assets\image\sky01.png" />
@@ -162,8 +168,12 @@
     <Content Include="assets\stage\stage02_enemy.csv" />
     <Content Include="assets\stage\stage02_ground.csv" />
     <Content Include="assets\stage\stage02_sky.csv" />
+    <Content Include="assets\stage\stage03_enemy.csv" />
+    <Content Include="assets\stage\stage03_ground.csv" />
+    <Content Include="assets\stage\stage03_sky.csv" />
     <Content Include="assets\stage\stageparam01.csv" />
     <Content Include="assets\stage\stageparam02.csv" />
+    <Content Include="assets\stage\stageparam03.csv" />
     <Content Include="res\drawable\icon.png" />
     <Content Include="res\values\strings.xml" />
     <AntBuildXml Include="build.xml" />
