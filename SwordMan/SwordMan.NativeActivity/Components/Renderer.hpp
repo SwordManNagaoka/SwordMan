@@ -192,6 +192,11 @@ namespace ECS
 			}
 
 		}
+		//!画像を切り替えます
+		void ChageHandle(const char* handleName)
+		{
+			name_ = handleName;
+		}
 		//! @brief 描画を有効にします
 		void DrawEnable()
 		{
@@ -206,6 +211,11 @@ namespace ECS
 		void DoCenter(const bool isCenter)
 		{
 			isCenter_ = isCenter;
+		}
+		//!画像反転
+		void DoTurn(const bool doTurn)
+		{
+			isTurn_ = doTurn;
 		}
 	};
 

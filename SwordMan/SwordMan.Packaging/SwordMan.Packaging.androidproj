@@ -141,6 +141,7 @@
     <Content Include="assets\image\menu\hiscore.png" />
     <Content Include="assets\image\menu\scorenum.png" />
     <Content Include="assets\image\menu\stage1.png" />
+    <Content Include="assets\image\menu\stage2_kari.png" />
     <Content Include="assets\image\menu\stage3.png" />
     <Content Include="assets\image\player.png" />
     <Content Include="assets\image\rolling.png" />

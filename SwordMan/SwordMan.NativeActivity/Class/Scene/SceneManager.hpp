@@ -52,6 +52,7 @@ namespace Scene
 		virtual ~AbstractScene() = default;
 		virtual void Update() = 0;
 		virtual void Draw() = 0;
+		virtual void Finalize() {};
 		IOnSceneChangeCallback& GetCallback() const noexcept
 		{
 			return *callBack;

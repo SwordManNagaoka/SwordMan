@@ -89,6 +89,7 @@ void GameController::OnSceneChange(const Scene::SceneName& scene, Parameter* par
 	case Scene::SceneStack::Non:
 		break;
 	case Scene::SceneStack::OneClear:
+		sceneStack.top()->Finalize();
 		sceneStack.pop();
 		break;
 	case Scene::SceneStack::AllClear:
@@ -121,6 +122,7 @@ void GameController::StackAllClear()
 {
 	while (!sceneStack.empty())
 	{
+		sceneStack.top()->Finalize();
 		sceneStack.pop();
 	}
 }

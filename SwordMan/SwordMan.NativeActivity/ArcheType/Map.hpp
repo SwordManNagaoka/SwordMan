@@ -13,10 +13,10 @@
 namespace ECS
 {
 	//マップチップ一つあたりの大きさは96x96
-	class MapArcheType : public IArcheType<const char*, const Vec2&, const Vec2&, const int, const int, const int, const bool>
+	class MapArcheType : public IArcheType<const char*, const Vec2&, const Vec2&, const int, const int, const int>
 	{
 	public:
-		ECS::Entity* operator()(const char* name, const Vec2& pos, const Vec2& velocity, const int w, const int h, const int id, const bool isBack = false) override
+		ECS::Entity* operator()(const char* name, const Vec2& pos, const Vec2& velocity, const int w, const int h, const int id) override
 		{
 			ECS::Entity* entity = &ECS::EcsSystem::GetManager().AddEntity();
 			
@@ -31,14 +31,8 @@ namespace ECS
 					e->AddComponent<HitBase>(static_cast<float>(w), static_cast<float>(h)).SetColor(255, 0, 0);
 				}
 				e->AddComponent<RectDraw>(name, srcX, srcY, w, h);
-				if (isBack)
-				{
-					e->AddGroup(ENTITY_GROUP::Back0);
-				}
-				else
-				{
-					e->AddGroup(ENTITY_GROUP::Ground);
-				}
+				e->AddGroup(ENTITY_GROUP::Ground);
+				
 				
 			};
 			
