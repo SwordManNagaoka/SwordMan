@@ -1,7 +1,6 @@
 ﻿#pragma once
 #include "../ECS/ECS.hpp"
 #include <stack>
-#include "../Class/Scene/Scene.hpp"
 #include "../Class/Scene/SceneManager.hpp"
 
 #define ENTITY_GROUP (ECS::Group)GameController::GameGroup

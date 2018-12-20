@@ -7,7 +7,7 @@
 #pragma once
 #include "../../ECS/ECS.hpp"
 #include "../../Utility/Utility.hpp"
-#include "../Scene/Scene.hpp"
+#include "../../Utility/Parameter.hpp"
 #include <map>
 
 

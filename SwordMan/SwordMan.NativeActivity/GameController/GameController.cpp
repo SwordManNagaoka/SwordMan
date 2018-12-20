@@ -100,14 +100,14 @@ void GameController::OnSceneChange(const Scene::SceneName& scene, Parameter* par
 	case Scene::SceneName::Title:
 		sceneStack.push(std::make_unique<Scene::Title>(this, parame));
 		break;
+	case Scene::SceneName::Menu:
+		sceneStack.push(std::make_unique<Scene::Menu>(this, parame));
+		break;
 	case Scene::SceneName::Game:
 		sceneStack.push(std::make_unique<Scene::Game>(this, parame));
 		break;
 	case Scene::SceneName::Pause:
 		sceneStack.push(std::make_unique<Scene::Pause>(this, parame));
-		break;
-	case Scene::SceneName::Menu:
-		sceneStack.push(std::make_unique<Scene::Menu>(this, parame));
 		break;
 	case Scene::SceneName::Result:
 		sceneStack.push(std::make_unique<Scene::Result>(this, parame));

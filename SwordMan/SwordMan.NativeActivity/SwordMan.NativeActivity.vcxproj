@@ -258,7 +258,7 @@
     <ClInclude Include="Class\Scene\Menu.h" />
     <ClInclude Include="Class\Scene\Pause.h" />
     <ClInclude Include="Class\Scene\Result.h" />
-    <ClInclude Include="Class\Scene\Scene.hpp" />
+    <ClInclude Include="Class\Scene\Parameter.hpp" />
     <ClInclude Include="Class\Scene\SceneManager.hpp" />
     <ClInclude Include="Class\Scene\Title.h" />
     <ClInclude Include="Class\TouchInput.hpp" />

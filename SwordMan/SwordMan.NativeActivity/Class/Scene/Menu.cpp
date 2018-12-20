@@ -35,9 +35,9 @@ namespace Scene
 		if (TouchInput::GetInput().GetBtnPress(0) == 1)
 		{
 			auto param = std::make_unique<Parameter>();
-			param->Set<std::string>("stageNum", stage3);
-			param->Set<std::string>("stagePath", "stage/stageparam03.csv");
-			GetCallback().OnSceneChange(SceneName::Game, param.get(), SceneStack::OneClear);
+			param->Set<const char*>("stageNum", stage1.c_str());
+			param->Set<const char*>("stagePath", "stage/stageparam01.csv");		//stringだとなぜかバグる
+			GetCallback().OnSceneChange(SceneName::Game, param.get(), SceneStack::Non);
 			return;
 		}
 	}
