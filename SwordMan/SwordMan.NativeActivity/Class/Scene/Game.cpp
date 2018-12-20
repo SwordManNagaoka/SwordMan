@@ -25,6 +25,7 @@ namespace Scene
 		//ステージの生成
 		stageCreator.Run(&stageLoader.GetStageData(), &stageLoader.GetSkyData(),&stageLoader.GetEnemyData());
 		//Entityの生成
+		ECS::PlayerArcheType()(Vec2(-150, 300), Vec2(64, 96));
 		//ECS::PlayerArcheType()(Vec2(250, 300), Vec2(64, 96));
 		for (int i = 0; i < 3; ++i)
 		{
