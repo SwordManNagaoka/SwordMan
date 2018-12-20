@@ -1,8 +1,11 @@
 ﻿/**
-* @file Scene.hpp
+* @file Parameter.hpp
 * @brief Sceneで扱うクラス群です
 * @author 日比野　真聖
 * @date 2018/10/21
+* @par History
+- 2018/12/20 tonarinohito
+-# Parameter::Getの処理がおかしかったのを修正
 */
 #pragma once
 
@@ -90,7 +93,7 @@ public:
 			printfDx("キーのパラメータが存在しません");
 			assert(false);
 		}
-		return Utility::AnyCast<ValueType>(it->second);
+		return Utility::AnyCast<ValueType>(map.at(key));
 	}
 	template<typename ValueType>
 	const ValueType& GetPtr(const std::string& key) const noexcept

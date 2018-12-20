@@ -5,10 +5,9 @@
 * @date 2018/9/21
 */
 #pragma once
-#include "Scene.hpp"
+#include "../../Utility/Parameter.hpp"
 #include "../../Class/StageLoader.hpp"
 #include "../../Class/StageCreator.hpp"
-#include "../Scene/Scene.hpp"
 #include "../Scene/SceneManager.hpp"
 #include "../../Class/CloudCreater.hpp"
 namespace Scene

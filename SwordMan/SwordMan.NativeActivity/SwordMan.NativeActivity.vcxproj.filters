@@ -165,9 +165,6 @@
     <ClInclude Include="Class\Scene\Title.h">
       <Filter>Class\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="Class\Scene\Scene.hpp">
-      <Filter>Class\Scene</Filter>
-    </ClInclude>
     <ClInclude Include="Events\EventManager.hpp">
       <Filter>Events</Filter>
     </ClInclude>
@@ -281,6 +278,9 @@
     </ClInclude>
     <ClInclude Include="Components\EnemyEvent.hpp">
       <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Class\Scene\Parameter.hpp">
+      <Filter>Utility</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

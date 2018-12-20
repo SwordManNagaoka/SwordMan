@@ -5,7 +5,6 @@
 * @date 2018/9/21
 */
 #pragma once
-#include "Scene.hpp"
 #include "../Scene/SceneManager.hpp"
 #include "../../ArcheType/Player.hpp"
 #include "../../Class/StageLoader.hpp"

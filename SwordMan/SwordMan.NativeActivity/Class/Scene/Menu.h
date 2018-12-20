@@ -5,7 +5,6 @@
 * @date 2018/9/21
 */
 #pragma once
-#include "Scene.hpp"
 #include "../Scene/SceneManager.hpp"
 #include "../../Class/StageCreator.hpp"
 #include "../../Class/CloudCreater.hpp"

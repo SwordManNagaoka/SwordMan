@@ -18,10 +18,9 @@ namespace Scene
 	Game::Game(IOnSceneChangeCallback* sceneTitleChange, Parameter* parame)
 		: AbstractScene(sceneTitleChange)
 	{
-		//auto a = parame->Get<std::string>("stagePath");なんか落ちる
-		stageLoader.LoadStage("stage/stageparam03.csv");
+		stageLoader.LoadStage(parame->Get<const char*>("stagePath"));
 		stageLoader.LoadStageConstitution();
-		const_cast<StageParam&>(stageLoader.GetStageParam()).mapImage = std::string("stage3");
+		const_cast<StageParam&>(stageLoader.GetStageParam()).mapImage = parame->Get<const char*>("stageNum");
 		stageCreator.SetMapParam(stageLoader.GetStageParam());
 		stageCreator.FillUpFlatMap();
 		
