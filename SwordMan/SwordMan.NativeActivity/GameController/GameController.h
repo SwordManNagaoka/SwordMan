@@ -15,6 +15,7 @@ public:
 	enum class GameGroup : ECS::Group
 	{
 		//OrderByDraw使用時、番号が大きいほど手前に描画される
+		Default,
 		Back0,      //最背面
 		Back1,		//背景(空など)
 		Back2,		//背景(遠景など)
@@ -48,4 +49,12 @@ public:
 private:
 	//シーンのスタックを全て削除
 	void StackAllClear() override;
+};
+//ステージ番号(苦肉の策でグローバル変数)
+struct CommonData
+{
+	struct StageNum
+	{
+		static int val;
+	};
 };

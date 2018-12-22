@@ -20,7 +20,7 @@
 #include "../Class/Scene/Pause.h"
 #include "../Class/Scene/Result.h"
 #include "../Class/Scene/Menu.h"
-
+int CommonData::StageNum::val = 0;
 void GameController::ResourceLoad()
 {
 	ResourceManager::GetSound().Load("sounds/nagaoka.wav", "BGM",SoundType::BGM);

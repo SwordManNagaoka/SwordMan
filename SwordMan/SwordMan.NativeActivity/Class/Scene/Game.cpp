@@ -18,19 +18,48 @@ namespace Scene
 	Game::Game(IOnSceneChangeCallback* sceneTitleChange, Parameter* parame)
 		: AbstractScene(sceneTitleChange)
 	{
-		stageLoader.LoadStage(parame->Get<const char*>("stagePath"));
-		stageLoader.LoadStageConstitution();
-		const_cast<StageParam&>(stageLoader.GetStageParam()).mapImage = parame->Get<const char*>("stageNum");
-		stageCreator.SetMapParam(stageLoader.GetStageParam());
-		stageCreator.FillUpFlatMap();
-		
+
+		switch (CommonData::StageNum::val)
+		{
+		case 1:
+		{
+			stageLoader.LoadStage("stage/stageparam01.csv");
+			stageLoader.LoadStageConstitution();
+			const_cast<StageParam&>(stageLoader.GetStageParam()).mapImage = "stage1";
+			stageCreator.SetMapParam(stageLoader.GetStageParam());
+			stageCreator.FillUpFlatMap();
+			break;
+		}
+		case 2:
+		{
+			stageLoader.LoadStage("stage/stageparam02.csv");
+			stageLoader.LoadStageConstitution();
+			const_cast<StageParam&>(stageLoader.GetStageParam()).mapImage = "stage2";
+			stageCreator.SetMapParam(stageLoader.GetStageParam());
+			stageCreator.FillUpFlatMap();
+			break;
+		}
+		case 3:
+		{
+			stageLoader.LoadStage("stage/stageparam03.csv");
+			stageLoader.LoadStageConstitution();
+			const_cast<StageParam&>(stageLoader.GetStageParam()).mapImage = "stage3";
+			stageCreator.SetMapParam(stageLoader.GetStageParam());
+			stageCreator.FillUpFlatMap();
+			break;
+		}
+		default:
+			break;
+		}
+
+
 		//ステージの生成
-		stageCreator.Run(&stageLoader.GetStageData(), &stageLoader.GetSkyData(),&stageLoader.GetEnemyData());
+		stageCreator.Run(&stageLoader.GetStageData(), &stageLoader.GetSkyData(), &stageLoader.GetEnemyData());
 		//Entityの生成
 		ECS::PlayerArcheType()(Vec2(-150, 300), Vec2(64, 96));
 		for (int i = 0; i < 3; ++i)
 		{
-			ECS::HealthUIArcheType()(i,Vec2(450 + i * 144, 640));
+			ECS::HealthUIArcheType()(i, Vec2(450 + i * 144, 640));
 		}
 		//トータルスコアの生成
 		ECS::TotalScoreArcheType()("font", Vec2(0, 0));
@@ -43,7 +72,7 @@ namespace Scene
 	{
 		ECS::EcsSystem::GetManager().AllKill();
 	}
-	
+
 	void Game::Update()
 	{
 		cloud.Run();
@@ -90,7 +119,7 @@ namespace Scene
 				auto param = std::make_unique<Parameter>();
 				for (auto& ui : gameUI)
 				{
-					if(ui->HasComponent<ECS::PauseButtonTag>())
+					if (ui->HasComponent<ECS::PauseButtonTag>())
 					{
 						ui->Destroy();
 					}
@@ -107,5 +136,21 @@ namespace Scene
 	void Game::Draw()
 	{
 		ECS::EcsSystem::GetManager().OrderByDraw(ENTITY_GROUP::Max);
+		DrawFormatString(0, 120, 0xffffffff, "%d", ECS::EcsSystem::GetManager().GetEntitiesByGroup(ENTITY_GROUP::Ground).size());
+		DrawFormatString(0, 140, 0xffffffff, "%d", ECS::EcsSystem::GetManager().GetEntitiesByGroup(ENTITY_GROUP::Back0).size());
+		DrawFormatString(0, 160, 0xffffffff, "%d", ECS::EcsSystem::GetManager().GetEntitiesByGroup(ENTITY_GROUP::Back1).size());
+		DrawFormatString(0, 180, 0xffffffff, "%d", ECS::EcsSystem::GetManager().GetEntitiesByGroup(ENTITY_GROUP::Back2).size());
+		DrawFormatString(0, 200, 0xffffffff, "%d", ECS::EcsSystem::GetManager().GetEntitiesByGroup(ENTITY_GROUP::Back3).size());
+		DrawFormatString(0, 220, 0xffffffff, "%d", ECS::EcsSystem::GetManager().GetEntitiesByGroup(ENTITY_GROUP::Gimmick).size());
+		DrawFormatString(0, 240, 0xffffffff, "%d", ECS::EcsSystem::GetManager().GetEntitiesByGroup(ENTITY_GROUP::Wepon).size());
+		DrawFormatString(0, 260, 0xffffffff, "%d", ECS::EcsSystem::GetManager().GetEntitiesByGroup(ENTITY_GROUP::Player).size());
+		DrawFormatString(0, 280, 0xffffffff, "%d", ECS::EcsSystem::GetManager().GetEntitiesByGroup(ENTITY_GROUP::Enemy).size());
+		DrawFormatString(0, 300, 0xffffffff, "%d", ECS::EcsSystem::GetManager().GetEntitiesByGroup(ENTITY_GROUP::Effect).size());
+		DrawFormatString(0, 320, 0xffffffff, "%d", ECS::EcsSystem::GetManager().GetEntitiesByGroup(ENTITY_GROUP::GameUI).size());
+		DrawFormatString(0, 340, 0xffffffff, "%d", ECS::EcsSystem::GetManager().GetEntitiesByGroup(ENTITY_GROUP::Fade1).size());
+		DrawFormatString(0, 360, 0xffffffff, "%d", ECS::EcsSystem::GetManager().GetEntitiesByGroup(ENTITY_GROUP::PauseUI).size());
+		DrawFormatString(0, 380, 0xffffffff, "%d", ECS::EcsSystem::GetManager().GetEntitiesByGroup(ENTITY_GROUP::Fade2).size());
+		DrawFormatString(0, 400, 0xffffffff, "%d", ECS::EcsSystem::GetManager().GetEntitiesByGroup(ENTITY_GROUP::Max).size());
+		DrawFormatString(0, 420, 0xffffffff, "%d", ECS::EcsSystem::GetManager().GetMaxEntityesSize());
 	}
 }

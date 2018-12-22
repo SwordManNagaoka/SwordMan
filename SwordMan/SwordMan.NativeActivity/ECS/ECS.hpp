@@ -314,6 +314,11 @@ namespace ECS
 			entityes.back()->tag = "";
 			return *e;
 		}
+
+		const size_t& GetMaxEntityesSize()
+		{
+			return entityes.size();
+		}
 		//タグを指定しそのEntityを取得する
 		//失敗した場合落ちる
 		//Entity& GetEntity(const std::string& tag)
