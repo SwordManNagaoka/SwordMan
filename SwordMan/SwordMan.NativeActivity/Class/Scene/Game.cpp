@@ -98,6 +98,15 @@ namespace Scene
 		Event::CollisionEvent::AttackCollisionToEnemy();
 		Event::CollisionEvent::PlayerToEnemy();
 		ECS::EcsSystem::GetManager().Update();
+
+		auto callback_func = [](void* ptr)
+		{
+			auto callback = static_cast<IOnSceneChangeCallback*>(ptr);
+			callback->OnSceneChange(SceneName::Pause, nullptr, SceneStack::Non);
+		};
+
+		//非アクティブ時にポーズ画面に移行する
+		SetAndroidLostFocusCallbackFunction(callback_func,&GetCallback());
 		//ボタンイベント
 		auto& gameUI = ECS::EcsSystem::GetManager().GetEntitiesByGroup(ENTITY_GROUP::GameUI);
 		for (auto& b : gameUI)
