@@ -29,6 +29,9 @@ namespace Scene
 			const_cast<StageParam&>(stageLoader.GetStageParam()).mapImage = "stage1";
 			stageCreator.SetMapParam(stageLoader.GetStageParam());
 			stageCreator.FillUpFlatMap();
+			ResourceManager::GetSound().Load("sounds/nagaoka.wav", "BGM", SoundType::BGM);
+			Sound s("BGM");
+			s.Play(true, false);
 			break;
 		}
 		case 2:
@@ -38,6 +41,9 @@ namespace Scene
 			const_cast<StageParam&>(stageLoader.GetStageParam()).mapImage = "stage2";
 			stageCreator.SetMapParam(stageLoader.GetStageParam());
 			stageCreator.FillUpFlatMap();
+			ResourceManager::GetSound().Load("sounds/nagaoka.wav", "BGM", SoundType::BGM);
+			Sound s("BGM");
+			s.Play(true, false);
 			break;
 		}
 		case 3:
@@ -47,6 +53,9 @@ namespace Scene
 			const_cast<StageParam&>(stageLoader.GetStageParam()).mapImage = "stage3";
 			stageCreator.SetMapParam(stageLoader.GetStageParam());
 			stageCreator.FillUpFlatMap();
+			ResourceManager::GetSound().Load("sounds/nagaoka.wav", "BGM", SoundType::BGM);
+			Sound s("BGM");
+			s.Play(true, false);
 			break;
 		}
 		default:
@@ -99,14 +108,14 @@ namespace Scene
 		Event::CollisionEvent::PlayerToEnemy();
 		ECS::EcsSystem::GetManager().Update();
 
-		auto callback_func = [](void* ptr)
+		//非アクティブ時にポーズ画面に移行する
+		SetAndroidLostFocusCallbackFunction([](void* ptr)
 		{
 			auto callback = static_cast<IOnSceneChangeCallback*>(ptr);
 			callback->OnSceneChange(SceneName::Pause, nullptr, SceneStack::Non);
-		};
-
-		//非アクティブ時にポーズ画面に移行する
-		SetAndroidLostFocusCallbackFunction(callback_func,&GetCallback());
+			return;
+		}, 
+			&GetCallback());
 		//ボタンイベント
 		auto& gameUI = ECS::EcsSystem::GetManager().GetEntitiesByGroup(ENTITY_GROUP::GameUI);
 		for (auto& b : gameUI)
