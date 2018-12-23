@@ -288,5 +288,8 @@
     <ClInclude Include="Class\RankSelector.hpp">
       <Filter>Class</Filter>
     </ClInclude>
+    <ClInclude Include="Components\GradationColor.hpp">
+      <Filter>Components</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
