@@ -86,6 +86,14 @@ namespace Scene
 		std::string stageName = "stage" + stageNo;
 		stageName += ".dat";
 		FileSystem().HighScoreSave(stageName, &scoreData);
+
+		//---新記録の表示---//
+		ECS::Entity* newRecord = &ECS::EcsSystem::GetManager().AddEntity();
+		newRecord->AddComponent<ECS::Color>(128, 128, 0);
+		newRecord->AddComponent<ECS::Position>(Vec2(800, 150));
+		newRecord->AddComponent<ECS::ImageFontDraw>("font", Vec2(32, 32), 16).SetFontImageKind(false);
+		newRecord->GetComponent<ECS::ImageFontDraw>().SetDrawData("NEW RECORD");
+		newRecord->AddGroup(ENTITY_GROUP::GameUI);
 	}
 
 	Result::~Result()
