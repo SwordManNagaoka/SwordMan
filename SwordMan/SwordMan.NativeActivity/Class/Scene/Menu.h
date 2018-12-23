@@ -26,6 +26,7 @@ namespace Scene
 		CloudCreater cloud;
 		StageLoader stageLoader;
 		StageCreator stageCreator;
+		ECS::Entity* number;
 		ECS::Entity* cursor_R;
 		ECS::Entity* cursor_L;
 		ECS::Entity* scoreBoard;

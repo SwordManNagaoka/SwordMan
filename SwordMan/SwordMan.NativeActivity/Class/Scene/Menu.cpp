@@ -82,6 +82,12 @@ namespace Scene
 		scoreBoard = ECS::ArcheType()("hiscore", Vec2{ System::SCREEN_WIDIH / 2.f,System::SCREEN_HEIGHT + 150.f }, ENTITY_GROUP::GameUI);
 			scoreBoard->GetComponent<ECS::SimpleDraw>().DoCenter(true);
 		ECS::Cloud()("cloud");
+		number = &ECS::EcsSystem::GetManager().AddEntity();
+		number->AddComponent<ECS::Transform>().SetPosition(-100.f,0.f);
+		number->AddComponent<ECS::ImageFontDraw>("font", Vec2(32, 32), 16);
+		number->AddGroup(ENTITY_GROUP::GameUI);
+		scoreBoard->AddComponent<ECS::Canvas>().AddChild(number);
+
 
 		//セーブデータのロード
 		//1
@@ -90,6 +96,7 @@ namespace Scene
 			std::string stageName = "stage" + stageNo;
 			stageName += ".dat";
 			FileSystem().Load(stageName, &score[0]);
+			number->GetComponent<ECS::ImageFontDraw>().SetDrawData(Converter::ToString(score[0]).c_str());
 		}
 		//2
 		{
@@ -217,6 +224,7 @@ namespace Scene
 			{
 				b->Destroy();
 			}
+			number->GetComponent<ECS::ImageFontDraw>().SetDrawData(Converter::ToString(score[2]).c_str());
 			stageCreator.FillUpFlatMap();
 		}
 		else if (index != preIndex && index == 1)
@@ -233,6 +241,7 @@ namespace Scene
 			{
 				b->Destroy();
 			}
+			number->GetComponent<ECS::ImageFontDraw>().SetDrawData(Converter::ToString(score[1]).c_str());
 			stageCreator.FillUpFlatMap();
 		}
 		else if (index != preIndex && index == 0)
@@ -249,6 +258,7 @@ namespace Scene
 			{
 				b->Destroy();
 			}
+			number->GetComponent<ECS::ImageFontDraw>().SetDrawData(Converter::ToString(score[0]).c_str());
 			stageCreator.FillUpFlatMap();
 		}
 		stageCreator.Run(nullptr, nullptr, nullptr);
