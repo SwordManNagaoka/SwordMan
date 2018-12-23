@@ -22,6 +22,7 @@
 #include "../Class/Scene/Menu.h"
 int CommonData::StageNum::val = 0;
 int CommonData::TotalScore::val = 0;
+Scene::SceneName CommonData::CurrentScene::val = Scene::SceneName::Title;
 void GameController::ResourceLoad()
 {
 	ResourceManager::GetSound().Load("sounds/rolling.wav", "rolling", SoundType::SE);
@@ -57,6 +58,7 @@ GameController::GameController()
 	pManager = &ECS::EcsSystem::GetManager();	
 	//初期シーン
 	sceneStack.push(std::make_unique< Scene::Title >(this, nullptr));	//タイトルシーンを作成し、プッシュ
+	CommonData::CurrentScene::val = Scene::SceneName::Title;
 	MasterSound::Get().SetAllBGMGain(0.8f);
 }
 
@@ -96,18 +98,23 @@ void GameController::OnSceneChange(const Scene::SceneName& scene, Parameter* par
 	switch (scene)
 	{
 	case Scene::SceneName::Title:
+		CommonData::CurrentScene::val = Scene::SceneName::Title;
 		sceneStack.push(std::make_unique<Scene::Title>(this, parame));
 		break;
 	case Scene::SceneName::Menu:
+		CommonData::CurrentScene::val = Scene::SceneName::Menu;
 		sceneStack.push(std::make_unique<Scene::Menu>(this, parame));
 		break;
 	case Scene::SceneName::Game:
+		CommonData::CurrentScene::val = Scene::SceneName::Game;
 		sceneStack.push(std::make_unique<Scene::Game>(this, parame));
 		break;
 	case Scene::SceneName::Pause:
+		CommonData::CurrentScene::val = Scene::SceneName::Pause;
 		sceneStack.push(std::make_unique<Scene::Pause>(this, parame));
 		break;
 	case Scene::SceneName::Result:
+		CommonData::CurrentScene::val = Scene::SceneName::Result;
 		sceneStack.push(std::make_unique<Scene::Result>(this, parame));
 		break;
 	default:
