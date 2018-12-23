@@ -63,8 +63,30 @@ namespace Scene
 		rankData->AddComponent<ECS::Position>(Vec2(600, 300));
 		rankData->AddComponent<ECS::ImageFontDraw>("font", Vec2(32, 32), 16).SetFontImageKind(false);
 		std::string rankName;
+
 		//ランク決め
 		rankName = RankSelector().execute(scoreData);
+
+		if (scoreData >= 0 && scoreData <= 2000)
+		{
+			rankName = "D";
+		}
+		else if(scoreData >= 2000 && scoreData <= 4000)
+		{
+			rankName = "C";
+		}
+		else if (scoreData >= 4000 && scoreData <= 6000)
+		{
+			rankName = "B";
+		}
+		else if (scoreData >= 6000 && scoreData <= 8000)
+		{
+			rankName = "A";
+		}
+		else if(scoreData >= 8000)
+		{
+			rankName = "S";
+		}
 
 		rankData->GetComponent<ECS::ImageFontDraw>().SetDrawData(rankName.c_str());
 		rankData->GetComponent<ECS::Scale>().val = 2.0f;
