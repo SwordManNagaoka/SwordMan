@@ -17,10 +17,15 @@ namespace Scene
 	Result::Result(IOnSceneChangeCallback* sceneTitleChange, Parameter* parame)
 		: AbstractScene(sceneTitleChange)
 	{
-		ECS::Entity* btn = ECS::ButtonArcheType()("pauseUI", Vec2(600, 400), Vec2(0, 0), Vec2(96, 144), 50);
+		ECS::Entity* btn = ECS::ButtonArcheType()("pauseUI", Vec2(680, 400), Vec2(0, 0), Vec2(96, 144), 50);
 		btn->GetComponent<ECS::CircleColiider>().SetOffset(48, 48);
 		btn->AddComponent<ECS::BackTitleButtonTag>();
 		btn->AddGroup(ENTITY_GROUP::GameUI);
+
+		ECS::Entity* menuBtn = ECS::ButtonArcheType()("pauseUI", Vec2(480, 400), Vec2(192, 0), Vec2(96, 144), 50);
+		menuBtn->GetComponent<ECS::CircleColiider>().SetOffset(48, 48);
+		menuBtn->AddComponent<ECS::BackMenuButtonTag>();
+		menuBtn->AddGroup(ENTITY_GROUP::GameUI);
 
 		int scoreData = CommonData::TotalScore::val;
 		int stageNo = CommonData::StageNum::val;
@@ -106,7 +111,17 @@ namespace Scene
 				b->GetComponent<ECS::PushButton>().SetSceneCallBack(&GetCallback());
 				auto changeFunc = [](Scene::IOnSceneChangeCallback* callBack)
 				{
-					callBack->OnSceneChange(SceneName::Title, nullptr, SceneStack::AllClear);
+					callBack->OnSceneChange(SceneName::Game, nullptr, SceneStack::AllClear);
+					return;
+				};
+				b->GetComponent<ECS::PushButton>().SetEventFunction(changeFunc);
+			}
+			if (b->HasComponent<ECS::BackMenuButtonTag>())
+			{
+				b->GetComponent<ECS::PushButton>().SetSceneCallBack(&GetCallback());
+				auto changeFunc = [](Scene::IOnSceneChangeCallback* callBack)
+				{
+					callBack->OnSceneChange(SceneName::Menu, nullptr, SceneStack::AllClear);
 					return;
 				};
 				b->GetComponent<ECS::PushButton>().SetEventFunction(changeFunc);
