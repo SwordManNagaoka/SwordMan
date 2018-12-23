@@ -62,19 +62,16 @@ namespace Scene
 			break;
 		}
 
-
-		//ステージの生成
-		stageCreator.Run(&stageLoader.GetStageData(), &stageLoader.GetSkyData(), &stageLoader.GetEnemyData());
 		//Entityの生成
-		ECS::PlayerArcheType()(Vec2(-150, 300), Vec2(64, 96));
-		for (int i = 0; i < 3; ++i)
+		ECS::PlayerArcheType()(Vec2(-150.f, 300.f), Vec2(64, 96));
+		for (float i = 0; i < 3; ++i)
 		{
-			ECS::HealthUIArcheType()(i, Vec2(450 + i * 144, 640));
+			ECS::HealthUIArcheType()(i, Vec2(450.f + i * 144.f, 640.f));
 		}
 		//トータルスコアの生成
 		ECS::TotalScoreArcheType()("font", Vec2(0, 0));
 		//ポーズボタン生成
-		ECS::Entity* pauseBtn = ECS::ButtonArcheType()("pauseButton", Vec2(1280 - 96, 0), Vec2(0, 0), Vec2(96, 96), 50);
+		ECS::Entity* pauseBtn = ECS::ButtonArcheType()("pauseButton", Vec2(1280.f - 96.f, 0.f), Vec2(0.f, 0.f), Vec2(96.f, 96.f), 50.f);
 		pauseBtn->AddComponent<ECS::PauseButtonTag>();
 		pauseBtn->AddGroup(ENTITY_GROUP::GameUI);
 	}
@@ -89,6 +86,17 @@ namespace Scene
 		stageCreator.Run(&stageLoader.GetStageData(), &stageLoader.GetSkyData(), &stageLoader.GetEnemyData());
 		auto& player = ECS::EcsSystem::GetManager().GetEntitiesByGroup(ENTITY_GROUP::Player);
 		auto& ground = ECS::EcsSystem::GetManager().GetEntitiesByGroup(ENTITY_GROUP::Ground);
+		//まれにめり込んだ状態から始まり、ジャンプできなくなるので苦肉の策としてこうしてある
+		for (const auto& p : player)
+		{
+			for (const auto& g : ground)
+			{
+				if (Collision::BoxAndBox<ECS::HitBase, ECS::HitBase>(*p, *g))
+				{
+					p->GetComponent<ECS::Position>().val.y -= 2;
+				}
+			}
+		}
 		//地形との衝突応答を行う
 		for (const auto& p : player)
 		{
