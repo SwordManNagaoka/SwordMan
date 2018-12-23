@@ -1,5 +1,7 @@
 ﻿#include "Menu.h"
 #include "../../ArcheType/ArcheType.hpp"
+#include "../../Class/DXFilieRead.hpp"
+
 namespace Scene
 {
 	void Menu::indexAdd()
@@ -51,6 +53,30 @@ namespace Scene
 		ECS::ArcheType()("hiscore", Vec2{ System::SCREEN_WIDIH / 2.f,System::SCREEN_HEIGHT - 140.f}, ENTITY_GROUP::GameUI)
 			->GetComponent<ECS::SimpleDraw>().DoCenter(true);
 		ECS::Cloud()("cloud");
+
+		//セーブデータのロード
+		//1
+		{
+			int stageNo = 1;
+			std::string stageName = "stage" + stageNo;
+			stageName += ".dat";
+			FileSystem().Load(stageName, &score[0]);
+		}
+		//2
+		{
+			int stageNo = 2;
+			std::string stageName = "stage" + stageNo;
+			stageName += ".dat";
+			FileSystem().Load(stageName, &score[1]);
+		}
+		//3
+		{
+			int stageNo = 3;
+			std::string stageName = "stage" + stageNo;
+			stageName += ".dat";
+			FileSystem().Load(stageName, &score[2]);
+		}
+		
 	}
 	void Menu::Finalize()
 	{
@@ -59,11 +85,7 @@ namespace Scene
 		ResourceManager::GetGraph().RemoveGraph("stage2UI");
 		ResourceManager::GetGraph().RemoveGraph("stage3UI");
 		ResourceManager::GetGraph().RemoveGraph("hiscore");
-		auto entity = ECS::EcsSystem::GetManager().GetEntitiesByGroup(ENTITY_GROUP::GameUI);
-		for (auto& e : entity)
-		{
-			e->Destroy();
-		}
+		ECS::EcsSystem::GetManager().AllKill();
 	}
 	void Menu::Update()
 	{
@@ -182,5 +204,8 @@ namespace Scene
 	void Menu::Draw()
 	{
 		ECS::EcsSystem::GetManager().OrderByDraw(ENTITY_GROUP::Max);
+		DrawFormatString(100, 500, 0, "1::%d", score[0]);
+		DrawFormatString(100, 520, 0, "2::%d", score[1]);
+		DrawFormatString(100, 540, 0, "3::%d", score[2]);
 	}
 }

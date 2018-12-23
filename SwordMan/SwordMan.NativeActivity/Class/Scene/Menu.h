@@ -23,7 +23,7 @@ namespace Scene
 		ECS::Entity* stageUI[3];
 		int index = 0;
 		int preIndex = 0;
-		int score = 0;
+		int score[3]{0};
 		void indexAdd();
 		void indexSub();
 	public:
