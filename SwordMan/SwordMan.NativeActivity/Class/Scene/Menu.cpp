@@ -104,7 +104,7 @@ namespace Scene
 				param->Set<int>("stageNum", 1);
 				CommonData::StageNum::val = 1;
 				Finalize();
-				GetCallback().OnSceneChange(SceneName::Game, param.get(), SceneStack::Non);
+				GetCallback().OnSceneChange(SceneName::Game, param.get(), SceneStack::OneClear);
 				return;
 				break;
 			}
@@ -114,7 +114,7 @@ namespace Scene
 				param->Set<int>("stageNum", 2);
 				CommonData::StageNum::val = 2;
 				Finalize();
-				GetCallback().OnSceneChange(SceneName::Game, param.get(), SceneStack::Non);
+				GetCallback().OnSceneChange(SceneName::Game, param.get(), SceneStack::OneClear);
 				return;
 				break;
 			}
@@ -124,7 +124,7 @@ namespace Scene
 				param->Set<int>("stageNum", 3);
 				CommonData::StageNum::val = 3;
 				Finalize();
-				GetCallback().OnSceneChange(SceneName::Game, param.get(), SceneStack::Non);
+				GetCallback().OnSceneChange(SceneName::Game, param.get(), SceneStack::OneClear);
 				return;
 				break;
 			}

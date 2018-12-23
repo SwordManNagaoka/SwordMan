@@ -315,7 +315,7 @@ namespace ECS
 			return *e;
 		}
 
-		const size_t& GetMaxEntityesSize()
+		const size_t& GetMaxEntityesSize() const
 		{
 			return entityes.size();
 		}
