@@ -133,7 +133,6 @@ namespace Scene
 		Event::CollisionEvent::AttackCollisionToEnemy();
 		Event::CollisionEvent::PlayerToEnemy();
 		ECS::EcsSystem::GetManager().Update();
-
 		
 		//ボタンイベント
 		auto& gameUI = ECS::EcsSystem::GetManager().GetEntitiesByGroup(ENTITY_GROUP::GameUI);
@@ -156,7 +155,6 @@ namespace Scene
 			}
 			else if (player.size() == 0)
 			{
-				auto param = std::make_unique<Parameter>();
 				for (auto& ui : gameUI)
 				{
 					if (ui->HasComponent<ECS::PauseButtonTag>())
@@ -171,6 +169,15 @@ namespace Scene
 				GetCallback().OnSceneChange(SceneName::Result, nullptr, SceneStack::Non);
 				return;
 			}
+			//スコア
+			for (auto& ui : gameUI)
+			{
+				if (ui->HasComponent<ECS::TotalScoreDraw>())
+				{
+					CommonData::TotalScore::val = ui->GetComponent<ECS::TotalScoreDraw>().GetTotalScore();
+				}
+			}
+			
 		}
 	}
 	void Game::Draw()
