@@ -59,7 +59,7 @@ namespace Scene
 		{
 			f->Destroy();
 		}
-		ResourceManager::GetSound().Remove("BGM");
+		
 	}
 	void Pause::Update()
 	{
@@ -72,8 +72,8 @@ namespace Scene
 				b->GetComponent<ECS::PushButton>().SetSceneCallBack(&GetCallback());
 				auto changeFunc = [](Scene::IOnSceneChangeCallback* callBack)
 				{
-					
-					callBack->OnSceneChange(SceneName::Title, nullptr, SceneStack::AllClear);
+					ResourceManager::GetSound().Remove("BGM");
+					callBack->OnSceneChange(SceneName::Game, nullptr, SceneStack::AllClear);
 					return;
 				};
 				b->GetComponent<ECS::PushButton>().SetEventFunction(changeFunc);
@@ -97,6 +97,7 @@ namespace Scene
 				b->GetComponent<ECS::PushButton>().SetSceneCallBack(&GetCallback());
 				auto changeFunc = [](Scene::IOnSceneChangeCallback* callBack)
 				{
+					ResourceManager::GetSound().Remove("BGM");
 					callBack->OnSceneChange(SceneName::Menu, nullptr, SceneStack::AllClear);
 					return;
 				};
