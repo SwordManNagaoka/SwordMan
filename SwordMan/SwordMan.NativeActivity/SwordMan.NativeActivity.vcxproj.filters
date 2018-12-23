@@ -285,5 +285,8 @@
     <ClInclude Include="ArcheType\ArcheType.hpp">
       <Filter>ArcheType</Filter>
     </ClInclude>
+    <ClInclude Include="ArcheType\Sky.hpp">
+      <Filter>ArcheType</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
