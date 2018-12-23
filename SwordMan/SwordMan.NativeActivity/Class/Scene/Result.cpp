@@ -59,7 +59,7 @@ namespace Scene
 		rankData->AddComponent<ECS::ImageFontDraw>("font", Vec2(32, 32), 16).SetFontImageKind(false);
 		std::string rankName;
 
-		if (scoreData <= 2000)
+		if (scoreData >= 0 || scoreData <= 2000)
 		{
 			rankName = "D";
 		}
@@ -75,23 +75,17 @@ namespace Scene
 		{
 			rankName = "A";
 		}
-		else if (scoreData <= 10000)
+		else
 		{
 			rankName = "S";
 		}
+
 		rankData->GetComponent<ECS::ImageFontDraw>().SetDrawData(rankName.c_str());
 		rankData->AddGroup(ENTITY_GROUP::GameUI);
 		
 		std::string stageName = "stage" + stageNo;
 		stageName += ".dat";
-		FileSystem().Save(stageName, &scoreData);
-
-		//セーブデータのロード
-		/*int data = -20;
-		int stageNo = 1;
-		std::string stageName = "stage" + stageNo;
-		stageName += ".dat";
-		FileSystem().Load(stageName, &data);*/
+		FileSystem().HighScoreSave(stageName, &scoreData);
 	}
 
 	Result::~Result()

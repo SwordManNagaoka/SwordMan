@@ -98,4 +98,14 @@ public:
 		//printfDx("load data : %d\n", *loadData);
 		return true;
 	}
+	const bool HighScoreSave(const std::string& fileName, int* saveData) noexcept
+	{
+		int highScore = 0;
+		if (!Load(fileName, &highScore)) { return false; }
+		if (*saveData >= highScore)
+		{
+			if (!Save(fileName, saveData)) { return false; }
+		}
+		return true;
+	}
 };
