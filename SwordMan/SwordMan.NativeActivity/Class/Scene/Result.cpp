@@ -22,8 +22,8 @@ namespace Scene
 		btn->AddComponent<ECS::BackTitleButtonTag>();
 		btn->AddGroup(ENTITY_GROUP::GameUI);
 
-		int scoreData = parame->Get<int>("score");
-		int stageNo = parame->Get<int>("stageNo");
+		int scoreData = CommonData::TotalScore::val;
+		int stageNo = CommonData::StageNum::val;
 
 		//---スコアの表示---//
 		ECS::Entity* scoreUI = &ECS::EcsSystem::GetManager().AddEntity();
