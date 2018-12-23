@@ -34,6 +34,7 @@ namespace Scene
 		//ステージの生成
 		stageCreator.Run(nullptr, nullptr, nullptr);
 		ECS::Cloud()("cloud");
+		fade = ECS::ArcheType()("fade", Vec2{ 0.f,0.f }, ENTITY_GROUP::Fade1);
 		tapStartLogo = ECS::ArcheType()("taptostart", Vec2{ System::SCREEN_WIDIH / 2.f,500.f }, ENTITY_GROUP::GameUI);
 		tapStartLogo->GetComponent<ECS::SimpleDraw>().DoCenter(true);
 		title = ECS::ArcheType()("title", Vec2{ System::SCREEN_WIDIH / 2.f,225.f }, ENTITY_GROUP::GameUI);
@@ -56,7 +57,15 @@ namespace Scene
 		cloud.Run();
 		stageCreator.Run(nullptr, nullptr, nullptr);
 		ECS::EcsSystem::GetManager().Update();
-		if (TouchInput::GetInput().GetBtnPress(0) == 1)
+		if (!isFadeEnd)
+		{
+			fade->GetComponent<ECS::AlphaBlend>().alpha -= 4;
+			if (fade->GetComponent<ECS::AlphaBlend>().alpha <= 0)
+			{
+				isFadeEnd = true;
+			}
+		}
+		if (TouchInput::GetInput().GetBtnPress(0) == 1 && isFadeEnd)
 		{
 			isPlayGame = true;
 		}
