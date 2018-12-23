@@ -27,9 +27,6 @@ namespace Scene
 		stageLoader.LoadStageConstitution();
 		//以下のようにしないと動的にマップチップを切り替えられない
 		ResourceManager::GetGraph().RemoveGraph(stageLoader.GetStageParam().mapImage);
-		ResourceManager::GetGraph().Load("image/ground01.png", "stage1");
-		ResourceManager::GetGraph().Load("image/ground02.png", "stage2");
-		ResourceManager::GetGraph().Load("image/ground03.png", "stage3");
 		ResourceManager::GetGraph().Load("image/menu/cursor.png", "cursor");
 		ResourceManager::GetGraph().Load("image/menu/stage1.png", "stage1UI");
 		ResourceManager::GetGraph().Load("image/menu/stage2.png", "stage2UI");

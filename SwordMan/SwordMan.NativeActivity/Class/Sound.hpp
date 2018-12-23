@@ -122,4 +122,9 @@ public:
 	{
 		ChangePanSoundMem(panPosition,handle_);
 	}
+
+	void SetHandle(const std::string& handleName)
+	{
+		name_ = handleName;
+	}
 };
