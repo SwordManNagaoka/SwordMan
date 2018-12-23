@@ -128,7 +128,7 @@ namespace Scene
 					}
 					else if (ui->HasComponent<ECS::TotalScoreDraw>())
 					{
-						param->Set<int>("score", ui->GetComponent<ECS::TotalScoreDraw>().GetTotalScore());
+						CommonData::TotalScore::val = ui->GetComponent<ECS::TotalScoreDraw>().GetTotalScore();
 					}
 				}
 				GetCallback().OnSceneChange(SceneName::Result, param.get(), SceneStack::Non);

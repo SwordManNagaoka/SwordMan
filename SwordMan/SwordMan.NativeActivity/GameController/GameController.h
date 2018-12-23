@@ -57,4 +57,8 @@ struct CommonData
 	{
 		static int val;
 	};
+	struct TotalScore
+	{
+		static int val;
+	};
 };
