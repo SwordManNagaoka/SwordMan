@@ -101,11 +101,18 @@ public:
 	const bool HighScoreSave(const std::string& fileName, int* saveData) noexcept
 	{
 		int highScore = 0;
-		if (!Load(fileName, &highScore)) { return false; }
+		Load(fileName, &highScore);
 		if (*saveData >= highScore)
 		{
-			if (!Save(fileName, saveData)) { return false; }
+			Save(fileName, saveData);
+			return true;
 		}
+		return false;
+	}
+	const bool SaveReset(const std::string& fileName) noexcept
+	{
+		int reset = 0;
+		if (!Save(fileName, &reset)) { return false; }
 		return true;
 	}
 };
