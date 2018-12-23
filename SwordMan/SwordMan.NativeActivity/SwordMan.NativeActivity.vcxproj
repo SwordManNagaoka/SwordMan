@@ -249,6 +249,7 @@
     <ClInclude Include="ArcheType\Map.hpp" />
     <ClInclude Include="ArcheType\Player.hpp" />
     <ClInclude Include="ArcheType\Score.hpp" />
+    <ClInclude Include="ArcheType\Sky.hpp" />
     <ClInclude Include="Class\CloudCreater.hpp" />
     <ClInclude Include="Class\DXFilieRead.hpp" />
     <ClInclude Include="Class\Sound.hpp" />

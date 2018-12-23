@@ -4,6 +4,35 @@
 
 namespace Scene
 {
+	void Menu::easingMove()
+	{
+		cL[0].Run(Easing::QuadOut, 60);
+		cR[0].Run(Easing::QuadOut, 60);
+		logo[0].Run(Easing::QuadOut, 60);
+		hiscore[0].Run(Easing::QuadOut, 60);
+		cursor_L->GetComponent<ECS::Position>().val.x = cL[0].GetVolume(-160, 0-(-160));
+		cursor_R->GetComponent<ECS::Position>().val.x = cR[0].GetVolume(System::SCREEN_WIDIH, (System::SCREEN_WIDIH - 160.f) - (System::SCREEN_WIDIH));
+		for (auto& it : stageUI)
+		{
+			it->GetComponent<ECS::Position>().val.y = logo[0].GetVolume(-160.f, System::SCREEN_HEIGHT / 3.f - (-160.f));
+		}
+		scoreBoard->GetComponent<ECS::Position>().val.y = hiscore[0].GetVolume(System::SCREEN_HEIGHT + 150.f, (System::SCREEN_HEIGHT - 140.f) - (System::SCREEN_HEIGHT + 150));
+
+	}
+	void Menu::easingOutMove()
+	{
+		cL[1].Run(Easing::QuadOut, 60);
+		cR[1].Run(Easing::QuadOut, 60);
+		logo[1].Run(Easing::QuadOut, 60);
+		hiscore[1].Run(Easing::QuadOut, 60);
+		cursor_L->GetComponent<ECS::Position>().val.x = cL[1].GetVolume(0, (-160) - (0));
+		cursor_R->GetComponent<ECS::Position>().val.x = cR[1].GetVolume(System::SCREEN_WIDIH - 160.f, (System::SCREEN_WIDIH) - (System::SCREEN_WIDIH - 160.f));
+		for (auto& it : stageUI)
+		{
+			it->GetComponent<ECS::Position>().val.y = logo[1].GetVolume(System::SCREEN_HEIGHT / 3.f, (-160.f) - (System::SCREEN_HEIGHT / 3.f));
+		}
+		scoreBoard->GetComponent<ECS::Position>().val.y = hiscore[1].GetVolume(System::SCREEN_HEIGHT - 140.f, (System::SCREEN_HEIGHT + 150.f) - (System::SCREEN_HEIGHT - 140.f));		
+	}
 	void Menu::indexAdd()
 	{
 		++index;
@@ -39,19 +68,19 @@ namespace Scene
 		stageCreator.FillUpFlatMap();
 		//ステージの生成
 		stageCreator.Run(nullptr, nullptr, nullptr);
-		cursor_L = ECS::ArcheType()("cursor", Vec2{ 0.f,300 }, ENTITY_GROUP::GameUI);
-		cursor_R = ECS::ArcheType()("cursor", Vec2{ System::SCREEN_WIDIH - 160.f,300 }, ENTITY_GROUP::GameUI);
+		cursor_L = ECS::ArcheType()("cursor", Vec2{ -160.f,300 }, ENTITY_GROUP::GameUI);
+		cursor_R = ECS::ArcheType()("cursor", Vec2{ (float)System::SCREEN_WIDIH,300 }, ENTITY_GROUP::GameUI);
 		cursor_R->GetComponent<ECS::SimpleDraw>().DoTurn(true);
-		stageUI[0] = ECS::ArcheType()("stage1UI", Vec2{ System::SCREEN_WIDIH / 2.f,System::SCREEN_HEIGHT / 2.6f }, ENTITY_GROUP::GameUI);
+		stageUI[0] = ECS::ArcheType()("stage1UI", Vec2{ System::SCREEN_WIDIH / 2.f, -160.f }, ENTITY_GROUP::GameUI);
 		stageUI[0]->GetComponent<ECS::SimpleDraw>().DoCenter(true);
-		stageUI[1] = ECS::ArcheType()("stage2UI", Vec2{ System::SCREEN_WIDIH / 2.f,System::SCREEN_HEIGHT / 2.6f }, ENTITY_GROUP::GameUI);
+		stageUI[1] = ECS::ArcheType()("stage2UI", Vec2{ System::SCREEN_WIDIH / 2.f, -160.f }, ENTITY_GROUP::GameUI);
 		stageUI[1]->GetComponent<ECS::SimpleDraw>().DoCenter(true);
 		stageUI[1]->GetComponent<ECS::SimpleDraw>().DrawDisable();
-		stageUI[2] = ECS::ArcheType()("stage3UI", Vec2{ System::SCREEN_WIDIH / 2.f,System::SCREEN_HEIGHT / 2.6f }, ENTITY_GROUP::GameUI);
+		stageUI[2] = ECS::ArcheType()("stage3UI", Vec2{ System::SCREEN_WIDIH / 2.f, -160.f }, ENTITY_GROUP::GameUI);
 		stageUI[2]->GetComponent<ECS::SimpleDraw>().DoCenter(true);
 		stageUI[2]->GetComponent<ECS::SimpleDraw>().DrawDisable();
-		ECS::ArcheType()("hiscore", Vec2{ System::SCREEN_WIDIH / 2.f,System::SCREEN_HEIGHT - 140.f}, ENTITY_GROUP::GameUI)
-			->GetComponent<ECS::SimpleDraw>().DoCenter(true);
+		scoreBoard = ECS::ArcheType()("hiscore", Vec2{ System::SCREEN_WIDIH / 2.f,System::SCREEN_HEIGHT + 150.f }, ENTITY_GROUP::GameUI);
+			scoreBoard->GetComponent<ECS::SimpleDraw>().DoCenter(true);
 		ECS::Cloud()("cloud");
 
 		//セーブデータのロード
@@ -85,70 +114,94 @@ namespace Scene
 		ResourceManager::GetGraph().RemoveGraph("stage2UI");
 		ResourceManager::GetGraph().RemoveGraph("stage3UI");
 		ResourceManager::GetGraph().RemoveGraph("hiscore");
-		ECS::EcsSystem::GetManager().AllKill();
+		auto ui = ECS::EcsSystem::GetManager().GetEntitiesByGroup(ENTITY_GROUP::GameUI);
+		for (auto& e : ui)
+		{
+			e->Destroy();
+		}
+		auto ground = ECS::EcsSystem::GetManager().GetEntitiesByGroup(ENTITY_GROUP::Ground);
+		for (auto& e : ground)
+		{
+			e->Destroy();
+		}
+		auto sky = ECS::EcsSystem::GetManager().GetEntitiesByGroup(ENTITY_GROUP::Back1);
+		for (auto& e : sky)
+		{
+			e->Destroy();
+		}
 	}
 	void Menu::Update()
 	{
 		ECS::EcsSystem::GetManager().Update();
+		easingMove();
 		for (auto& it : stageUI)
 		{
 			it->GetComponent<ECS::SimpleDraw>().DrawDisable();
 		}
 		preIndex = index;
 		stageUI[index]->GetComponent<ECS::SimpleDraw>().DrawEnable();
-		//左端
-		if (TouchInput::GetInput().GetBtnPress(0) == 1 && 
-			Collision::BoxAndBox(
-				TouchInput::GetInput().GetTouchIDPos(0), Vec2{ 1.f,1.f },
-				Vec2{0.f,0.f}, Vec2{ 160.f,720.f }))
+		if (logo[0].IsEaseEnd())
 		{
-			indexSub();
+			//左端
+			if (TouchInput::GetInput().GetBtnPress(0) == 1 &&
+				Collision::BoxAndBox(
+					TouchInput::GetInput().GetTouchIDPos(0), Vec2{ 1.f,1.f },
+					Vec2{ 0.f,0.f }, Vec2{ 160.f,720.f }))
+			{
+				indexSub();
+			}
+			//右端
+			else if (TouchInput::GetInput().GetBtnPress(0) == 1 &&
+				Collision::BoxAndBox(
+					TouchInput::GetInput().GetTouchIDPos(0), Vec2{ 1.f,1.f }, Vec2{ System::SCREEN_WIDIH - 160.f,0.f },
+					Vec2{ System::SCREEN_WIDIH ,720.f }))
+			{
+				indexAdd();
+			}
+			//真ん中
+			else if (TouchInput::GetInput().GetBtnPress(0) == 1)
+			{
+				isPlay = true;
+			}
+			
 		}
-		//右端
-		else if (TouchInput::GetInput().GetBtnPress(0) == 1 &&
-			Collision::BoxAndBox(
-				TouchInput::GetInput().GetTouchIDPos(0), Vec2{ 1.f,1.f }, Vec2{ System::SCREEN_WIDIH - 160.f,0.f }, 
-				Vec2{ System::SCREEN_WIDIH ,720.f }))
+
+		if (isPlay)
 		{
-			indexAdd();
-		}
-		//真ん中
-		else if(TouchInput::GetInput().GetBtnPress(0) == 1)
-		{
-			switch (index)
+			easingOutMove();
+
+			if (logo[1].IsEaseEnd())
 			{
-			case 0:
-			{
-				auto param = std::make_unique<Parameter>();
-				param->Set<int>("stageNum", 1);
-				CommonData::StageNum::val = 1;
-				Finalize();
-				GetCallback().OnSceneChange(SceneName::Game, param.get(), SceneStack::OneClear);
-				return;
-				break;
-			}
-			case 1:
-			{
-				auto param = std::make_unique<Parameter>();
-				param->Set<int>("stageNum", 2);
-				CommonData::StageNum::val = 2;
-				Finalize();
-				GetCallback().OnSceneChange(SceneName::Game, param.get(), SceneStack::OneClear);
-				return;
-				break;
-			}
-			case 2:
-			{
-				auto param = std::make_unique<Parameter>();
-				param->Set<int>("stageNum", 3);
-				CommonData::StageNum::val = 3;
-				Finalize();
-				GetCallback().OnSceneChange(SceneName::Game, param.get(), SceneStack::OneClear);
-				return;
-				break;
-			}
+				switch (index)
+				{
+				case 0:
+				{
+					CommonData::StageNum::val = 1;
+					Finalize();
+					GetCallback().OnSceneChange(SceneName::Game, nullptr, SceneStack::OneClear);
+					return;
+					break;
+				}
+				case 1:
+				{
+					CommonData::StageNum::val = 2;
+					Finalize();
+					GetCallback().OnSceneChange(SceneName::Game, nullptr, SceneStack::OneClear);
+					return;
+					break;
+				}
+				case 2:
+				{
+					CommonData::StageNum::val = 3;
+					Finalize();
+					GetCallback().OnSceneChange(SceneName::Game, nullptr, SceneStack::OneClear);
+					return;
+					break;
+				}
+				}
 			}
 		}
+
 		if (index != preIndex && index == 2)
 		{
 			const_cast<StageParam&>(stageLoader.GetStageParam()).mapImage = "stage3";
@@ -166,9 +219,9 @@ namespace Scene
 			}
 			stageCreator.FillUpFlatMap();
 		}
-		else if (index != preIndex && index == 0)
+		else if (index != preIndex && index == 1)
 		{
-			const_cast<StageParam&>(stageLoader.GetStageParam()).mapImage = "stage1";
+			const_cast<StageParam&>(stageLoader.GetStageParam()).mapImage = "stage2";
 			stageCreator.SetMapParam(stageLoader.GetStageParam());
 			auto entity = ECS::EcsSystem::GetManager().GetEntitiesByGroup(ENTITY_GROUP::Ground);
 			for (auto& e : entity)
@@ -182,9 +235,9 @@ namespace Scene
 			}
 			stageCreator.FillUpFlatMap();
 		}
-		else if (index != preIndex && index == 1)
+		else if (index != preIndex && index == 0)
 		{
-			const_cast<StageParam&>(stageLoader.GetStageParam()).mapImage = "stage2";
+			const_cast<StageParam&>(stageLoader.GetStageParam()).mapImage = "stage1";
 			stageCreator.SetMapParam(stageLoader.GetStageParam());
 			auto entity = ECS::EcsSystem::GetManager().GetEntitiesByGroup(ENTITY_GROUP::Ground);
 			for (auto& e : entity)
