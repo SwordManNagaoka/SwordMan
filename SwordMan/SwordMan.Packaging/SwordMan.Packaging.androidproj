@@ -142,7 +142,6 @@
     <Content Include="assets\image\menu\scorenum.png" />
     <Content Include="assets\image\menu\stage1.png" />
     <Content Include="assets\image\menu\stage2.png" />
-    <Content Include="assets\image\menu\stage2_kari.png" />
     <Content Include="assets\image\menu\stage3.png" />
     <Content Include="assets\image\player.png" />
     <Content Include="assets\image\rolling.png" />
@@ -161,7 +160,6 @@
     <Content Include="assets\saveData\highScore\stage3.dat" />
     <Content Include="assets\sounds\Attack.wav" />
     <Content Include="assets\sounds\bomb.wav" />
-    <Content Include="assets\sounds\Grass.wav" />
     <Content Include="assets\sounds\hit.wav" />
     <Content Include="assets\sounds\jump.wav" />
     <Content Include="assets\sounds\nagaoka.wav" />

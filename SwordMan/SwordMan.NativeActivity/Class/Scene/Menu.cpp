@@ -85,11 +85,7 @@ namespace Scene
 		ResourceManager::GetGraph().RemoveGraph("stage2UI");
 		ResourceManager::GetGraph().RemoveGraph("stage3UI");
 		ResourceManager::GetGraph().RemoveGraph("hiscore");
-		auto entity = ECS::EcsSystem::GetManager().GetEntitiesByGroup(ENTITY_GROUP::GameUI);
-		for (auto& e : entity)
-		{
-			e->Destroy();
-		}
+		ECS::EcsSystem::GetManager().AllKill();
 	}
 	void Menu::Update()
 	{
