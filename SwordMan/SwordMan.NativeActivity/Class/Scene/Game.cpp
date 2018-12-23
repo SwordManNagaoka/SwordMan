@@ -87,13 +87,17 @@ namespace Scene
 		auto& player = ECS::EcsSystem::GetManager().GetEntitiesByGroup(ENTITY_GROUP::Player);
 		auto& ground = ECS::EcsSystem::GetManager().GetEntitiesByGroup(ENTITY_GROUP::Ground);
 		//まれにめり込んだ状態から始まり、ジャンプできなくなるので苦肉の策としてこうしてある
-		for (const auto& p : player)
+		if (!isIntrusion)
 		{
-			for (const auto& g : ground)
+			for (const auto& p : player)
 			{
-				if (Collision::BoxAndBox<ECS::HitBase, ECS::HitBase>(*p, *g))
+				for (const auto& g : ground)
 				{
-					p->GetComponent<ECS::Position>().val.y -= 2;
+					if (Collision::BoxAndBox<ECS::HitBase, ECS::HitBase>(*p, *g))
+					{
+						p->GetComponent<ECS::Position>().val.y -= 1;
+						isIntrusion = true;
+					}
 				}
 			}
 		}
@@ -157,7 +161,7 @@ namespace Scene
 						CommonData::TotalScore::val = ui->GetComponent<ECS::TotalScoreDraw>().GetTotalScore();
 					}
 				}
-				GetCallback().OnSceneChange(SceneName::Result, param.get(), SceneStack::Non);
+				GetCallback().OnSceneChange(SceneName::Result, nullptr, SceneStack::Non);
 				return;
 			}
 		}
