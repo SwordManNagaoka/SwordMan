@@ -59,6 +59,7 @@ namespace Scene
 		{
 			f->Destroy();
 		}
+		ResourceManager::GetSound().Remove("BGM");
 	}
 	void Pause::Update()
 	{
@@ -71,6 +72,7 @@ namespace Scene
 				b->GetComponent<ECS::PushButton>().SetSceneCallBack(&GetCallback());
 				auto changeFunc = [](Scene::IOnSceneChangeCallback* callBack)
 				{
+					
 					callBack->OnSceneChange(SceneName::Title, nullptr, SceneStack::AllClear);
 					return;
 				};
@@ -92,15 +94,13 @@ namespace Scene
 			}
 			else if (b->HasComponent<ECS::BackMenuButtonTag>())
 			{
-				/*b->GetComponent<ECS::PushButton>().SetSceneCallBack(callBack);
+				b->GetComponent<ECS::PushButton>().SetSceneCallBack(&GetCallback());
 				auto changeFunc = [](Scene::IOnSceneChangeCallback* callBack)
 				{
-					Parameter param;
-					callBack->OnSceneChange(SceneName::Game, param, true);
-					printfDx("ポーズからメニューシーンへ\n");
+					callBack->OnSceneChange(SceneName::Menu, nullptr, SceneStack::AllClear);
 					return;
 				};
-				b->GetComponent<ECS::PushButton>().SetEventFunction(changeFunc);*/
+				b->GetComponent<ECS::PushButton>().SetEventFunction(changeFunc);
 			}
 		}
 	}

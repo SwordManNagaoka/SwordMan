@@ -24,7 +24,6 @@ int CommonData::StageNum::val = 0;
 int CommonData::TotalScore::val = 0;
 void GameController::ResourceLoad()
 {
-	ResourceManager::GetSound().Load("sounds/nagaoka.wav", "BGM",SoundType::BGM);
 	ResourceManager::GetSound().Load("sounds/rolling.wav", "rolling", SoundType::SE);
 	ResourceManager::GetSound().Load("sounds/smash.wav", "smash", SoundType::SE);
 	ResourceManager::GetSound().Load("sounds/hit.wav", "hit", SoundType::SE);
@@ -58,8 +57,6 @@ GameController::GameController()
 	pManager = &ECS::EcsSystem::GetManager();	
 	//初期シーン
 	sceneStack.push(std::make_unique< Scene::Title >(this, nullptr));	//タイトルシーンを作成し、プッシュ
-	Sound s("BGM");
-	s.Play(true,false);
 	MasterSound::Get().SetAllBGMGain(0.8f);
 }
 
