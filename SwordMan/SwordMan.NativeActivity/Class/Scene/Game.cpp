@@ -97,6 +97,8 @@ namespace Scene
 					else if (ui->HasComponent<ECS::TotalScoreDraw>())
 					{
 						param->Set<int>("score", ui->GetComponent<ECS::TotalScoreDraw>().GetTotalScore());
+						int stageNo = 1;
+						param->Set<int>("stageNo", stageNo);
 					}
 				}
 				GetCallback().OnSceneChange(SceneName::Result, param.get(), SceneStack::Non);

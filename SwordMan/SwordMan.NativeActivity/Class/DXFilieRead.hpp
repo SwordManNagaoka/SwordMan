@@ -54,3 +54,48 @@ public:
 		return pathBuffer;
 	}
 };
+
+class FileSystem final
+{
+public:
+	const bool Save(const std::string& fileName, int* saveData) noexcept
+	{
+		char filePath[256];
+		DxLib::GetInternalDataPath(filePath, sizeof(filePath));
+
+		strcat(filePath, "/");
+		strcat(filePath, fileName.c_str());
+
+		//そのあと、既存のファイルに書き込む
+		std::ofstream fon(filePath, std::ios::out);
+		if (!fon.is_open())
+		{
+			printfDx("save file error : %s\n", fileName.c_str());
+			return false;
+		}
+		fon << *saveData;
+		fon.close();
+		return true;
+	}
+	const bool Load(const std::string& fileName, int* loadData) noexcept
+	{
+		char filePath[256];
+		DxLib::GetInternalDataPath(filePath, sizeof(filePath));
+
+		strcat(filePath, "/");
+		strcat(filePath, fileName.c_str());
+
+		std::fstream inputFile(filePath);
+		if (!inputFile.is_open())
+		{
+			printfDx("load file error : %s \n", fileName.c_str());
+			return false;
+		}
+		inputFile >> *loadData;
+		inputFile.close();
+
+		//printfDx("load file : %s\n", filePath);
+		//printfDx("load data : %d\n", *loadData);
+		return true;
+	}
+};
