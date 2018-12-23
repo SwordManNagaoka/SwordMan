@@ -124,7 +124,6 @@
     <Content Include="assets\enemy\enemy03.csv" />
     <Content Include="assets\enemy\enemy04.csv" />
     <Content Include="assets\enemy\goal.csv" />
-    <Content Include="assets\image\a.png" />
     <Content Include="assets\image\cloud.png" />
     <Content Include="assets\image\effect\bomb.png" />
     <Content Include="assets\image\effect\hit_strong.png" />
@@ -149,8 +148,6 @@
     <Content Include="assets\image\rolling.png" />
     <Content Include="assets\image\sky01.png" />
     <Content Include="assets\image\sword.png" />
-    <Content Include="assets\image\tekito.png" />
-    <Content Include="assets\image\temp.png" />
     <Content Include="assets\image\title\taptostart.png" />
     <Content Include="assets\image\title\title.png" />
     <Content Include="assets\image\ui\fade.png" />

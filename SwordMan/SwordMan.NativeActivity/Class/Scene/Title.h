@@ -21,9 +21,14 @@ namespace Scene
 		virtual void Update() override;
 		virtual void Draw() override;
 	private:
+		bool isPlayGame = false;
+		ECS::Entity* tapStartLogo;
+		ECS::Entity* title;
 		CloudCreater cloud;
 		StageLoader stageLoader;
 		StageCreator stageCreator;
+		Easing startEase;
+		Easing titleEase;
 	};
 
 }
