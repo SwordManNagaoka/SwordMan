@@ -87,7 +87,7 @@ namespace Scene
 					ECS::Entity* pauseBtn = ECS::ButtonArcheType()("pauseButton", Vec2(1280 - 96, 0), Vec2(0, 0), Vec2(96, 96), 50);
 					pauseBtn->AddComponent<ECS::PauseButtonTag>();
 					pauseBtn->AddGroup(ENTITY_GROUP::GameUI);
-					callBack->OnSceneChange(SceneName::BackToScene, nullptr, SceneStack::OneClear);
+					callBack->OnSceneChange(SceneName::Game, nullptr, SceneStack::OneClear);
 					return;
 				};
 				b->GetComponent<ECS::PushButton>().SetEventFunction(changeFunc);

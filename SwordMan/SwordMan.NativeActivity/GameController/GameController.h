@@ -11,6 +11,7 @@ private:
 	void ResourceLoad();
 	std::stack<std::unique_ptr<Scene::AbstractScene>> sceneStack;
 	Parameter param;
+	
 public:
 	enum class GameGroup : ECS::Group
 	{
@@ -60,5 +61,9 @@ struct CommonData
 	struct TotalScore
 	{
 		static int val;
+	};
+	struct CurrentScene
+	{
+		static Scene::SceneName val;
 	};
 };

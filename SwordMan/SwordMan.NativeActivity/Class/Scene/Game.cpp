@@ -74,6 +74,20 @@ namespace Scene
 		ECS::Entity* pauseBtn = ECS::ButtonArcheType()("pauseButton", Vec2(1280.f - 96.f, 0.f), Vec2(0.f, 0.f), Vec2(96.f, 96.f), 50.f);
 		pauseBtn->AddComponent<ECS::PauseButtonTag>();
 		pauseBtn->AddGroup(ENTITY_GROUP::GameUI);
+
+		//非アクティブ時にポーズ画面に移行する
+		SetAndroidLostFocusCallbackFunction([](void* ptr)
+		{
+			auto callback = static_cast<IOnSceneChangeCallback*>(ptr);
+			if (CommonData::CurrentScene::val == SceneName::Game)
+			{
+				callback->OnSceneChange(SceneName::Pause, nullptr, SceneStack::Non);
+				return;
+			}
+		},
+			&GetCallback());
+		
+		
 	}
 	Game::~Game()
 	{
@@ -120,14 +134,7 @@ namespace Scene
 		Event::CollisionEvent::PlayerToEnemy();
 		ECS::EcsSystem::GetManager().Update();
 
-		//非アクティブ時にポーズ画面に移行する
-		SetAndroidLostFocusCallbackFunction([](void* ptr)
-		{
-			auto callback = static_cast<IOnSceneChangeCallback*>(ptr);
-			callback->OnSceneChange(SceneName::Pause, nullptr, SceneStack::Non);
-			return;
-		}, 
-			&GetCallback());
+		
 		//ボタンイベント
 		auto& gameUI = ECS::EcsSystem::GetManager().GetEntitiesByGroup(ENTITY_GROUP::GameUI);
 		for (auto& b : gameUI)
