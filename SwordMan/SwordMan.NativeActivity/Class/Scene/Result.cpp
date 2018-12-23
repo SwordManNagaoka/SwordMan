@@ -10,6 +10,7 @@
 
 #include <fstream>
 #include "../../Class/DXFilieRead.hpp"
+#include "../../Class/RankSelector.hpp"
 
 
 namespace Scene
@@ -58,42 +59,24 @@ namespace Scene
 		rankData->AddComponent<ECS::Position>(Vec2(300, 300));
 		rankData->AddComponent<ECS::ImageFontDraw>("font", Vec2(32, 32), 16).SetFontImageKind(false);
 		std::string rankName;
-
-		if (scoreData >= 0 || scoreData <= 2000)
-		{
-			rankName = "D";
-		}
-		else if(scoreData <= 4000)
-		{
-			rankName = "C";
-		}
-		else if (scoreData <= 6000)
-		{
-			rankName = "B";
-		}
-		else if (scoreData <= 8000)
-		{
-			rankName = "A";
-		}
-		else
-		{
-			rankName = "S";
-		}
+		//ランク決め
+		rankName = RankSelector().execute(scoreData);
 
 		rankData->GetComponent<ECS::ImageFontDraw>().SetDrawData(rankName.c_str());
 		rankData->AddGroup(ENTITY_GROUP::GameUI);
 		
 		std::string stageName = "stage" + stageNo;
 		stageName += ".dat";
-		FileSystem().HighScoreSave(stageName, &scoreData);
-
-		//---新記録の表示---//
-		ECS::Entity* newRecord = &ECS::EcsSystem::GetManager().AddEntity();
-		newRecord->AddComponent<ECS::Color>(128, 128, 0);
-		newRecord->AddComponent<ECS::Position>(Vec2(800, 150));
-		newRecord->AddComponent<ECS::ImageFontDraw>("font", Vec2(32, 32), 16).SetFontImageKind(false);
-		newRecord->GetComponent<ECS::ImageFontDraw>().SetDrawData("NEW RECORD");
-		newRecord->AddGroup(ENTITY_GROUP::GameUI);
+		if (FileSystem().HighScoreSave(stageName, &scoreData))
+		{
+			//---新記録の表示---//
+			ECS::Entity* newRecord = &ECS::EcsSystem::GetManager().AddEntity();
+			newRecord->AddComponent<ECS::Color>(128, 128, 0);
+			newRecord->AddComponent<ECS::Position>(Vec2(800, 150));
+			newRecord->AddComponent<ECS::ImageFontDraw>("font", Vec2(32, 32), 16).SetFontImageKind(false);
+			newRecord->GetComponent<ECS::ImageFontDraw>().SetDrawData("NEW RECORD");
+			newRecord->AddGroup(ENTITY_GROUP::GameUI);
+		}
 	}
 
 	Result::~Result()

@@ -285,5 +285,8 @@
     <ClInclude Include="ArcheType\ArcheType.hpp">
       <Filter>ArcheType</Filter>
     </ClInclude>
+    <ClInclude Include="Class\RankSelector.hpp">
+      <Filter>Class</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
