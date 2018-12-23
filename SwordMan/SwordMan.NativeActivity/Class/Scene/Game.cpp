@@ -1,4 +1,5 @@
 #include "Game.h"
+#include "../../Events/AtackEvent.hpp"
 #include "../../GameController/GameController.h"
 #include "../../ECS/ECS.hpp"
 #include "../../ArcheType/Map.hpp"
@@ -18,19 +19,57 @@ namespace Scene
 	Game::Game(IOnSceneChangeCallback* sceneTitleChange, Parameter* parame)
 		: AbstractScene(sceneTitleChange)
 	{
-		stageLoader.LoadStage(parame->Get<const char*>("stagePath"));
-		stageLoader.LoadStageConstitution();
-		const_cast<StageParam&>(stageLoader.GetStageParam()).mapImage = parame->Get<const char*>("stageNum");
-		stageCreator.SetMapParam(stageLoader.GetStageParam());
-		stageCreator.FillUpFlatMap();
-		
+
+		switch (CommonData::StageNum::val)
+		{
+		case 1:
+		{
+			stageLoader.LoadStage("stage/stageparam01.csv");
+			stageLoader.LoadStageConstitution();
+			const_cast<StageParam&>(stageLoader.GetStageParam()).mapImage = "stage1";
+			stageCreator.SetMapParam(stageLoader.GetStageParam());
+			stageCreator.FillUpFlatMap();
+			ResourceManager::GetSound().Load("sounds/nagaoka.wav", "BGM", SoundType::BGM);
+			Sound s("BGM");
+			s.Play(true, false);
+			break;
+		}
+		case 2:
+		{
+			stageLoader.LoadStage("stage/stageparam02.csv");
+			stageLoader.LoadStageConstitution();
+			const_cast<StageParam&>(stageLoader.GetStageParam()).mapImage = "stage2";
+			stageCreator.SetMapParam(stageLoader.GetStageParam());
+			stageCreator.FillUpFlatMap();
+			ResourceManager::GetSound().Load("sounds/nagaoka.wav", "BGM", SoundType::BGM);
+			Sound s("BGM");
+			s.Play(true, false);
+			break;
+		}
+		case 3:
+		{
+			stageLoader.LoadStage("stage/stageparam03.csv");
+			stageLoader.LoadStageConstitution();
+			const_cast<StageParam&>(stageLoader.GetStageParam()).mapImage = "stage3";
+			stageCreator.SetMapParam(stageLoader.GetStageParam());
+			stageCreator.FillUpFlatMap();
+			ResourceManager::GetSound().Load("sounds/nagaoka.wav", "BGM", SoundType::BGM);
+			Sound s("BGM");
+			s.Play(true, false);
+			break;
+		}
+		default:
+			break;
+		}
+
+
 		//ステージの生成
-		stageCreator.Run(&stageLoader.GetStageData(), &stageLoader.GetSkyData(),&stageLoader.GetEnemyData());
+		stageCreator.Run(&stageLoader.GetStageData(), &stageLoader.GetSkyData(), &stageLoader.GetEnemyData());
 		//Entityの生成
 		ECS::PlayerArcheType()(Vec2(-150, 300), Vec2(64, 96));
 		for (int i = 0; i < 3; ++i)
 		{
-			ECS::HealthUIArcheType()(i,Vec2(450 + i * 144, 640));
+			ECS::HealthUIArcheType()(i, Vec2(450 + i * 144, 640));
 		}
 		//トータルスコアの生成
 		ECS::TotalScoreArcheType()("font", Vec2(0, 0));
@@ -43,7 +82,7 @@ namespace Scene
 	{
 		ECS::EcsSystem::GetManager().AllKill();
 	}
-	
+
 	void Game::Update()
 	{
 		cloud.Run();
@@ -65,7 +104,18 @@ namespace Scene
 				e->GetComponent<ECS::Physics>().SetCollisionFunction(Collision::BoxAndBox<ECS::HitBase, ECS::HitBase>);
 			}
 		}
+		Event::CollisionEvent::AttackCollisionToEnemy();
+		Event::CollisionEvent::PlayerToEnemy();
 		ECS::EcsSystem::GetManager().Update();
+
+		//非アクティブ時にポーズ画面に移行する
+		SetAndroidLostFocusCallbackFunction([](void* ptr)
+		{
+			auto callback = static_cast<IOnSceneChangeCallback*>(ptr);
+			callback->OnSceneChange(SceneName::Pause, nullptr, SceneStack::Non);
+			return;
+		}, 
+			&GetCallback());
 		//ボタンイベント
 		auto& gameUI = ECS::EcsSystem::GetManager().GetEntitiesByGroup(ENTITY_GROUP::GameUI);
 		for (auto& b : gameUI)
@@ -90,7 +140,7 @@ namespace Scene
 				auto param = std::make_unique<Parameter>();
 				for (auto& ui : gameUI)
 				{
-					if(ui->HasComponent<ECS::PauseButtonTag>())
+					if (ui->HasComponent<ECS::PauseButtonTag>())
 					{
 						ui->Destroy();
 					}

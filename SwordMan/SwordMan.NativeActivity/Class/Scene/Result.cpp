@@ -77,22 +77,22 @@ namespace Scene
 		rankData->GetComponent<ECS::ImageFontDraw>().SetDrawData(rankName.c_str());
 		rankData->AddGroup(ENTITY_GROUP::GameUI);
 		
-		FileSystem file;
 		std::string stageName = "stage" + stageNo;
 		stageName += ".dat";
-		file.Save(stageName, &scoreData);
+		FileSystem().Save(stageName, &scoreData);
 
 		//セーブデータのロード
 		/*int data = -20;
 		int stageNo = 1;
 		std::string stageName = "stage" + stageNo;
 		stageName += ".dat";
-		file.Load(stageName, &data);*/
+		FileSystem().Load(stageName, &data);*/
 	}
 
 	Result::~Result()
 	{
 		ECS::EcsSystem::GetManager().AllKill();
+		ResourceManager::GetSound().Remove("BGM");
 	}
 	
 	void Result::Update()

@@ -282,5 +282,8 @@
     <ClInclude Include="Class\Scene\Parameter.hpp">
       <Filter>Utility</Filter>
     </ClInclude>
+    <ClInclude Include="ArcheType\ArcheType.hpp">
+      <Filter>ArcheType</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
