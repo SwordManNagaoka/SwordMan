@@ -239,6 +239,7 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ArcheType\ArcheType.hpp" />
     <ClInclude Include="ArcheType\AttackCollision.hpp" />
     <ClInclude Include="ArcheType\Button.hpp" />
     <ClInclude Include="ArcheType\Cloud.hpp" />

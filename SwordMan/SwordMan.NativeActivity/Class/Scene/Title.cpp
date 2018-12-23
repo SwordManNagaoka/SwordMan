@@ -21,6 +21,10 @@ namespace Scene
 	{
 		stageLoader.LoadStage("stage/stageparam01.csv");
 		stageLoader.LoadStageConstitution();
+		ResourceManager::GetGraph().RemoveGraph(stageLoader.GetStageParam().mapImage);
+		ResourceManager::GetGraph().Load("image/ground01.png", "stage1");
+		ResourceManager::GetGraph().Load("image/ground03.png", "stage3");
+		const_cast<StageParam&>(stageLoader.GetStageParam()).mapImage = "stage1";
 		stageCreator.SetMapParam(stageLoader.GetStageParam());
 		stageCreator.FillUpFlatMap();
 		//ステージの生成

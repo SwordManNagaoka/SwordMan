@@ -16,7 +16,7 @@ namespace Scene
 		btn->AddComponent<ECS::BackTitleButtonTag>();
 		btn->AddGroup(ENTITY_GROUP::GameUI);
 
-		printfDx("%d\n", parame->Get<int>("score"));
+		printfDx("%d\n", CommonData::TotalScore::val);
 	}
 
 	Result::~Result()

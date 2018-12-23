@@ -9,20 +9,27 @@
 #include "../../Class/StageCreator.hpp"
 #include "../../Class/CloudCreater.hpp"
 #include "../../Class/StageLoader.hpp"
-
+#include <array>
 namespace Scene
 {
 	class Menu final : public AbstractScene
 	{
 	private:
-		const std::string stage1 = "stage1";
-		const std::string stage3 = "stage3";
 		CloudCreater cloud;
 		StageLoader stageLoader;
 		StageCreator stageCreator;
+		ECS::Entity* cursor_R;
+		ECS::Entity* cursor_L;
+		ECS::Entity* stageUI[3];
+		int index = 0;
+		int preIndex = 0;
+		int score = 0;
+		void indexAdd();
+		void indexSub();
 	public:
 		Menu(IOnSceneChangeCallback* sceneTitleChange, Parameter* parame);
-		~Menu();
+
+		void Finalize() override;
 		void Update() override;
 		void Draw() override;
 	};

@@ -20,7 +20,8 @@
 #include "../Class/Scene/Pause.h"
 #include "../Class/Scene/Result.h"
 #include "../Class/Scene/Menu.h"
-
+int CommonData::StageNum::val = 0;
+int CommonData::TotalScore::val = 0;
 void GameController::ResourceLoad()
 {
 	ResourceManager::GetSound().Load("sounds/nagaoka.wav", "BGM",SoundType::BGM);
@@ -30,7 +31,6 @@ void GameController::ResourceLoad()
 	ResourceManager::GetSound().Load("sounds/bomb.wav", "bomb", SoundType::SE);
 	ResourceManager::GetSound().Load("sounds/jump.wav", "jump", SoundType::SE);
 	ResourceManager::GetGraph().Load("image/cloud.png", "cloud");
-	ResourceManager::GetGraph().Load("image/a.png", "a");
 	ResourceManager::GetGraph().Load("image/font_text.png", "font");
 	ResourceManager::GetGraph().Load("image/ui/goalMessage.png", "goalMessage");
 	ResourceManager::GetGraph().Load("image/ui/pauseButton.png", "pauseButton");
@@ -89,6 +89,7 @@ void GameController::OnSceneChange(const Scene::SceneName& scene, Parameter* par
 	case Scene::SceneStack::Non:
 		break;
 	case Scene::SceneStack::OneClear:
+		sceneStack.top()->Finalize();
 		sceneStack.pop();
 		break;
 	case Scene::SceneStack::AllClear:
@@ -121,6 +122,7 @@ void GameController::StackAllClear()
 {
 	while (!sceneStack.empty())
 	{
+		sceneStack.top()->Finalize();
 		sceneStack.pop();
 	}
 }
