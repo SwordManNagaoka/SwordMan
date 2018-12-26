@@ -313,6 +313,7 @@
     <ClInclude Include="Utility\Counter.hpp" />
     <ClInclude Include="Utility\Easing.hpp" />
     <ClInclude Include="Utility\FPS.hpp" />
+    <ClInclude Include="Utility\Input.hpp" />
     <ClInclude Include="Utility\Random.hpp" />
     <ClInclude Include="Utility\Utility.hpp" />
     <ClInclude Include="Utility\Vec.hpp" />

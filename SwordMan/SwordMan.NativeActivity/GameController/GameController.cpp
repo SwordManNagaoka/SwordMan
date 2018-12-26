@@ -20,11 +20,15 @@
 #include "../Class/Scene/Pause.h"
 #include "../Class/Scene/Result.h"
 #include "../Class/Scene/Menu.h"
+
+#include "../../Utility/Input.hpp"
 int CommonData::StageNum::val = 0;
 int CommonData::TotalScore::val = 0;
 Scene::SceneName CommonData::CurrentScene::val = Scene::SceneName::Title;
 void GameController::ResourceLoad()
 {
+#ifdef __ANDROID__
+	// Android版のコンパイル
 	ResourceManager::GetSound().Load("sounds/rolling.wav", "rolling", SoundType::SE);
 	ResourceManager::GetSound().Load("sounds/smash.wav", "smash", SoundType::SE);
 	ResourceManager::GetSound().Load("sounds/hit.wav", "hit", SoundType::SE);
@@ -39,7 +43,7 @@ void GameController::ResourceLoad()
 	ResourceManager::GetGraph().Load("image/ui/fade.png", "fade");
 	ResourceManager::GetGraph().Load("image/ui/pauseMessage.png", "pauseMessage");
 	ResourceManager::GetGraph().LoadDiv("image/sword.png", "sword", 5, 5, 1, 193, 193);
-	ResourceManager::GetGraph().LoadDiv("image/rolling.png", "rolling", 12, 4, 3, 288, 288);	
+	ResourceManager::GetGraph().LoadDiv("image/rolling.png", "rolling", 12, 4, 3, 288, 288);
 	ResourceManager::GetGraph().LoadDiv("image/enemy01.png", "enemy1", 2, 2, 1, 96, 96);
 	ResourceManager::GetGraph().LoadDiv("image/enemy02.png", "enemy2", 4, 4, 1, 96, 96);
 	ResourceManager::GetGraph().LoadDiv("image/enemy03.png", "enemy3", 6, 6, 1, 96, 96);
@@ -49,6 +53,34 @@ void GameController::ResourceLoad()
 	ResourceManager::GetGraph().LoadDiv("image/effect/hit_weak.png", "hitWeak", 4, 4, 1, 192, 192);
 	ResourceManager::GetGraph().LoadDiv("image/effect/bomb.png", "bomb", 4, 4, 1, 192, 192);
 	ResourceManager::GetGraph().LoadDiv("image/effect/hit_strong.png", "hitStrong", 5, 5, 1, 192, 192);
+#else
+	// Windows版のコンパイルだったら
+	ResourceManager::GetSound().Load("Resource/sounds/rolling.wav", "rolling", SoundType::SE);
+	ResourceManager::GetSound().Load("Resource/sounds/smash.wav", "smash", SoundType::SE);
+	ResourceManager::GetSound().Load("Resource/sounds/hit.wav", "hit", SoundType::SE);
+	ResourceManager::GetSound().Load("Resource/sounds/bomb.wav", "bomb", SoundType::SE);
+	ResourceManager::GetSound().Load("Resource/sounds/jump.wav", "jump", SoundType::SE);
+	ResourceManager::GetGraph().Load("Resource/image/cloud.png", "cloud");
+	ResourceManager::GetGraph().Load("Resource/image/font_text.png", "font");
+	ResourceManager::GetGraph().Load("Resource/image/ui/goalMessage.png", "goalMessage");
+	ResourceManager::GetGraph().Load("Resource/image/ui/pauseButton.png", "pauseButton");
+	ResourceManager::GetGraph().Load("Resource/image/ui/life.png", "health");
+	ResourceManager::GetGraph().Load("Resource/image/ui/pauseUI.png", "pauseUI");
+	ResourceManager::GetGraph().Load("Resource/image/ui/fade.png", "fade");
+	ResourceManager::GetGraph().Load("Resource/image/ui/pauseMessage.png", "pauseMessage");
+	ResourceManager::GetGraph().LoadDiv("Resource/image/sword.png", "sword", 5, 5, 1, 193, 193);
+	ResourceManager::GetGraph().LoadDiv("Resource/image/rolling.png", "rolling", 12, 4, 3, 288, 288);
+	ResourceManager::GetGraph().LoadDiv("Resource/image/enemy01.png", "enemy1", 2, 2, 1, 96, 96);
+	ResourceManager::GetGraph().LoadDiv("Resource/image/enemy02.png", "enemy2", 4, 4, 1, 96, 96);
+	ResourceManager::GetGraph().LoadDiv("Resource/image/enemy03.png", "enemy3", 6, 6, 1, 96, 96);
+	ResourceManager::GetGraph().LoadDiv("Resource/image/enemy04.png", "enemy4", 4, 4, 1, 96, 96);
+	ResourceManager::GetGraph().LoadDiv("Resource/image/goal.png", "goal", 1, 1, 1, 144, 192);
+	ResourceManager::GetGraph().LoadDiv("Resource/image/player.png", "player", 6, 2, 3, 96, 96);
+	ResourceManager::GetGraph().LoadDiv("Resource/image/effect/hit_weak.png", "hitWeak", 4, 4, 1, 192, 192);
+	ResourceManager::GetGraph().LoadDiv("Resource/image/effect/bomb.png", "bomb", 4, 4, 1, 192, 192);
+	ResourceManager::GetGraph().LoadDiv("Resource/image/effect/hit_strong.png", "hitStrong", 5, 5, 1, 192, 192);
+#endif
+	
 }
 
 GameController::GameController()
@@ -70,6 +102,7 @@ void GameController::ResetGame()
 void GameController::Update()
 {
 	TouchInput::GetInput().Update();
+	Input::Get().Update_Key();
 	pManager->Refresh();
 	sceneStack.top()->Update();
 	MasterSound::Get().Update();

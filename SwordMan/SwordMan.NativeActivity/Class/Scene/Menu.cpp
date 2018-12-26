@@ -1,7 +1,7 @@
 ﻿#include "Menu.h"
 #include "../../ArcheType/ArcheType.hpp"
 #include "../../Class/DXFilieRead.hpp"
-
+#include "../../Utility/Input.hpp"
 namespace Scene
 {
 	void Menu::easingMove()
@@ -53,16 +53,29 @@ namespace Scene
 	Menu::Menu(IOnSceneChangeCallback * sceneTitleChange, Parameter * parame)
 		: AbstractScene(sceneTitleChange)
 	{
-		//平坦なのしか出さないのでステージパラメーターはなんでもいい
+#ifdef __ANDROID__
+		// Android版のコンパイル
 		stageLoader.LoadStage("stage/stageparam03.csv");
-		stageLoader.LoadStageConstitution();
-		//以下のようにしないと動的にマップチップを切り替えられない
-		ResourceManager::GetGraph().RemoveGraph(stageLoader.GetStageParam().mapImage);
 		ResourceManager::GetGraph().Load("image/menu/cursor.png", "cursor");
 		ResourceManager::GetGraph().Load("image/menu/stage1.png", "stage1UI");
 		ResourceManager::GetGraph().Load("image/menu/stage2.png", "stage2UI");
 		ResourceManager::GetGraph().Load("image/menu/stage3.png", "stage3UI");
 		ResourceManager::GetGraph().Load("image/menu/hiscore.png", "hiscore");
+#else
+		// Windows版のコンパイルだったら
+		stageLoader.LoadStage("Resource/stage/stageparam03.csv");
+		ResourceManager::GetGraph().Load("Resource/image/menu/cursor.png", "cursor");
+		ResourceManager::GetGraph().Load("Resource/image/menu/stage1.png", "stage1UI");
+		ResourceManager::GetGraph().Load("Resource/image/menu/stage2.png", "stage2UI");
+		ResourceManager::GetGraph().Load("Resource/image/menu/stage3.png", "stage3UI");
+		ResourceManager::GetGraph().Load("Resource/image/menu/hiscore.png", "hiscore");
+#endif
+		//平坦なのしか出さないのでステージパラメーターはなんでもいい
+		
+		stageLoader.LoadStageConstitution();
+		//以下のようにしないと動的にマップチップを切り替えられない
+		ResourceManager::GetGraph().RemoveGraph(stageLoader.GetStageParam().mapImage);
+	
 		const_cast<StageParam&>(stageLoader.GetStageParam()).mapImage = "stage1";
 		stageCreator.SetMapParam(stageLoader.GetStageParam());
 		stageCreator.FillUpFlatMap();
@@ -82,12 +95,14 @@ namespace Scene
 		scoreBoard = ECS::ArcheType()("hiscore", Vec2{ System::SCREEN_WIDIH / 2.f,System::SCREEN_HEIGHT + 150.f }, ENTITY_GROUP::GameUI);
 			scoreBoard->GetComponent<ECS::SimpleDraw>().DoCenter(true);
 		ECS::Cloud()("cloud");
+
 		number = &ECS::EcsSystem::GetManager().AddEntity();
-		number->AddComponent<ECS::Transform>().SetPosition(-100.f,0.f);
+		number->AddComponent<ECS::Transform>().SetPosition(-180.f,0.f);
 		number->AddComponent<ECS::ImageFontDraw>("font", Vec2(32, 32), 16);
 		number->AddGroup(ENTITY_GROUP::GameUI);
+		
 		scoreBoard->AddComponent<ECS::Canvas>().AddChild(number);
-
+		scoreBoard->GetComponent<ECS::Canvas>().OffsetChildScale(0,2.0f);
 
 		//セーブデータのロード
 		//1
@@ -150,7 +165,8 @@ namespace Scene
 		if (logo[0].IsEaseEnd())
 		{
 			//左端
-			if (TouchInput::GetInput().GetBtnPress(0) == 1 &&
+			if ((TouchInput::GetInput().GetBtnPress(0) == 1 ||
+				Input::Get().GetKeyFrame(KEY_INPUT_LEFT) == 1) &&
 				Collision::BoxAndBox(
 					TouchInput::GetInput().GetTouchIDPos(0), Vec2{ 1.f,1.f },
 					Vec2{ 0.f,0.f }, Vec2{ 160.f,720.f }))
@@ -158,7 +174,8 @@ namespace Scene
 				indexSub();
 			}
 			//右端
-			else if (TouchInput::GetInput().GetBtnPress(0) == 1 &&
+			else if ((TouchInput::GetInput().GetBtnPress(0) == 1 ||
+				Input::Get().GetKeyFrame(KEY_INPUT_RIGHT) == 1) &&
 				Collision::BoxAndBox(
 					TouchInput::GetInput().GetTouchIDPos(0), Vec2{ 1.f,1.f }, Vec2{ System::SCREEN_WIDIH - 160.f,0.f },
 					Vec2{ System::SCREEN_WIDIH ,720.f }))
@@ -166,7 +183,8 @@ namespace Scene
 				indexAdd();
 			}
 			//真ん中
-			else if (TouchInput::GetInput().GetBtnPress(0) == 1)
+			else if ((TouchInput::GetInput().GetBtnPress(0) == 1 ||
+				Input::Get().GetKeyFrame(KEY_INPUT_Z) == 1))
 			{
 				isPlay = true;
 			}
@@ -267,8 +285,5 @@ namespace Scene
 	void Menu::Draw()
 	{
 		ECS::EcsSystem::GetManager().OrderByDraw(ENTITY_GROUP::Max);
-		DrawFormatString(100, 500, 0, "1::%d", score[0]);
-		DrawFormatString(100, 520, 0, "2::%d", score[1]);
-		DrawFormatString(100, 540, 0, "3::%d", score[2]);
 	}
 }

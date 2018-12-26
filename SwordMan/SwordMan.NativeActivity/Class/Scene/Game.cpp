@@ -24,36 +24,58 @@ namespace Scene
 		{
 		case 1:
 		{
+#ifdef __ANDROID__
+			// Android版のコンパイル
 			stageLoader.LoadStage("stage/stageparam01.csv");
+			ResourceManager::GetSound().Load("sounds/nagaoka.wav", "BGM", SoundType::BGM);
+#else
+			// Windows版のコンパイル
+			stageLoader.LoadStage("Resource/stage/stageparam01.csv");
+			ResourceManager::GetSound().Load("Resource/sounds/nagaoka.wav", "BGM", SoundType::BGM);
+#endif
 			stageLoader.LoadStageConstitution();
 			const_cast<StageParam&>(stageLoader.GetStageParam()).mapImage = "stage1";
 			stageCreator.SetMapParam(stageLoader.GetStageParam());
 			stageCreator.FillUpFlatMap();
-			ResourceManager::GetSound().Load("sounds/nagaoka.wav", "BGM", SoundType::BGM);
 			Sound s("BGM");
 			s.Play(true, false);
 			break;
 		}
 		case 2:
 		{
+#ifdef __ANDROID__
+			// Android版のコンパイル
 			stageLoader.LoadStage("stage/stageparam02.csv");
+			ResourceManager::GetSound().Load("sounds/nagaoka.wav", "BGM", SoundType::BGM);
+#else
+			// Windows版のコンパイル
+			stageLoader.LoadStage("Resource/stage/stageparam02.csv");
+			ResourceManager::GetSound().Load("Resource/sounds/nagaoka.wav", "BGM", SoundType::BGM);
+#endif
+			
 			stageLoader.LoadStageConstitution();
 			const_cast<StageParam&>(stageLoader.GetStageParam()).mapImage = "stage2";
 			stageCreator.SetMapParam(stageLoader.GetStageParam());
 			stageCreator.FillUpFlatMap();
-			ResourceManager::GetSound().Load("sounds/nagaoka.wav", "BGM", SoundType::BGM);
 			Sound s("BGM");
 			s.Play(true, false);
 			break;
 		}
 		case 3:
 		{
+#ifdef __ANDROID__
+			// Android版のコンパイル
 			stageLoader.LoadStage("stage/stageparam03.csv");
+			ResourceManager::GetSound().Load("sounds/nagaoka.wav", "BGM", SoundType::BGM);
+#else
+			// Windows版のコンパイル
+			stageLoader.LoadStage("Resource/stage/stageparam03.csv");
+			ResourceManager::GetSound().Load("Resource/sounds/nagaoka.wav", "BGM", SoundType::BGM);
+#endif
 			stageLoader.LoadStageConstitution();
 			const_cast<StageParam&>(stageLoader.GetStageParam()).mapImage = "stage3";
 			stageCreator.SetMapParam(stageLoader.GetStageParam());
 			stageCreator.FillUpFlatMap();
-			ResourceManager::GetSound().Load("sounds/nagaoka.wav", "BGM", SoundType::BGM);
 			Sound s("BGM");
 			s.Play(true, false);
 			break;

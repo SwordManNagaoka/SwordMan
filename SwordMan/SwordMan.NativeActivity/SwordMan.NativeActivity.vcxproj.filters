@@ -285,16 +285,17 @@
     <ClInclude Include="ArcheType\ArcheType.hpp">
       <Filter>ArcheType</Filter>
     </ClInclude>
-<<<<<<< HEAD
-    <ClInclude Include="Class\RankSelector.hpp">
-      <Filter>Class</Filter>
+    <ClInclude Include="ArcheType\Sky.hpp">
+      <Filter>ArcheType</Filter>
     </ClInclude>
     <ClInclude Include="Components\GradationColor.hpp">
       <Filter>Components</Filter>
-=======
-    <ClInclude Include="ArcheType\Sky.hpp">
-      <Filter>ArcheType</Filter>
->>>>>>> master
+    </ClInclude>
+    <ClInclude Include="Class\RankSelector.hpp">
+      <Filter>Class</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\Input.hpp">
+      <Filter>Utility</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
