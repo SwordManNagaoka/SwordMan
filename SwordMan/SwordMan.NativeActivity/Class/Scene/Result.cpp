@@ -107,20 +107,10 @@ namespace Scene
 			newRecord->AddComponent<ECS::GradationColor>().SetGradationPower(Vec3(3, 2, 1));
 			newRecord->AddGroup(ENTITY_GROUP::GameUI);
 		}
-	}
 
-	Result::~Result()
-	{
-		ECS::EcsSystem::GetManager().AllKill();
-		ResourceManager::GetSound().Remove("BGM");
-	}
-	
-	void Result::Update()
-	{
 		const auto& button = ECS::EcsSystem::GetManager().GetEntitiesByGroup(ENTITY_GROUP::GameUI);
 		for (auto& b : button)
 		{
-			b->Update();
 			if (b->HasComponent<ECS::BackTitleButtonTag>())
 			{
 				b->GetComponent<ECS::PushButton>().SetSceneCallBack(&GetCallback());
@@ -141,6 +131,21 @@ namespace Scene
 				};
 				b->GetComponent<ECS::PushButton>().SetEventFunction(changeFunc);
 			}
+		}
+	}
+
+	Result::~Result()
+	{
+		ECS::EcsSystem::GetManager().AllKill();
+		ResourceManager::GetSound().Remove("BGM");
+	}
+	
+	void Result::Update()
+	{
+		const auto& button = ECS::EcsSystem::GetManager().GetEntitiesByGroup(ENTITY_GROUP::GameUI);
+		for (auto& b : button)
+		{
+			b->Update();
 		}
 	}
 	void Result::Draw()
