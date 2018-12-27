@@ -8,6 +8,8 @@
 #include <DxLib.h>
 #include <string>
 
+#ifdef __ANDROID__
+// Android版のコンパイル
 class DXFilieRead final
 {
 private:
@@ -54,12 +56,15 @@ public:
 		return pathBuffer;
 	}
 };
+#endif
+
 
 class FileSystem final
 {
 public:
 	const bool Save(const std::string& fileName, int* saveData) noexcept
 	{
+#ifdef __ANDROID__
 		char filePath[256];
 		DxLib::GetInternalDataPath(filePath, sizeof(filePath));
 
@@ -76,9 +81,22 @@ public:
 		fon << *saveData;
 		fon.close();
 		return true;
+#else
+		std::ofstream fon(fileName, std::ios::out);
+		if (!fon.is_open())
+		{
+			printfDx("save file error : %s\n", fileName.c_str());
+			return false;
+		}
+		fon << *saveData;
+		fon.close();
+		return true;
+#endif
 	}
 	const bool Load(const std::string& fileName, int* loadData) noexcept
 	{
+
+#ifdef __ANDROID__
 		char filePath[256];
 		DxLib::GetInternalDataPath(filePath, sizeof(filePath));
 
@@ -97,6 +115,20 @@ public:
 		//printfDx("load file : %s\n", filePath);
 		//printfDx("load data : %d\n", *loadData);
 		return true;
+#else
+		std::fstream inputFile(fileName);
+		if (!inputFile.is_open())
+		{
+			printfDx("load file error : %s \n", fileName.c_str());
+			return false;
+		}
+		inputFile >> *loadData;
+		inputFile.close();
+
+		//printfDx("load file : %s\n", filePath);
+		//printfDx("load data : %d\n", *loadData);
+		return true;
+#endif
 	}
 	const bool HighScoreSave(const std::string& fileName, int* saveData) noexcept
 	{

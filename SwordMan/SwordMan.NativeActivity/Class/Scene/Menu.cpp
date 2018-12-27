@@ -104,6 +104,7 @@ namespace Scene
 		scoreBoard->AddComponent<ECS::Canvas>().AddChild(number);
 		scoreBoard->GetComponent<ECS::Canvas>().OffsetChildScale(0,2.0f);
 
+#ifdef __ANDROID__
 		//セーブデータのロード
 		//1
 		{
@@ -127,6 +128,33 @@ namespace Scene
 			stageName += ".dat";
 			FileSystem().Load(stageName, &score[2]);
 		}
+#else
+		//セーブデータのロード
+		//1
+		{
+			int stageNo = 1;
+			std::string stageName = std::string("Resource/score/stage") + std::to_string(stageNo);
+			stageName += ".dat";
+			FileSystem().Load(stageName, &score[0]);
+			number->GetComponent<ECS::ImageFontDraw>().SetDrawData(std::to_string(score[0]).c_str());
+		}
+		//2
+		{
+			int stageNo = 2;
+			std::string stageName = std::string("Resource/score/stage") + std::to_string(stageNo);
+			stageName += ".dat";
+			FileSystem().Load(stageName, &score[1]);
+		}
+		//3
+		{
+			int stageNo = 3;
+			std::string stageName = std::string("Resource/score/stage") + std::to_string(stageNo);
+			stageName += ".dat";
+			FileSystem().Load(stageName, &score[2]);
+		}
+#endif
+
+
 		
 	}
 	void Menu::Finalize()
