@@ -11,6 +11,9 @@
 #include "../../Components/ComponentDatas/ButtonTag.hpp"
 #include "../../Components/EasingMove.hpp"
 #include "../../Class/Sound.hpp"
+
+#include "../../Utility/Input.hpp"
+
 namespace Scene
 {
 	Pause::Pause(IOnSceneChangeCallback* sceneTitleChange, Parameter* parame)
@@ -63,7 +66,25 @@ namespace Scene
 	}
 	void Pause::Update()
 	{
+		if (Input::Get().GetKeyFrame(KEY_INPUT_A) == 1)
+		{
+			ResourceManager::GetSound().Remove("BGM");
+			GetCallback().OnSceneChange(SceneName::Game, nullptr, SceneStack::AllClear);
+			return;
+		}
+		else if (Input::Get().GetKeyFrame(KEY_INPUT_S) == 1)
+		{
+			CommonData::CurrentScene::val = Scene::SceneName::Game;
+			GetCallback().OnSceneChange(SceneName::BackToScene, nullptr, SceneStack::OneClear);
+			return;
+		}
+		else if (Input::Get().GetKeyFrame(KEY_INPUT_D) == 1)
+		{
+			GetCallback().OnSceneChange(SceneName::Menu, nullptr, SceneStack::AllClear);
+			return;
+		}
 		const auto& button = ECS::EcsSystem::GetManager().GetEntitiesByGroup(ENTITY_GROUP::PauseUI);
+
 		for (auto& b : button)
 		{
 			b->Update();
