@@ -12,7 +12,8 @@
 #include "../../ArcheType/Cloud.hpp"
 #include "../../ArcheType/Button.hpp"
 #include "../../ArcheType/Player.hpp"
-//コンポーネント
+
+#include "../../Utility/Input.hpp"
 
 
 namespace Scene
@@ -65,7 +66,7 @@ namespace Scene
 				isFadeEnd = true;
 			}
 		}
-		if (TouchInput::GetInput().GetBtnPress(0) == 1 && isFadeEnd)
+		if ((TouchInput::GetInput().GetBtnPress(0) == 1 || Input::Get().GetKeyFrame(KEY_INPUT_Z) == 1) && isFadeEnd)
 		{
 			isPlayGame = true;
 		}

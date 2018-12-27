@@ -12,7 +12,7 @@
 #include "../../ArcheType/Score.hpp"
 #include "../../ArcheType/Button.hpp"
 #include "../../Events/AtackEvent.hpp"
-
+#include "../../Utility/Input.hpp"
 
 namespace Scene
 {
@@ -96,7 +96,8 @@ namespace Scene
 		ECS::Entity* pauseBtn = ECS::ButtonArcheType()("pauseButton", Vec2(1280.f - 96.f, 0.f), Vec2(0.f, 0.f), Vec2(96.f, 96.f), 50.f);
 		pauseBtn->AddComponent<ECS::PauseButtonTag>();
 		pauseBtn->AddGroup(ENTITY_GROUP::GameUI);
-
+#ifdef __ANDROID__
+		// Android版のコンパイル
 		//非アクティブ時にポーズ画面に移行する
 		SetAndroidLostFocusCallbackFunction([](void* ptr)
 		{
@@ -108,7 +109,7 @@ namespace Scene
 			}
 		},
 			&GetCallback());
-		
+#endif
 		
 	}
 	Game::~Game()
@@ -156,6 +157,12 @@ namespace Scene
 		Event::CollisionEvent::PlayerToEnemy();
 		ECS::EcsSystem::GetManager().Update();
 		
+		//キーイベント(仮)
+		if (Input::Get().GetKeyFrame(KEY_INPUT_SPACE) == 1)
+		{
+			GetCallback().OnSceneChange(SceneName::Pause, nullptr, SceneStack::Non);
+			return;
+		}
 		//ボタンイベント
 		auto& gameUI = ECS::EcsSystem::GetManager().GetEntitiesByGroup(ENTITY_GROUP::GameUI);
 		for (auto& b : gameUI)
