@@ -13,7 +13,7 @@
 #include "../Class/TouchInput.hpp"
 #include "../Components/AnimationController.hpp"
 #include "../Components/Jump.hpp"
-
+#include "../../Utility/Input.hpp"
 
 namespace ECS
 {
@@ -171,6 +171,10 @@ namespace ECS
 		}
 		bool	LeftButtonTap(const int btnNumber)
 		{
+			if (Input::Get().GetKeyFrame(KEY_INPUT_LEFT) == 1)
+			{
+				return true;
+			}
 			if (TouchInput::GetInput().GetBtnPress(btnNumber) == 1)
 			{
 				if (TouchInput::GetInput().GetTouchIDPos(btnNumber).x <= (System::SCREEN_WIDIH / 2.0f))
@@ -182,6 +186,10 @@ namespace ECS
 		}
 		bool	RightButtonTap(const int btnNumber)
 		{
+			if (Input::Get().GetKeyFrame(KEY_INPUT_RIGHT) == 1)
+			{
+				return true;
+			}
 			if (TouchInput::GetInput().GetBtnPress(btnNumber) == 1)
 			{
 				//Pauseボタンの矩形との当たり判定

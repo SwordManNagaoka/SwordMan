@@ -11,7 +11,7 @@
 #include <fstream>
 #include "../../Class/DXFilieRead.hpp"
 #include "../../Class/RankSelector.hpp"
-
+#include "../../Utility/Input.hpp"
 
 namespace Scene
 {
@@ -146,6 +146,16 @@ namespace Scene
 		for (auto& b : button)
 		{
 			b->Update();
+		}
+		if (Input::Get().GetKeyFrame(KEY_INPUT_S) == 1)
+		{
+			GetCallback().OnSceneChange(SceneName::Game, nullptr, SceneStack::AllClear);
+			return;
+		}
+		else if (Input::Get().GetKeyFrame(KEY_INPUT_A) == 1)
+		{
+			GetCallback().OnSceneChange(SceneName::Menu, nullptr, SceneStack::AllClear);
+			return;
 		}
 	}
 	void Result::Draw()

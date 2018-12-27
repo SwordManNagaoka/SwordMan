@@ -21,6 +21,8 @@ namespace Scene
 	Title::Title(IOnSceneChangeCallback* sceneTitleChange, Parameter* parame)
 		: AbstractScene(sceneTitleChange)
 	{
+#ifdef __ANDROID__
+		// Android版のコンパイル
 		stageLoader.LoadStage("stage/stageparam03.csv");
 		stageLoader.LoadStageConstitution();
 		ResourceManager::GetGraph().RemoveGraph(stageLoader.GetStageParam().mapImage);
@@ -29,6 +31,18 @@ namespace Scene
 		ResourceManager::GetGraph().Load("image/ground03.png", "stage3");
 		ResourceManager::GetGraph().Load("image/title/taptostart.png", "taptostart");
 		ResourceManager::GetGraph().Load("image/title/title.png", "title");
+#else
+		// Windows版のコンパイル
+		stageLoader.LoadStage("Resource/stage/stageparam03.csv");
+		stageLoader.LoadStageConstitution();
+		ResourceManager::GetGraph().RemoveGraph(stageLoader.GetStageParam().mapImage);
+		ResourceManager::GetGraph().Load("Resource/image/ground01.png", "stage1");
+		ResourceManager::GetGraph().Load("Resource/image/ground02.png", "stage2");
+		ResourceManager::GetGraph().Load("Resource/image/ground03.png", "stage3");
+		ResourceManager::GetGraph().Load("Resource/image/title/taptostart.png", "taptostart");
+		ResourceManager::GetGraph().Load("Resource/image/title/title.png", "title");
+#endif
+		
 		const_cast<StageParam&>(stageLoader.GetStageParam()).mapImage = "stage1";
 		stageCreator.SetMapParam(stageLoader.GetStageParam());
 		stageCreator.FillUpFlatMap();
