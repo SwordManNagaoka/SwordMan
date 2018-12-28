@@ -29,9 +29,11 @@ namespace Scene
 		menuBtn->AddComponent<ECS::BackMenuButtonTag>();
 		menuBtn->AddGroup(ENTITY_GROUP::GameUI);
 
-		ECS::Entity* fade = &ECS::EcsSystem::GetManager().AddEntity();
-		fade->AddComponent<ECS::Position>(0,0);
-		fade->AddGroup(ENTITY_GROUP::Fade1);
+		ECS::Entity* backFade = &ECS::EcsSystem::GetManager().AddEntity();
+		backFade->AddComponent<ECS::Position>(0, 0);
+		backFade->AddComponent<ECS::SimpleDraw>("fade").DrawDisable();
+		backFade->AddComponent<ECS::BlendMode>().SetAlpha(50);
+		backFade->AddGroup(ENTITY_GROUP::Fade1);
 
 		int scoreData = CommonData::TotalScore::val;
 		int stageNo = CommonData::StageNum::val;
@@ -117,8 +119,7 @@ namespace Scene
 					const auto& fades = ECS::EcsSystem::GetManager().GetEntitiesByGroup(ENTITY_GROUP::Fade1);
 					for (auto& fade : fades)
 					{
-						fade->AddComponent<ECS::SimpleDraw>("fade").DrawDisable();
-						fade->AddComponent<ECS::BlendMode>().FadeIn(0, 255, 5);
+						fade->GetComponent<ECS::BlendMode>().FadeIn(50, 255, 5);
 					}
 					return;
 				};
