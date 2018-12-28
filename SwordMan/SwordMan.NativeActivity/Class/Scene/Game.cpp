@@ -16,7 +16,7 @@
 
 namespace Scene
 {
-	Game::Game(IOnSceneChangeCallback* sceneTitleChange, Parameter* parame)
+	Game::Game(IOnSceneChangeCallback* sceneTitleChange, [[maybe_unused]] Parameter* parame)
 		: AbstractScene(sceneTitleChange)
 	{
 
@@ -52,7 +52,7 @@ namespace Scene
 			stageLoader.LoadStage("Resource/stage/stageparam02.csv");
 			ResourceManager::GetSound().Load("Resource/sounds/nagaoka.wav", "BGM", SoundType::BGM);
 #endif
-			
+
 			stageLoader.LoadStageConstitution();
 			const_cast<StageParam&>(stageLoader.GetStageParam()).mapImage = "stage2";
 			stageCreator.SetMapParam(stageLoader.GetStageParam());
@@ -110,7 +110,7 @@ namespace Scene
 		},
 			&GetCallback());
 #endif
-		
+
 	}
 	Game::~Game()
 	{
@@ -123,6 +123,7 @@ namespace Scene
 		stageCreator.Run(&stageLoader.GetStageData(), &stageLoader.GetSkyData(), &stageLoader.GetEnemyData());
 		auto& player = ECS::EcsSystem::GetManager().GetEntitiesByGroup(ENTITY_GROUP::Player);
 		auto& ground = ECS::EcsSystem::GetManager().GetEntitiesByGroup(ENTITY_GROUP::Ground);
+		auto& gameUI = ECS::EcsSystem::GetManager().GetEntitiesByGroup(ENTITY_GROUP::GameUI);
 		//まれにめり込んだ状態から始まり、ジャンプできなくなるので苦肉の策としてこうしてある
 		if (!isIntrusion)
 		{
@@ -156,7 +157,7 @@ namespace Scene
 		Event::CollisionEvent::AttackCollisionToEnemy();
 		Event::CollisionEvent::PlayerToEnemy();
 		ECS::EcsSystem::GetManager().Update();
-		
+
 		//キーイベント(仮)
 		if (Input::Get().GetKeyFrame(KEY_INPUT_SPACE) == 1)
 		{
@@ -164,7 +165,6 @@ namespace Scene
 			return;
 		}
 		//ボタンイベント
-		auto& gameUI = ECS::EcsSystem::GetManager().GetEntitiesByGroup(ENTITY_GROUP::GameUI);
 		for (auto& b : gameUI)
 		{
 			if (b->HasComponent<ECS::PauseButtonTag>())
@@ -182,22 +182,6 @@ namespace Scene
 				};
 				b->GetComponent<ECS::PushButton>().SetEventFunction(changeFunc);
 			}
-			else if (player.size() == 0)
-			{
-				for (auto& ui : gameUI)
-				{
-					if (ui->HasComponent<ECS::PauseButtonTag>())
-					{
-						ui->Destroy();
-					}
-					else if (ui->HasComponent<ECS::TotalScoreDraw>())
-					{
-						CommonData::TotalScore::val = ui->GetComponent<ECS::TotalScoreDraw>().GetTotalScore();
-					}
-				}
-				GetCallback().OnSceneChange(SceneName::Result, nullptr, SceneStack::Non);
-				return;
-			}
 			//スコア
 			for (auto& ui : gameUI)
 			{
@@ -206,7 +190,29 @@ namespace Scene
 					CommonData::TotalScore::val = ui->GetComponent<ECS::TotalScoreDraw>().GetTotalScore();
 				}
 			}
-			
+		}
+		//プレイヤー死亡時
+		if (!player[0]->IsActive() && !player.empty())
+		{
+			for (auto& ui : gameUI)
+			{
+				if (ui->HasComponent<ECS::PauseButtonTag>())
+				{
+					ui->Destroy();
+				}
+				else if (ui->HasComponent<ECS::TotalScoreDraw>())
+				{
+					CommonData::TotalScore::val = ui->GetComponent<ECS::TotalScoreDraw>().GetTotalScore();
+				}
+			}
+#ifdef __ANDROID__
+			ResourceManager::GetGraph().LoadDiv("image/death.png", "death", 2, 2, 1, 96, 192);
+#else
+			ResourceManager::GetGraph().LoadDiv("Resource/image/death.png", "death", 2, 2, 1, 96, 192);
+#endif
+			ECS::PlayerDeathArcheType()("death", Vec2{ player[0]->GetComponent<ECS::Position>().val });
+			GetCallback().OnSceneChange(SceneName::Result, nullptr, SceneStack::Non);
+			return;
 		}
 	}
 	void Game::Draw()
