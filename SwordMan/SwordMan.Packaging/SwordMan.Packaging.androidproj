@@ -125,6 +125,7 @@
     <Content Include="assets\enemy\enemy04.csv" />
     <Content Include="assets\enemy\goal.csv" />
     <Content Include="assets\image\cloud.png" />
+    <Content Include="assets\image\death.png" />
     <Content Include="assets\image\effect\bomb.png" />
     <Content Include="assets\image\effect\hit_strong.png" />
     <Content Include="assets\image\effect\hit_weak.png" />

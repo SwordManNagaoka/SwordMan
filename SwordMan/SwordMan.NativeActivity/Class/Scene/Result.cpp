@@ -143,10 +143,9 @@ namespace Scene
 	void Result::Update()
 	{
 		const auto& button = ECS::EcsSystem::GetManager().GetEntitiesByGroup(ENTITY_GROUP::GameUI);
-		for (auto& b : button)
-		{
-			b->Update();
-		}
+		const auto& player = ECS::EcsSystem::GetManager().GetEntitiesByGroup(ENTITY_GROUP::Player);
+		for (const auto& it : player) { it->Update(); }
+		for (auto& b : button) { b->Update(); }
 		if (Input::Get().GetKeyFrame(KEY_INPUT_S) == 1)
 		{
 			GetCallback().OnSceneChange(SceneName::Game, nullptr, SceneStack::AllClear);
