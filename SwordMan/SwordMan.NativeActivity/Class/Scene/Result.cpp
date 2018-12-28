@@ -142,10 +142,6 @@ namespace Scene
 	
 	void Result::Update()
 	{
-		const auto& button = ECS::EcsSystem::GetManager().GetEntitiesByGroup(ENTITY_GROUP::GameUI);
-		const auto& player = ECS::EcsSystem::GetManager().GetEntitiesByGroup(ENTITY_GROUP::Player);
-		for (const auto& it : player) { it->Update(); }
-		for (auto& b : button) { b->Update(); }
 		if (Input::Get().GetKeyFrame(KEY_INPUT_S) == 1)
 		{
 			GetCallback().OnSceneChange(SceneName::Game, nullptr, SceneStack::AllClear);
@@ -156,6 +152,10 @@ namespace Scene
 			GetCallback().OnSceneChange(SceneName::Menu, nullptr, SceneStack::AllClear);
 			return;
 		}
+		const auto& button = ECS::EcsSystem::GetManager().GetEntitiesByGroup(ENTITY_GROUP::GameUI);
+		const auto& player = ECS::EcsSystem::GetManager().GetEntitiesByGroup(ENTITY_GROUP::Player);
+		for (const auto& it : player) { it->Update(); }
+		for (auto& b : button) { b->Update(); }
 	}
 	void Result::Draw()
 	{
