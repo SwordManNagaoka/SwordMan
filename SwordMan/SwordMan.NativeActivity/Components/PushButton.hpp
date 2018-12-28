@@ -23,7 +23,6 @@ namespace ECS
 		void Update() override
 		{
 			if(TouchInput::GetInput().GetBtnPress(0) == 1)
-			//if (TouchInput::GetInput().Push(0))
 			{
 				float radius = entity->GetComponent<CircleColiider>().radius();
 				Vec2 circlePos = Vec2(entity->GetComponent<CircleColiider>().x(), entity->GetComponent<CircleColiider>().y());
