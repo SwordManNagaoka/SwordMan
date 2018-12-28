@@ -162,8 +162,3 @@ namespace Scene
 		ECS::EcsSystem::GetManager().OrderByDraw(ENTITY_GROUP::Max);
 	}
 }
-
-
-
-
-
