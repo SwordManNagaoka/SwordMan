@@ -12,15 +12,15 @@
 #include "../Components/Collider.hpp"
 struct Collision
 {
-	template<class T = ECS::HitBase, class T2 = ECS::HitBase>
+	template<class T = ECS::HitBase, class TData = ECS::HitBase>
 	inline static bool BoxAndBox(const ECS::Entity& b1, const ECS::Entity& b2)
 	{
-		if (!b1.HasComponent<T>() || !b2.HasComponent<T2>())
+		if (!b1.HasComponent<T>() || !b2.HasComponent<TData>())
 		{
 			return false;
 		}
 		const auto& box1 = b1.GetComponent<T>();
-		const auto& box2 = b2.GetComponent<T2>();
+		const auto& box2 = b2.GetComponent<TData>();
 		if (box1.x() < box2.x() + box2.w() &&
 			box2.x() < box1.x() + box1.w() &&
 			box1.y() < box2.y() + box2.h() &&
@@ -41,15 +41,15 @@ struct Collision
 		}
 		return false;
 	}
-	template<class T = ECS::CircleColiider, class T2 = ECS::CircleColiider>
+	template<class T = ECS::CircleColiider, class TData = ECS::CircleColiider>
 	inline static bool CircleAndCircle(const ECS::Entity& e1, const ECS::Entity& e2)
 	{
-		if (!e1.HasComponent<T>() || !e2.HasComponent<T2>())
+		if (!e1.HasComponent<T>() || !e2.HasComponent<TData>())
 		{
 			return false;
 		}
 		const auto& c1 = e1.GetComponent<T>();
-		const auto& c2 = e2.GetComponent<T2>();
+		const auto& c2 = e2.GetComponent<TData>();
 		if (((c1.x() - c2.x()) *(c1.x() - c2.x())) + ((c1.y() - c2.y()) * (c1.y() - c2.y())) <=
 			(c1.radius() + c2.radius()) * (c1.radius() + c2.radius()))
 		{
@@ -68,15 +68,15 @@ struct Collision
 	}
 
 	//円と点の当たり判定
-	template<class T = ECS::CircleColiider, class T2 = ECS::Position>
+	template<class T = ECS::CircleColiider, class TData = ECS::Position>
 	inline static bool CircleAndPoint(const ECS::Entity& b1, const ECS::Entity& b2)
 	{
-		if (!b1.HasComponent<T>() || !b2.HasComponent<T2>())
+		if (!b1.HasComponent<T>() || !b2.HasComponent<TData>())
 		{
 			return false;
 		}
 		const auto& circle = b1.GetComponent<T>();
-		const auto& point = b2.GetComponent<T2>();
+		const auto& point = b2.GetComponent<TData>();
 
 		Vec2 buttonPos = Vec2(circle.x(), circle.y());
 		Vec2 distance = buttonPos - point.val();

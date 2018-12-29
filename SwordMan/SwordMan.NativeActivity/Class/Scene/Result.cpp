@@ -19,21 +19,23 @@ namespace Scene
 	Result::Result(IOnSceneChangeCallback* sceneTitleChange, Parameter* parame)
 		: AbstractScene(sceneTitleChange)
 	{
-		ECS::Entity* btn = ECS::ButtonArcheType()("pauseUI", Vec2(680, 500), Vec2(0, 0), Vec2(96, 144), 50);
-		btn->GetComponent<ECS::CircleColiider>().SetOffset(48, 48);
-		btn->AddComponent<ECS::BackTitleButtonTag>();
-		btn->AddGroup(ENTITY_GROUP::GameUI);
+		ECS::Entity* retry = ECS::ButtonArcheType()("pauseUI", Vec2(680, 500), Vec2(0, 0), Vec2(96, 144), 50);
+		retry->GetComponent<ECS::CircleColiider>().SetOffset(48, 48);
+		retry->AddComponent<ECS::RetryButtonTag>();
+		retry->AddGroup(ENTITY_GROUP::GameUI);
 
 		ECS::Entity* menuBtn = ECS::ButtonArcheType()("pauseUI", Vec2(480, 500), Vec2(192, 0), Vec2(96, 144), 50);
+		menuBtn->GetComponent<ECS::PushButton>().NotOnlyOne();
 		menuBtn->GetComponent<ECS::CircleColiider>().SetOffset(48, 48);
 		menuBtn->AddComponent<ECS::BackMenuButtonTag>();
 		menuBtn->AddGroup(ENTITY_GROUP::GameUI);
 
-		ECS::Entity* backFade = &ECS::EcsSystem::GetManager().AddEntity();
+		backFade = &ECS::EcsSystem::GetManager().AddEntity();
 		backFade->AddComponent<ECS::Position>(0, 0);
-		backFade->AddComponent<ECS::SimpleDraw>("fade").DrawDisable();
-		backFade->AddComponent<ECS::BlendMode>().SetAlpha(50);
-		backFade->AddGroup(ENTITY_GROUP::Fade1);
+		backFade->AddComponent<ECS::AlphaBlend>().alpha = 60;
+		backFade->AddComponent<ECS::SimpleDraw>("fade");
+		
+		backFade->AddGroup(ENTITY_GROUP::Fade0);
 
 		int scoreData = CommonData::TotalScore::val;
 		int stageNo = CommonData::StageNum::val;
@@ -83,9 +85,13 @@ namespace Scene
 		rankData->GetComponent<ECS::Scale>().val = 2.0f;
 		rankData->AddComponent<ECS::GradationColor>().SetGradationPower(Vec3(1,3,5));
 		rankData->AddGroup(ENTITY_GROUP::GameUI);
-		
+#ifdef __ANDROID__
 		std::string stageName = "stage" + stageNo;
 		stageName += ".dat";
+#else
+		std::string stageName = std::string("Resource/score/stage") + std::to_string(stageNo);
+		stageName += ".dat";
+#endif
 		if (FileSystem().HighScoreSave(stageName, &scoreData))
 		{
 			//---新記録の表示---//
@@ -98,33 +104,25 @@ namespace Scene
 			newRecord->AddComponent<ECS::GradationColor>().SetGradationPower(Vec3(3, 2, 1));
 			newRecord->AddGroup(ENTITY_GROUP::GameUI);
 		}
-		const auto& button = ECS::EcsSystem::GetManager().GetEntitiesByGroup(ENTITY_GROUP::GameUI);
-		for (auto& b : button)
+		//Retryボタンにイベントを設定
 		{
-			if (b->HasComponent<ECS::BackTitleButtonTag>())
+			auto changeFunc = [=]([[maybe_unused]] Scene::IOnSceneChangeCallback* callBack)
 			{
-				b->GetComponent<ECS::PushButton>().SetSceneCallBack(&GetCallback());
-				auto changeFunc = [](Scene::IOnSceneChangeCallback* callBack)
-				{
-					callBack->OnSceneChange(SceneName::Game, nullptr, SceneStack::AllClear);
-					return;
-				};
-				b->GetComponent<ECS::PushButton>().SetEventFunction(changeFunc);
-			}
-			if (b->HasComponent<ECS::BackMenuButtonTag>())
+				//ここでシーン切り替えするとなぜか落ちるのでこうなった
+				isGame = true;
+				return;
+			};
+			retry->GetComponent<ECS::PushButton>().SetEventFunction(changeFunc);
+		}
+		//メニューボタンにイベントを設定
+		{
+			auto changeFunc = [=]([[maybe_unused]] Scene::IOnSceneChangeCallback* callBack)
 			{
-				b->GetComponent<ECS::PushButton>().SetSceneCallBack(&GetCallback());
-				auto changeFunc = [](Scene::IOnSceneChangeCallback* callBack)
-				{
-					const auto& fades = ECS::EcsSystem::GetManager().GetEntitiesByGroup(ENTITY_GROUP::Fade1);
-					for (auto& fade : fades)
-					{
-						fade->GetComponent<ECS::BlendMode>().FadeIn(50, 255, 5);
-					}
-					return;
-				};
-				b->GetComponent<ECS::PushButton>().SetEventFunction(changeFunc);
-			}
+				//ここでシーン切り替えするとなぜか落ちるのでこうなった
+				isMenu = true;
+				return;
+			};
+			menuBtn->GetComponent<ECS::PushButton>().SetEventFunction(changeFunc);
 		}
 	}
 
@@ -135,33 +133,22 @@ namespace Scene
 	}
 	
 	void Result::Update()
-	{
-		if (Input::Get().GetKeyFrame(KEY_INPUT_S) == 1)
-		{
-			GetCallback().OnSceneChange(SceneName::Game, nullptr, SceneStack::AllClear);
-			return;
-		}
-		else if (Input::Get().GetKeyFrame(KEY_INPUT_A) == 1)
-		{
-			GetCallback().OnSceneChange(SceneName::Menu, nullptr, SceneStack::AllClear);
-			return;
-		}
+	{	
 		const auto& button = ECS::EcsSystem::GetManager().GetEntitiesByGroup(ENTITY_GROUP::GameUI);
 		const auto& player = ECS::EcsSystem::GetManager().GetEntitiesByGroup(ENTITY_GROUP::Player);
 		for (const auto& it : player) { it->Update(); }
 		for (auto& b : button) { b->Update(); }
 
-		const auto& fades = ECS::EcsSystem::GetManager().GetEntitiesByGroup(ENTITY_GROUP::Fade1);
-		for (auto& fade : fades)
+		if (Input::Get().GetKeyFrame(KEY_INPUT_S) == 1 || isGame)
 		{
-			if (!fade->HasComponent<ECS::BlendMode>()) { break; }
-			if (fade->GetComponent<ECS::BlendMode>().isEnd())
-			{
-				GetCallback().OnSceneChange(SceneName::Menu, nullptr, SceneStack::AllClear);
-				return;
-			}
+			GetCallback().OnSceneChange(SceneName::Game, nullptr, SceneStack::AllClear);
+			return;
 		}
-
+		else if (Input::Get().GetKeyFrame(KEY_INPUT_A) == 1 || isMenu)
+		{
+			GetCallback().OnSceneChange(SceneName::Menu, nullptr, SceneStack::AllClear);
+			return;
+		}
 	}
 	void Result::Draw()
 	{
