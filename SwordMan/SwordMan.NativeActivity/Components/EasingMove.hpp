@@ -89,6 +89,8 @@ namespace ECS
 		{
 			ease = easing;
 		}
+
+		bool IsEnd() { return easing.IsEaseEnd(); }
 	private:
 		//動作の開始時間を設定
 		void SetBeginPoint(const float beginPoint)
