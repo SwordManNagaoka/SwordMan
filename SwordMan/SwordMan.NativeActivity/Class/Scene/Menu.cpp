@@ -103,7 +103,7 @@ namespace Scene
 		
 		scoreBoard->AddComponent<ECS::Canvas>().AddChild(number);
 		scoreBoard->GetComponent<ECS::Canvas>().OffsetChildScale(0,2.0f);
-
+		
 #ifdef __ANDROID__
 		//セーブデータのロード
 		//1
