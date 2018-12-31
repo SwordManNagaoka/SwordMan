@@ -110,7 +110,7 @@ namespace Scene
 		{
 			int stageNo = 1;
 			std::string stageName = "stage" + stageNo;
-			stageName += ".dat";
+			stageName += std::string(".dat");
 			FileSystem().Load(stageName, &score[0]);
 			number->GetComponent<ECS::ImageFontDraw>().SetDrawData(Converter::ToString(score[0]).c_str());
 		}
@@ -118,7 +118,7 @@ namespace Scene
 		{
 			int stageNo = 2;
 			std::string stageName = "stage" + stageNo;
-			stageName += ".dat";
+			stageName += std::string(".dat");
 			FileSystem().Load(stageName, &score[1]);
 		}
 		//3
