@@ -102,6 +102,8 @@ namespace Scene
 			newRecord->GetComponent<ECS::ImageFontDraw>().SetDrawData("NEW RECORD");
 			newRecord->GetComponent<ECS::Scale>().val = 2.0f;
 			newRecord->AddComponent<ECS::GradationColor>().SetGradationPower(Vec3(3, 2, 1));
+			newRecord->AddComponent<ECS::EasingMove>(Easing::BackOut, ECS::EasingMove::DirectionState::LeftAndRight).SetBeginToEndPoint(1400, 650);
+			newRecord->GetComponent<ECS::EasingMove>().SetTimeToDuration(50.0f, 130.0f);
 			newRecord->AddGroup(ENTITY_GROUP::GameUI);
 		}
 		//Retryボタンにイベントを設定
