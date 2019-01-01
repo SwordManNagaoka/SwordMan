@@ -137,7 +137,13 @@ namespace Event
 				//エフェクト作成
 				EnemyHitEffect(enemy, plusScore);
 				//スコアEntityを作成
-				ECS::AddScoreArcheType()("font", Vec2(0, 50 + (addScoreNum * 32)), plusScore);
+				//スコアEntityを作成
+				Vec2 pos(0, 50 + (addScoreNum * 32));
+				if (!addScores.empty() && addScores.back()->GetComponent<ECS::Position>().val.y == pos.y)
+				{
+					pos.y += 32;
+				}
+				ECS::AddScoreArcheType()("font", pos, plusScore);
 				if (totalScore->HasComponent<ECS::TotalScoreDraw>())
 				{
 					totalScore->GetComponent<ECS::TotalScoreDraw>().AddScore(plusScore);
@@ -173,7 +179,7 @@ namespace Event
 			{
 				//エフェクトの作成
 				//サウンドをつける
-				Sound se("hit");
+				Sound hit("hit");
 				ECS::EffectData effect;
 				effect.imageName = "hitWeak";
 				effect.pos = enemy.GetComponent<ECS::Position>().val;
@@ -183,13 +189,14 @@ namespace Event
 				if (score >= 200)
 				{
 					//サウンドをつける
-					se.SetHandle("smash");
+					Sound smash("smash");
+					smash.Play(false, true);
 					effect.imageName = "hitStrong";
 					effect.changeChipFrameTime = 3;
 					effect.chipNum = 5;
 					effect.killTime = 15;
 				}
-				se.Play(false, true);
+				hit.Play(false, true);
 				ECS::Entity* effectEntity = ECS::EffectArcheType()(effect);
 				effectEntity->GetComponent<ECS::AnimationDraw>().Offset(Vec2(-48.0f, -48.0f));
 			}
