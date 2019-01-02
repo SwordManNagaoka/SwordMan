@@ -97,7 +97,7 @@ namespace Scene
 		ECS::Cloud()("cloud");
 
 		number = &ECS::EcsSystem::GetManager().AddEntity();
-		number->AddComponent<ECS::Transform>().SetPosition(-180.f,0.f);
+		number->AddComponent<ECS::Transform>().SetPosition(-220.f,0.f);
 		number->AddComponent<ECS::ImageFontDraw>("font", Vec2(32, 32), 16);
 		number->AddGroup(ENTITY_GROUP::GameUI);
 		
