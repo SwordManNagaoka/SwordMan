@@ -30,6 +30,7 @@ void GameController::ResourceLoad()
 #ifdef __ANDROID__
 	// Android版のコンパイル
 	ResourceManager::GetSound().Load("sounds/rolling.wav", "rolling", SoundType::SE);
+	ResourceManager::GetSound().Load("sounds/damage.wav", "damage", SoundType::SE);
 	ResourceManager::GetSound().Load("sounds/smash.wav", "smash", SoundType::SE);
 	ResourceManager::GetSound().Load("sounds/hit.wav", "hit", SoundType::SE);
 	ResourceManager::GetSound().Load("sounds/bomb.wav", "bomb", SoundType::SE);
@@ -56,6 +57,7 @@ void GameController::ResourceLoad()
 #else
 	// Windows版のコンパイルだったら
 	ResourceManager::GetSound().Load("Resource/sounds/rolling.wav", "rolling", SoundType::SE);
+	ResourceManager::GetSound().Load("Resource/sounds/damage.wav", "damage", SoundType::SE);
 	ResourceManager::GetSound().Load("Resource/sounds/smash.wav", "smash", SoundType::SE);
 	ResourceManager::GetSound().Load("Resource/sounds/hit.wav", "hit", SoundType::SE);
 	ResourceManager::GetSound().Load("Resource/sounds/bomb.wav", "bomb", SoundType::SE);
@@ -80,7 +82,6 @@ void GameController::ResourceLoad()
 	ResourceManager::GetGraph().LoadDiv("Resource/image/effect/bomb.png", "bomb", 4, 4, 1, 192, 192);
 	ResourceManager::GetGraph().LoadDiv("Resource/image/effect/hit_strong.png", "hitStrong", 5, 5, 1, 192, 192);
 #endif
-	
 }
 
 GameController::GameController()
