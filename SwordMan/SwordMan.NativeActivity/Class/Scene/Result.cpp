@@ -31,6 +31,14 @@ namespace Scene
 		scoreData = CommonData::TotalScore::val;
 		int stageNo = CommonData::StageNum::val;
 
+		//--- クリアフラグのセーブ ---//
+		std::string stageClearFileName = "stageClearFile" + stageNo;
+		stageClearFileName += std::string(".dat");
+		if (CommonData::ClearFlagData::val == 1)
+		{
+			FileSystem().Save(stageClearFileName, &CommonData::ClearFlagData::val);
+		}
+
 		//---スコアの表示---//
 		scoreUI = &ECS::EcsSystem::GetManager().AddEntity();
 		scoreUI->AddComponent<ECS::Color>(0,0,255);

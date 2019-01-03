@@ -16,6 +16,7 @@
 #include "../Components/EasingMove.hpp"
 
 
+
 namespace Event
 {
 	class GoalEvent
@@ -73,6 +74,8 @@ namespace Event
 				entity->GetComponent<ECS::EasingMove>().SetTimeToDuration(30, 60);
 				entity->AddGroup(ENTITY_GROUP::GameUI);
 			}
+			//クリアフラグ(成功)
+			CommonData::ClearFlagData::val = 1;
 		}
 	};
 }

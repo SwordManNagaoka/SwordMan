@@ -41,6 +41,7 @@ namespace ECS
 			end = 0.0f;
 			time = 0.0f;
 			duration = 0.0f;
+			isPlay = true;
 		}
 		void Initialize() override
 		{
@@ -51,6 +52,7 @@ namespace ECS
 		}
 		void Update() override
 		{
+			if (!isPlay) { return; }
 			if (pos == nullptr) { return; }
 			switch (moveDirection)
 			{
@@ -68,10 +70,7 @@ namespace ECS
 			ease(time, duration);
 			easing.Run(ease, duration);
 		}
-		void Draw2D() override
-		{
-
-		}
+		void Draw2D() override {}
 		//[ 始点ポイント ]と[ 終点ポイント ]を設定
 		void SetBeginToEndPoint(const float beginPoint, const float endPoint)
 		{
@@ -89,8 +88,18 @@ namespace ECS
 		{
 			ease = easing;
 		}
-
+		//[ easing ] が終了したか
 		bool IsEnd() { return easing.IsEaseEnd(); }
+		//[ easing ] を行うかのフラグ
+		void SetPlayFlag(const bool playFlag)
+		{
+			isPlay = playFlag;
+		}
+		//[ easing ] をリセットする
+		void Reset() noexcept
+		{
+			easing.Reset();
+		}
 	private:
 		//動作の開始時間を設定
 		void SetBeginPoint(const float beginPoint)
@@ -123,5 +132,6 @@ namespace ECS
 		float duration;
 		Ease ease;
 		DirectionState moveDirection;
+		bool isPlay;
 	};
 }

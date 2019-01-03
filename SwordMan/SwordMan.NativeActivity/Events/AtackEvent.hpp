@@ -88,6 +88,10 @@ namespace Event
 			{
 				enemy.DeleteComponent<ECS::Physics>();
 			}
+			enemy.GetComponent<ECS::Color>().red = 255;
+			enemy.GetComponent<ECS::Color>().blue = 200;
+			enemy.GetComponent<ECS::Color>().green = 200;
+			enemy.GetComponent<ECS::AlphaBlend>().alpha = 128;
 			enemy.AddComponent<ECS::EntityCounter>().SetSpecifyCnt(30 - 1);
 			enemy.AddComponent<ECS::KillEntity>(30);
 		}
