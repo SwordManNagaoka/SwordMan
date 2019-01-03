@@ -13,6 +13,7 @@
 + 使用したコンパイラー：VisualStudio2017
 + 使用言語：C++17(アンドロイド環境では一部機能が使用不可)
 + 使用した外部エディター：Tiled
++ 使用したDAWソフト:　Cubase8.5 pro
 + 使用した外部ライブラリ: DXライブラリ http://dxlib.o.oo7.jp/
 ## 開発者
 ### **Neighbor Sound https://github.com/tonarinohito**
