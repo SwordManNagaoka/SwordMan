@@ -18,7 +18,7 @@ namespace Scene
 			it->GetComponent<ECS::Position>().val.y = logo[0].GetVolume(-160.f, System::SCREEN_HEIGHT / 3.f - (-160.f));
 		}
 		scoreBoard->GetComponent<ECS::Position>().val.y = hiscore[0].GetVolume(System::SCREEN_HEIGHT + 150.f, (System::SCREEN_HEIGHT - 140.f) - (System::SCREEN_HEIGHT + 150));
-
+		clearUI->GetComponent<ECS::Position>().val.x = cL[0].GetVolume(System::SCREEN_WIDIH, 900 - System::SCREEN_WIDIH);
 	}
 	void Menu::easingOutMove()
 	{
@@ -32,7 +32,8 @@ namespace Scene
 		{
 			it->GetComponent<ECS::Position>().val.y = logo[1].GetVolume(System::SCREEN_HEIGHT / 3.f, (-160.f) - (System::SCREEN_HEIGHT / 3.f));
 		}
-		scoreBoard->GetComponent<ECS::Position>().val.y = hiscore[1].GetVolume(System::SCREEN_HEIGHT - 140.f, (System::SCREEN_HEIGHT + 150.f) - (System::SCREEN_HEIGHT - 140.f));		
+		scoreBoard->GetComponent<ECS::Position>().val.y = hiscore[1].GetVolume(System::SCREEN_HEIGHT - 140.f, (System::SCREEN_HEIGHT + 150.f) - (System::SCREEN_HEIGHT - 140.f));
+		clearUI->GetComponent<ECS::Position>().val.x = cR[1].GetVolume(900, (System::SCREEN_WIDIH) - 900);
 	}
 	void Menu::indexAdd()
 	{
