@@ -18,7 +18,7 @@ namespace Scene
 			it->GetComponent<ECS::Position>().val.y = logo[0].GetVolume(-160.f, System::SCREEN_HEIGHT / 3.f - (-160.f));
 		}
 		scoreBoard->GetComponent<ECS::Position>().val.y = hiscore[0].GetVolume(System::SCREEN_HEIGHT + 150.f, (System::SCREEN_HEIGHT - 140.f) - (System::SCREEN_HEIGHT + 150));
-		clearUI->GetComponent<ECS::Position>().val.x = cL[0].GetVolume(System::SCREEN_WIDIH, 900 - System::SCREEN_WIDIH);
+		//clearUI->GetComponent<ECS::Position>().val.x = cL[0].GetVolume(System::SCREEN_WIDIH, 900 - System::SCREEN_WIDIH);
 	}
 	void Menu::easingOutMove()
 	{
@@ -33,7 +33,7 @@ namespace Scene
 			it->GetComponent<ECS::Position>().val.y = logo[1].GetVolume(System::SCREEN_HEIGHT / 3.f, (-160.f) - (System::SCREEN_HEIGHT / 3.f));
 		}
 		scoreBoard->GetComponent<ECS::Position>().val.y = hiscore[1].GetVolume(System::SCREEN_HEIGHT - 140.f, (System::SCREEN_HEIGHT + 150.f) - (System::SCREEN_HEIGHT - 140.f));
-		clearUI->GetComponent<ECS::Position>().val.x = cR[1].GetVolume(900, (System::SCREEN_WIDIH) - 900);
+		//clearUI->GetComponent<ECS::Position>().val.x = cR[1].GetVolume(900, (System::SCREEN_WIDIH) - 900);
 	}
 	void Menu::indexAdd()
 	{
@@ -182,8 +182,8 @@ namespace Scene
 
 		//クリアフラグ
 		clearUI = &ECS::EcsSystem::GetManager().AddEntity();
-		clearUI->AddComponent<ECS::Transform>().SetPosition(System::SCREEN_WIDIH, 100);
-		clearUI->AddComponent<ECS::Color>(128, 128, 10);
+		clearUI->AddComponent<ECS::Transform>().SetPosition(100.f, -120.f);
+		clearUI->AddComponent<ECS::Color>(255, 255, 255);
 		if (clearFlag[0] == 1)
 		{
 			clearUI->AddComponent<ECS::SimpleDraw>("clear");
@@ -193,6 +193,8 @@ namespace Scene
 			clearUI->AddComponent<ECS::SimpleDraw>("notclear");
 		}
 		clearUI->AddGroup(ENTITY_GROUP::GameUI);
+		scoreBoard->GetComponent<ECS::Canvas>().AddChild(clearUI);
+		scoreBoard->GetComponent<ECS::Canvas>().OffsetChildScale(1, 1.0f);
 	}
 	void Menu::Finalize()
 	{
