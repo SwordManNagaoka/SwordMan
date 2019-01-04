@@ -33,12 +33,18 @@ namespace ECS
 				Vec2 touchPos = TouchInput::GetInput().GetTouchIDPos(0);
 				if (Collision::CircleAndPoint(circlePos, radius, touchPos))
 				{
+					if (!isEventFunc) { return; }
 					//ヒット
 					isPushed = true;
-					if (onlyOne) { return; }
-					if (!isEventFunc) { return; }
+					
+				}
+				else
+				{
+					isPushed = false;
+				}
+				if (isPushed)
+				{
 					func(callBack);
-					onlyOne = true;
 				}
 			}
 		}

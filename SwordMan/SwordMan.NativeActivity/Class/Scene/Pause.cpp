@@ -44,11 +44,12 @@ namespace Scene
 			entity->AddGroup(ENTITY_GROUP::PauseUI);
 		}
 		//フェード画像生成
-		ECS::Entity* entity = &ECS::EcsSystem::GetManager().AddEntity();
-		entity->AddComponent<ECS::Position>();
-		entity->AddComponent<ECS::SimpleDraw>("fade");
-		entity->AddComponent<ECS::BlendMode>().SetAlpha(128);
-		entity->AddGroup(ENTITY_GROUP::Fade1);
+		ECS::Entity* fade = &ECS::EcsSystem::GetManager().AddEntity();
+		fade->AddComponent<ECS::Position>();
+		fade->AddComponent<ECS::AlphaBlend>().alpha = 128;
+		fade->AddComponent<ECS::SimpleDraw>("fade");
+		
+		fade->AddGroup(ENTITY_GROUP::Fade1);
 	}
 	Pause::~Pause()
 	{
@@ -84,7 +85,6 @@ namespace Scene
 			return;
 		}
 		const auto& button = ECS::EcsSystem::GetManager().GetEntitiesByGroup(ENTITY_GROUP::PauseUI);
-
 		for (auto& b : button)
 		{
 			b->Update();
@@ -104,10 +104,6 @@ namespace Scene
 				b->GetComponent<ECS::PushButton>().SetSceneCallBack(&GetCallback());
 				auto changeFunc = [](Scene::IOnSceneChangeCallback* callBack)
 				{
-					//ポーズボタン生成
-					ECS::Entity* pauseBtn = ECS::ButtonArcheType()("pauseButton", Vec2(1280 - 96, 0), Vec2(0, 0), Vec2(96, 96), 50);
-					pauseBtn->AddComponent<ECS::PauseButtonTag>();
-					pauseBtn->AddGroup(ENTITY_GROUP::GameUI);
 					CommonData::CurrentScene::val = Scene::SceneName::Game;
 					callBack->OnSceneChange(SceneName::BackToScene, nullptr, SceneStack::OneClear);
 					return;

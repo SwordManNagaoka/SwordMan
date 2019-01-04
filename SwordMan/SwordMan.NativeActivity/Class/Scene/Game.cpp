@@ -257,11 +257,11 @@ namespace Scene
 				auto changeFunc = [](Scene::IOnSceneChangeCallback* callBack)
 				{
 					callBack->OnSceneChange(SceneName::Pause, nullptr, SceneStack::Non);
-					auto& gameUI = ECS::EcsSystem::GetManager().GetEntitiesByGroup(ENTITY_GROUP::GameUI);
+				/*	auto& gameUI = ECS::EcsSystem::GetManager().GetEntitiesByGroup(ENTITY_GROUP::GameUI);
 					for (auto& b : gameUI)
 					{
 						if (b->HasComponent<ECS::PauseButtonTag>()) { b->Destroy(); }
-					}
+					}*/
 					return;
 				};
 				b->GetComponent<ECS::PushButton>().SetEventFunction(changeFunc);
