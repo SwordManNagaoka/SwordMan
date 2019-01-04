@@ -67,4 +67,8 @@ struct CommonData
 	{
 		static Scene::SceneName val;
 	};
+	struct ClearFlagData
+	{
+		static int val;
+	};
 };

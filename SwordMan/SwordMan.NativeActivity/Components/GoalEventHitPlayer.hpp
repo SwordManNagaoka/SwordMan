@@ -45,6 +45,8 @@ namespace ECS
 							players[0]->DeleteComponent<ECS::Think>();
 							players[0]->DeleteComponent<ECS::Behavior>();
 							eventFunc();
+							//クリアフラグ(成功)
+							CommonData::ClearFlagData::val = 1;
 							onceReferrd = true;
 						}
 					}

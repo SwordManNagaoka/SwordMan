@@ -2,6 +2,7 @@
 #include "../../ArcheType/ArcheType.hpp"
 #include "../../Class/DXFilieRead.hpp"
 #include "../../Utility/Input.hpp"
+#include "../../Components/GradationColor.hpp"
 namespace Scene
 {
 	void Menu::easingMove()
@@ -17,7 +18,7 @@ namespace Scene
 			it->GetComponent<ECS::Position>().val.y = logo[0].GetVolume(-160.f, System::SCREEN_HEIGHT / 3.f - (-160.f));
 		}
 		scoreBoard->GetComponent<ECS::Position>().val.y = hiscore[0].GetVolume(System::SCREEN_HEIGHT + 150.f, (System::SCREEN_HEIGHT - 140.f) - (System::SCREEN_HEIGHT + 150));
-
+		//clearUI->GetComponent<ECS::Position>().val.x = cL[0].GetVolume(System::SCREEN_WIDIH, 900 - System::SCREEN_WIDIH);
 	}
 	void Menu::easingOutMove()
 	{
@@ -31,7 +32,8 @@ namespace Scene
 		{
 			it->GetComponent<ECS::Position>().val.y = logo[1].GetVolume(System::SCREEN_HEIGHT / 3.f, (-160.f) - (System::SCREEN_HEIGHT / 3.f));
 		}
-		scoreBoard->GetComponent<ECS::Position>().val.y = hiscore[1].GetVolume(System::SCREEN_HEIGHT - 140.f, (System::SCREEN_HEIGHT + 150.f) - (System::SCREEN_HEIGHT - 140.f));		
+		scoreBoard->GetComponent<ECS::Position>().val.y = hiscore[1].GetVolume(System::SCREEN_HEIGHT - 140.f, (System::SCREEN_HEIGHT + 150.f) - (System::SCREEN_HEIGHT - 140.f));
+		//clearUI->GetComponent<ECS::Position>().val.x = cR[1].GetVolume(900, (System::SCREEN_WIDIH) - 900);
 	}
 	void Menu::indexAdd()
 	{
@@ -103,7 +105,7 @@ namespace Scene
 		
 		scoreBoard->AddComponent<ECS::Canvas>().AddChild(number);
 		scoreBoard->GetComponent<ECS::Canvas>().OffsetChildScale(0,2.0f);
-		
+
 #ifdef __ANDROID__
 		//セーブデータのロード
 		//1
@@ -113,6 +115,10 @@ namespace Scene
 			stageName += std::string(".dat");
 			FileSystem().Load(stageName, &score[0]);
 			number->GetComponent<ECS::ImageFontDraw>().SetDrawData(Converter::ToString(score[0]).c_str());
+			//クリアフラグ
+			std::string clarFlagName = "stageClearFile" + stageNo;
+			clarFlagName += std::string(".dat");
+			FileSystem().Load(clarFlagName, &clearFlag[0]);
 		}
 		//2
 		{
@@ -120,6 +126,10 @@ namespace Scene
 			std::string stageName = "stage" + stageNo;
 			stageName += std::string(".dat");
 			FileSystem().Load(stageName, &score[1]);
+			//クリアフラグ
+			std::string clarFlagName = "stageClearFile" + stageNo;
+			clarFlagName += std::string(".dat");
+			FileSystem().Load(clarFlagName, &clearFlag[1]);
 		}
 		//3
 		{
@@ -127,6 +137,10 @@ namespace Scene
 			std::string stageName = "stage" + stageNo;
 			stageName += ".dat";
 			FileSystem().Load(stageName, &score[2]);
+			//クリアフラグ
+			std::string clarFlagName = "stageClearFile" + stageNo;
+			clarFlagName += std::string(".dat");
+			FileSystem().Load(clarFlagName, &clearFlag[2]);
 		}
 #else
 		//セーブデータのロード
@@ -137,6 +151,10 @@ namespace Scene
 			stageName += ".dat";
 			FileSystem().Load(stageName, &score[0]);
 			number->GetComponent<ECS::ImageFontDraw>().SetDrawData(std::to_string(score[0]).c_str());
+			//クリアフラグ
+			std::string clarFlagName = std::string("Resource/stageClearFile") + std::to_string(stageNo);
+			clarFlagName += ".dat";
+			FileSystem().Load(clarFlagName, &clarFlag[0]);
 		}
 		//2
 		{
@@ -144,6 +162,10 @@ namespace Scene
 			std::string stageName = std::string("Resource/score/stage") + std::to_string(stageNo);
 			stageName += ".dat";
 			FileSystem().Load(stageName, &score[1]);
+			//クリアフラグ
+			std::string clarFlagName = std::string("Resource/stageClearFile") + std::to_string(stageNo);
+			clarFlagName += ".dat";
+			FileSystem().Load(clarFlagName, &clarFlag[2\1]);
 		}
 		//3
 		{
@@ -151,11 +173,28 @@ namespace Scene
 			std::string stageName = std::string("Resource/score/stage") + std::to_string(stageNo);
 			stageName += ".dat";
 			FileSystem().Load(stageName, &score[2]);
+			//クリアフラグ
+			std::string clarFlagName = std::string("Resource/stageClearFile") + std::to_string(stageNo);
+			clarFlagName += ".dat";
+			FileSystem().Load(clarFlagName, &clarFlag[2]);
 		}
 #endif
 
-
-		
+		//クリアフラグ
+		clearUI = &ECS::EcsSystem::GetManager().AddEntity();
+		clearUI->AddComponent<ECS::Transform>().SetPosition(100.f, -120.f);
+		clearUI->AddComponent<ECS::Color>(255, 255, 255);
+		if (clearFlag[0] == 1)
+		{
+			clearUI->AddComponent<ECS::SimpleDraw>("clear");
+		}
+		else
+		{
+			clearUI->AddComponent<ECS::SimpleDraw>("notclear");
+		}
+		clearUI->AddGroup(ENTITY_GROUP::GameUI);
+		scoreBoard->GetComponent<ECS::Canvas>().AddChild(clearUI);
+		scoreBoard->GetComponent<ECS::Canvas>().OffsetChildScale(1, 1.0f);
 	}
 	void Menu::Finalize()
 	{
@@ -273,6 +312,15 @@ namespace Scene
 			}
 			number->GetComponent<ECS::ImageFontDraw>().SetDrawData(Converter::ToString(score[2]).c_str());
 			stageCreator.FillUpFlatMap();
+
+			if (clearFlag[2] == 1)
+			{
+				clearUI->GetComponent<ECS::SimpleDraw>().ChageHandle("clear");
+			}
+			else
+			{
+				clearUI->GetComponent<ECS::SimpleDraw>().ChageHandle("notclear");
+			}
 		}
 		else if (index != preIndex && index == 1)
 		{
@@ -290,6 +338,15 @@ namespace Scene
 			}
 			number->GetComponent<ECS::ImageFontDraw>().SetDrawData(Converter::ToString(score[1]).c_str());
 			stageCreator.FillUpFlatMap();
+
+			if (clearFlag[1] == 1)
+			{
+				clearUI->GetComponent<ECS::SimpleDraw>().ChageHandle("clear");
+			}
+			else
+			{
+				clearUI->GetComponent<ECS::SimpleDraw>().ChageHandle("notclear");
+			}
 		}
 		else if (index != preIndex && index == 0)
 		{
@@ -307,6 +364,15 @@ namespace Scene
 			}
 			number->GetComponent<ECS::ImageFontDraw>().SetDrawData(Converter::ToString(score[0]).c_str());
 			stageCreator.FillUpFlatMap();
+
+			if (clearFlag[0] == 1)
+			{
+				clearUI->GetComponent<ECS::SimpleDraw>().ChageHandle("clear");
+			}
+			else
+			{
+				clearUI->GetComponent<ECS::SimpleDraw>().ChageHandle("notclear");
+			}
 		}
 		stageCreator.Run(nullptr, nullptr, nullptr);
 		cloud.Run();
