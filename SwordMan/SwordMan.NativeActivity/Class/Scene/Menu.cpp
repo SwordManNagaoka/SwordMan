@@ -105,15 +105,6 @@ namespace Scene
 		
 		scoreBoard->AddComponent<ECS::Canvas>().AddChild(number);
 		scoreBoard->GetComponent<ECS::Canvas>().OffsetChildScale(0,2.0f);
-		
-		//クリアフラグ
-		clearUI = &ECS::EcsSystem::GetManager().AddEntity();
-		clearUI->AddComponent<ECS::Transform>().SetPosition(900, 100);
-		clearUI->AddComponent<ECS::Color>(128,128,10);
-		clearUI->GetComponent<ECS::Scale>().val = 2.0f;
-		clearUI->AddComponent<ECS::GradationColor>().SetGradationPower(Vec3(2,2,2));
-		clearUI->AddComponent<ECS::ImageFontDraw>("font", Vec2(32, 32), 16);
-		clearUI->AddGroup(ENTITY_GROUP::GameUI);
 
 #ifdef __ANDROID__
 		//セーブデータのロード
@@ -189,15 +180,19 @@ namespace Scene
 		}
 #endif
 
+		//クリアフラグ
+		clearUI = &ECS::EcsSystem::GetManager().AddEntity();
+		clearUI->AddComponent<ECS::Transform>().SetPosition(System::SCREEN_WIDIH, 100);
+		clearUI->AddComponent<ECS::Color>(128, 128, 10);
 		if (clearFlag[0] == 1)
 		{
-			clearUI->GetComponent<ECS::ImageFontDraw>().SetDrawData("Clear");
+			clearUI->AddComponent<ECS::SimpleDraw>("clear");
 		}
 		else
 		{
-			clearUI->GetComponent<ECS::ImageFontDraw>().SetDrawData("Non");
+			clearUI->AddComponent<ECS::SimpleDraw>("notclear");
 		}
-		
+		clearUI->AddGroup(ENTITY_GROUP::GameUI);
 	}
 	void Menu::Finalize()
 	{
@@ -316,17 +311,13 @@ namespace Scene
 			number->GetComponent<ECS::ImageFontDraw>().SetDrawData(Converter::ToString(score[2]).c_str());
 			stageCreator.FillUpFlatMap();
 
-			clearUI->GetComponent<ECS::Color>().red = 128;
-			clearUI->GetComponent<ECS::Color>().blue = 128;
-			clearUI->GetComponent<ECS::Color>().green = 10;
-			clearUI->GetComponent<ECS::GradationColor>().SetGradationPower(Vec3(2, 2, 2));
 			if (clearFlag[2] == 1)
 			{
-				clearUI->GetComponent<ECS::ImageFontDraw>().SetDrawData("Clear");
+				clearUI->GetComponent<ECS::SimpleDraw>().ChageHandle("clear");
 			}
 			else
 			{
-				clearUI->GetComponent<ECS::ImageFontDraw>().SetDrawData("Non");
+				clearUI->GetComponent<ECS::SimpleDraw>().ChageHandle("notclear");
 			}
 		}
 		else if (index != preIndex && index == 1)
@@ -346,17 +337,13 @@ namespace Scene
 			number->GetComponent<ECS::ImageFontDraw>().SetDrawData(Converter::ToString(score[1]).c_str());
 			stageCreator.FillUpFlatMap();
 
-			clearUI->GetComponent<ECS::Color>().red = 128;
-			clearUI->GetComponent<ECS::Color>().blue = 128;
-			clearUI->GetComponent<ECS::Color>().green = 10;
-			clearUI->GetComponent<ECS::GradationColor>().SetGradationPower(Vec3(2, 2, 2));
 			if (clearFlag[1] == 1)
 			{
-				clearUI->GetComponent<ECS::ImageFontDraw>().SetDrawData("Clear");
+				clearUI->GetComponent<ECS::SimpleDraw>().ChageHandle("clear");
 			}
 			else
 			{
-				clearUI->GetComponent<ECS::ImageFontDraw>().SetDrawData("Non");
+				clearUI->GetComponent<ECS::SimpleDraw>().ChageHandle("notclear");
 			}
 		}
 		else if (index != preIndex && index == 0)
@@ -376,17 +363,13 @@ namespace Scene
 			number->GetComponent<ECS::ImageFontDraw>().SetDrawData(Converter::ToString(score[0]).c_str());
 			stageCreator.FillUpFlatMap();
 
-			clearUI->GetComponent<ECS::Color>().red = 128;
-			clearUI->GetComponent<ECS::Color>().blue = 128;
-			clearUI->GetComponent<ECS::Color>().green = 10;
-			clearUI->GetComponent<ECS::GradationColor>().SetGradationPower(Vec3(2, 2, 2));
 			if (clearFlag[0] == 1)
 			{
-				clearUI->GetComponent<ECS::ImageFontDraw>().SetDrawData("Clear");
+				clearUI->GetComponent<ECS::SimpleDraw>().ChageHandle("clear");
 			}
 			else
 			{
-				clearUI->GetComponent<ECS::ImageFontDraw>().SetDrawData("Non");
+				clearUI->GetComponent<ECS::SimpleDraw>().ChageHandle("notclear");
 			}
 		}
 		stageCreator.Run(nullptr, nullptr, nullptr);

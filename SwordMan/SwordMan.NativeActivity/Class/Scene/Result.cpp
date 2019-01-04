@@ -38,6 +38,7 @@ namespace Scene
 		{
 			FileSystem().Save(stageClearFileName, &CommonData::ClearFlagData::val);
 		}
+		CommonData::ClearFlagData::val = 0;
 
 		//---スコアの表示---//
 		scoreUI = &ECS::EcsSystem::GetManager().AddEntity();

@@ -150,10 +150,12 @@
     <Content Include="assets\image\sword.png" />
     <Content Include="assets\image\title\taptostart.png" />
     <Content Include="assets\image\title\title.png" />
+    <Content Include="assets\image\ui\clear.png" />
     <Content Include="assets\image\ui\colorScreen.png" />
     <Content Include="assets\image\ui\fade.png" />
     <Content Include="assets\image\ui\goalMessage.png" />
     <Content Include="assets\image\ui\life.png" />
+    <Content Include="assets\image\ui\notclear.png" />
     <Content Include="assets\image\ui\pauseButton.png" />
     <Content Include="assets\image\ui\pauseMessage.png" />
     <Content Include="assets\image\ui\pauseUI.png" />

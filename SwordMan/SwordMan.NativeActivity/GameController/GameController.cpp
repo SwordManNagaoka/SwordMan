@@ -45,6 +45,8 @@ void GameController::ResourceLoad()
 	ResourceManager::GetGraph().Load("image/ui/fade.png", "fade");
 	ResourceManager::GetGraph().Load("image/ui/colorScreen.png", "colorScreen");
 	ResourceManager::GetGraph().Load("image/ui/pauseMessage.png", "pauseMessage");
+	ResourceManager::GetGraph().Load("image/ui/clear.png", "clear");
+	ResourceManager::GetGraph().Load("image/ui/notclear.png", "notclear");
 	ResourceManager::GetGraph().LoadDiv("image/sword.png", "sword", 5, 5, 1, 193, 193);
 	ResourceManager::GetGraph().LoadDiv("image/rolling.png", "rolling", 12, 4, 3, 288, 288);
 	ResourceManager::GetGraph().LoadDiv("image/enemy01.png", "enemy1", 2, 2, 1, 96, 96);
@@ -74,6 +76,8 @@ void GameController::ResourceLoad()
 	ResourceManager::GetGraph().Load("Resource/image/ui/fade.png", "fade");
 	ResourceManager::GetGraph().Load("Resource/image/ui/colorScreen.png", "colorScreen");
 	ResourceManager::GetGraph().Load("Resource/image/ui/pauseMessage.png", "pauseMessage");
+	ResourceManager::GetGraph().Load("Resource/image/ui/clear.png", "clear");
+	ResourceManager::GetGraph().Load("Resource/image/ui/notclear.png", "notclear");
 	ResourceManager::GetGraph().LoadDiv("Resource/image/sword.png", "sword", 5, 5, 1, 193, 193);
 	ResourceManager::GetGraph().LoadDiv("Resource/image/rolling.png", "rolling", 12, 4, 3, 288, 288);
 	ResourceManager::GetGraph().LoadDiv("Resource/image/enemy01.png", "enemy1", 2, 2, 1, 96, 96);
