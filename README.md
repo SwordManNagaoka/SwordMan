@@ -22,8 +22,9 @@
 + メインシステムプログラム
 + レベルデザイン
 + デバッグ
++ 企画
 ### **feveleK5563 https://github.com/feveleK5563**
-+ メイン企画
++ 企画
 + マップデザイン、キャラクタデザイン
 + 一部プログラム
 ### **hibino0429 https://github.com/hibino0429**
