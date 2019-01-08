@@ -128,13 +128,13 @@ namespace ECS
 					if (playerState == PlayerData::State::JumpAttack)
 					{
 						entity->GetComponent<AnimationController>().SetIsHeightAnimation(true);
-						entity->GetComponent<AnimationController>().SetHeightAnimation(1, 3, 0);
+						entity->GetComponent<AnimationController>().SetHeightAnimation(1, 2, 1);
 						oneFlag = true;
 					}
 					else
 					{
 						entity->GetComponent<AnimationController>().SetIsHeightAnimation(true);
-						entity->GetComponent<AnimationController>().SetHeightAnimation(10, 3, 0);
+						entity->GetComponent<AnimationController>().SetHeightAnimation(10, 2, 1);
 					}
 					preState = playerState;
 				}
@@ -158,7 +158,7 @@ namespace ECS
 		Health* health;
 		Counter	stateCnt;
 		int maxValue;
-		const int maxDamageTime = 50;
+		const int maxDamageTime = 40;
 		PlayerData::State playerState;
 		PlayerData::State preState;
 		bool oneFlag = false;
