@@ -136,16 +136,33 @@ namespace ECS
 						entity->GetComponent<AnimationController>().SetIsHeightAnimation(true);
 						entity->GetComponent<AnimationController>().SetHeightAnimation(10, 3, 0);
 					}
+					preState = playerState;
 				}
-				if (stateCnt.GetCurrentCount() > 1 && stateCnt.GetCurrentCount() < 30-1)
+				//if (stateCnt.GetCurrentCount() > 1 && stateCnt.GetCurrentCount() < 30-1)
+				//{
+				//	if (oneFlag) { return; }
+				//	/*if (playerState == PlayerData::State::JumpAttack)
+				//	{
+				//		entity->GetComponent<AnimationController>().SetIsHeightAnimation(true);
+				//		entity->GetComponent<AnimationController>().SetHeightAnimation(1, 3, 0);
+				//		oneFlag = true;
+				//	}*/
+				//	if (preState != playerState && playerState == PlayerData::State::JumpAttack)
+				//	{
+				//		entity->GetComponent<AnimationController>().SetIsHeightAnimation(true);
+				//		entity->GetComponent<AnimationController>().SetHeightAnimation(1, 3, 0);
+				//		oneFlag = true;
+				//	}
+				//	else if (preState != playerState)
+				//	{
+				//		entity->GetComponent<AnimationController>().SetIsHeightAnimation(true);
+				//		entity->GetComponent<AnimationController>().SetHeightAnimation(10, 3, 0);
+				//		oneFlag = true;
+				//	}
+				//}
+				if (stateCnt.GetCurrentCount() >= 30)
 				{
-					if (oneFlag) { return; }
-					if (playerState == PlayerData::State::JumpAttack)
-					{
-						entity->GetComponent<AnimationController>().SetIsHeightAnimation(true);
-						entity->GetComponent<AnimationController>().SetHeightAnimation(1, 3, 0);
-						oneFlag = true;
-					}
+					entity->GetComponent<AnimationController>().SetIsHeightAnimation(false);
 				}
 				break;
 			case State::Death:
@@ -164,6 +181,7 @@ namespace ECS
 		Counter	stateCnt;
 		int maxValue;
 		PlayerData::State playerState;
+		PlayerData::State preState;
 		bool oneFlag = false;
 	};
 }
