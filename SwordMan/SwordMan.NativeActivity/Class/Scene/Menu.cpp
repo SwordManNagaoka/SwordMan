@@ -229,9 +229,8 @@ namespace Scene
 		}
 		preIndex = index;
 		stageUI[index]->GetComponent<ECS::SimpleDraw>().DrawEnable();
-		if (logo[0].IsEaseEnd())
+		if (logo[0].IsEaseEnd() && !isPlay)
 		{
-			//左端
 			//左端
 			if (TouchInput::GetInput().GetBtnPress(0) == 1 &&
 				Collision::BoxAndBox(

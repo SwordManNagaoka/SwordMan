@@ -2,3 +2,9 @@
 \.vs/
 
 ARM/
+
+SwordMan/SwordMan\.Packaging/ARM64/
+
+SwordMan/SwordMan\.NativeActivity/ARM64/
+
+ARM64/
