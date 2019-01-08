@@ -30,5 +30,6 @@
 ### **hibino0429 https://github.com/hibino0429**
 + アプリケーションメインプログラム
 + デバッグ
++ 企画
 
 *Wrote By Neighbor Sound*
