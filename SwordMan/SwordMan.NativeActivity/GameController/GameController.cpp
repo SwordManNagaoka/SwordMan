@@ -112,6 +112,7 @@ void GameController::ResetGame()
 void GameController::Update()
 {
 	TouchInput::GetInput().Update();
+	TouchInput::GetTap().Update();
 	Input::Get().Update_Key();
 	pManager->Refresh();
 	sceneStack.top()->Update();
